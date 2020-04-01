@@ -1,0 +1,38 @@
+gzip_types application/x-javascript text/css;
+fastcgi_intercept_errors on;
+client_max_body_size 5m;
+error_page 404 /404;
+
+location ~* \.html$ {
+    add_header Cache-Control "no-store, no-cache, private";
+    root /opt/static/build/;
+}
+
+location = / {
+ try_files $uri $uri/ /build/index.html;
+}
+
+location = /favicon.ico {
+  try_files $uri $uri/ /build/favicon.ico;
+}
+
+location ^~ / {
+   try_files $uri $uri/ /build/index.html;
+}
+
+location /Status/ {
+  alias /opt/static/deploy/;
+}
+
+location /api {
+    proxy_pass https://your-domin.com;
+    client_max_body_size 10M;
+}
+
+location = / {
+  rewrite .* redirect;
+}
+
+location / {
+  root /opt/static/;
+}

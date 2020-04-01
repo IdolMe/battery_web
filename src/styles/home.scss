@@ -1,0 +1,53 @@
+.home-page {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    .bg {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+    }
+    .content {
+        position: absolute;
+        left: 0;
+        bottom: 35px;
+        width: 100%;
+        text-align: center;
+        p {
+            margin-bottom: 0;
+        }
+        .scan {
+            width: 126px;
+            height: 126px;
+            margin-bottom: 18px;
+        }
+        .items {
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            img {
+                width: 25px;
+                margin-bottom: 5px;
+            }
+        }
+    }
+}
+
+#home-modal {
+    color: rgba(0,0,0,0.80);
+    .topImg {
+        width: 100%;
+        margin-top: 20px;
+    }
+    .btn {
+        width: 260px;
+        height: 38px;
+        line-height: 38px;
+        background: #00A75D;
+        margin-top: 20px;
+    }
+    p {
+        margin-bottom: 5px;
+    }
+}

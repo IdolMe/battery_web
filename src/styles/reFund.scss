@@ -1,0 +1,78 @@
+.reFund-page {
+  .card {
+    width: 328px;
+    margin: 20px auto;
+    box-shadow: 0 0 15px 0 rgba(0,0,0,0.15);
+    color: rgba(0,0,0,0.85);
+    padding-top: 20px;
+    span {
+      font-size: 36px;
+    }
+    p {
+      padding: 0 20px;
+    }
+    .bottom {
+      border-top: 1px solid #ECECEC;
+      display: flex;
+      padding: 16px;
+      justify-content: space-between;
+      align-items: top;
+      p {
+        margin-bottom: 0;
+        padding: 0;
+      }
+      .flex1 {
+        width: 40%;
+      }
+      .desc {
+        width: 60%;
+        text-align: right;
+        .gray {
+          color: rgba(0,0,0,0.40);
+        }
+      }
+    }
+    .img {
+      display: block;
+      width: 46px;
+      height: 46px;
+      margin: 0 auto 12px;
+    }
+  }
+  .descs {
+    padding: 0 16px;
+  }
+  p.normal {
+    color: rgba(0,0,0,0.4);
+  }
+  .red {
+    color: #F44236;
+    img {
+      width: 12px;
+      height: 12px;
+      margin-right: 5px;
+    }
+  }
+  .green {
+    color: #00A75D;
+    margin-bottom: 0;
+  }
+  .redTop {
+    padding-bottom: 18px!important;
+  }
+  .bottom-btns {
+    position: absolute;
+    bottom: 20px;
+    left: 16px;
+    padding-right: 16px;
+  }
+  .btn {
+    width: 328px;
+    height: 46px;
+    line-height: 46px;
+    background: #00A75D;
+    color: #ffffff;
+    text-align: center;
+    font-size: 18px;
+  }
+}

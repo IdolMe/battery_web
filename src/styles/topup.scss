@@ -1,0 +1,72 @@
+.topup-page {
+  width: 100%;
+  min-height: 100vh;
+  background: #F7F7F7;
+  .header-wrap {
+    background: #FFFFFF;
+  }
+  .contents {
+    padding: 0 16px;
+    .title {
+      color: rgba(0,0,0,0.40);
+      margin: 16px auto 0;
+    }
+    .amounts {
+      display: flex;
+      justify-content: space-between;
+      color: rgba(0,0,0,0.40);
+      flex-wrap: wrap;
+      .amount {
+        width: 150px;
+        height: 72px;
+        line-height: 72px;
+        flex-basis: 150px;
+        border: 1px solid #949494;
+        border-radius: 10px;
+        margin-top: 16px;
+        span {
+          margin-left: 5px;
+        }
+      }
+      .checkedAmount {
+        border: 1px solid #00A75D;
+        color: rgba(0,0,0,0.85);
+      }
+    }
+    .method {
+      display: flex;
+      justify-content: space-between;
+      margin: 10px 0;
+      img {
+        width: 14px;
+        height: 14px;
+      }
+      .logo {
+        width: 18px;
+        margin-right: 8px;
+        height: auto;
+      }
+    }
+  }
+  .btns {
+    position: absolute;
+    bottom: 20px;
+    left: 16px;
+    width: 328px;
+    p {
+      margin-bottom: 0;
+      img {
+        width: 10px;
+        height: 10px;
+        vertical-align: middle;
+      }
+    }
+  }
+  .btn {
+    width: 328px;
+    height: 52px;
+    line-height: 52px;
+    background: #00A75D;
+    margin-top: 10px;
+  }
+}

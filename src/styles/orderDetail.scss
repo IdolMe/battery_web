@@ -1,0 +1,43 @@
+.order-detail-page {
+  width: 100vw;
+  min-height: 100vh;
+  background: #F7F7F7;
+  .heading-wrap {
+    background: #ffffff;
+    overflow: hidden;
+    .status {
+      color: #F44236;
+      text-align: right;
+      padding: 0 16px;
+    }
+    .amount {
+      text-align: center;
+      margin-top: 16px;
+      margin-bottom: 0;
+      .num {
+        font-size: 46px;
+        color: #00A75D;
+      }
+    }
+  }
+  .items {
+    width: 100%;
+    padding: 16px 16px 6px;
+    margin-bottom: 12px;
+    background: #ffffff;
+    .item {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+  }
+  .items1 {
+    margin-bottom: 1px;/*px*/
+    p {
+      text-align: right;
+      margin-bottom: 0;
+      max-width: 250px;
+    }
+  }
+}

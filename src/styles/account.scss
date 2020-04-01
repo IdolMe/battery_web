@@ -1,0 +1,83 @@
+.account-page {
+  width: 100%;
+  min-height: 100vh;
+  background: #F7F7F7;
+  .header-wrap {
+    background: #FFFFFF;
+    padding-bottom: 20px;
+    box-shadow: 0 0 15px 0 rgba(0,0,0,0.15);
+    .headCard {
+      width: 328px;
+      height: 143px;
+      background: url('../assets/image/account/bg.png') center center no-repeat;
+      background-size: cover;
+      padding: 20px;
+      box-sizing: border-box;
+      .info {
+        img {
+          vertical-align: top;
+          width: 44px;
+          height: 44px;
+          border-radius: 44px;
+          margin-right: 12px;
+          margin-bottom: 20px;
+        }
+      }
+      .infos {
+        p {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+
+  .contents {
+    margin: 16px;
+    background: #ffffff;
+    box-shadow: 0 0 15px 0 rgba(0,0,0,0.15);
+    .items {
+      display: flex;
+      justify-content: space-between;
+      width: 328px;
+      .item {
+        width: 108px;
+        height: 94px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+        padding: 12px 0;
+        box-sizing: border-box;
+        img {
+          width: 28px;
+        }
+      }
+      .mid {
+        border-left: 1px solid #ECECEC;
+        border-right: 1px solid #ECECEC;
+      }
+    }
+    .items1 {
+      border-bottom: 1px solid #ECECEC;
+    }
+  }
+
+  .bottom {
+    position: fixed;
+    bottom: 16px;
+    left: 16px;
+    .login-btn {
+      width: 328px;
+      height: 46px;
+      line-height: 46px;
+      background: #00A75D;
+    }
+    .version {
+      display: block;
+      width: 100%;
+      color: rgba(0,0,0,0.40);
+      letter-spacing: 0;
+      margin: 16px auto;
+    }
+  }
+}

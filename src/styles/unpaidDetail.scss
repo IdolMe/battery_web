@@ -1,0 +1,59 @@
+.unpaid-detail-page {
+  width: 100vw;
+  min-height: 100vh;
+  background: #F7F7F7;
+  .heading-wrap {
+    background: #ffffff;
+    .status {
+      color: #F44236;
+      text-align: right;
+      padding: 0 16px;
+    }
+    .amount {
+      text-align: center;
+      margin-top: 16px;
+      margin-bottom: 0;
+      .num {
+        font-size: 46px;
+        color: #00A75D;
+      }
+    }
+  }
+  .items {
+    width: 100%;
+    padding: 16px 16px 6px;
+    margin-bottom: 12px;
+    background: #ffffff;
+    .item {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+  }
+  .items1 {
+    margin-bottom: 1px;/*px*/
+    p {
+      text-align: right;
+      margin-bottom: 0;
+      max-width: 250px;
+    }
+  }
+  .items-last {
+    margin-bottom: 80px;
+  }
+
+  .btn {
+    width: 328px;
+    height: 46px;
+    line-height: 46px;
+    background: #00A75D;
+    color: #ffffff;
+    text-align: center;
+    margin: 0 auto;
+    font-size: 18px;
+    position: fixed;
+    left: 16px;
+    bottom: 28px;
+  }
+}

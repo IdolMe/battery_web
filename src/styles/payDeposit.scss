@@ -1,0 +1,60 @@
+.payDeposit-page {
+  .card {
+    width: 328px;
+    margin: 20px auto;
+    box-shadow: 0 0 15px 0 rgba(0,0,0,0.15);
+    color: rgba(0,0,0,0.85);
+    padding-top: 20px;
+    span {
+      font-size: 36px;
+    }
+    p {
+      padding: 0 20px;
+    }
+    .bottom {
+      border-top: 1px solid #ECECEC;
+      display: flex;
+      padding: 0 16px;
+      height: 50px;
+      justify-content: space-between;
+      align-items: center;
+      p {
+        margin-bottom: 0;
+        padding: 0;
+      }
+      img {
+        width: 14px;
+      }
+      p img {
+        width: 24px;
+        margin-right: 10px;
+      }
+    }
+  }
+  .descs {
+    padding: 0 16px;
+  }
+  p.normal {
+    color: rgba(0,0,0,0.4);
+  }
+  .red {
+    color: #F44236;
+    img {
+      width: 12px;
+      height: 12px;
+      margin-right: 5px;
+    }
+  }
+  .btn {
+    width: 328px;
+    height: 46px;
+    line-height: 46px;
+    background: #00A75D;
+    color: #ffffff;
+    text-align: center;
+    font-size: 18px;
+    position: absolute;
+    bottom: 20px;
+    left: 16px;
+  }
+}

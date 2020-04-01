@@ -1,0 +1,85 @@
+.rentProcess-page {
+  background: #ffffff;
+  .top-swip {
+    background: #E8FAEB;
+    .swips {
+      width: 100%;
+      padding: 0 16px;
+      h3 {
+        color: rgba(0,0,0,0.85);
+        margin-bottom: 0;
+      }
+      p {
+        color: rgba(0,0,0,0.40);
+        margin-bottom: 0;
+      }
+      img {
+        width: 260px;
+        height: 260px;
+        margin: 0 auto;
+      }
+      .slick-dots {
+        button {
+          background: #B8E6D2;
+        }
+        .slick-active button {
+          background: #00A75D;
+        }
+      }
+    }
+  }
+  .contents {
+    padding: 24px 16px 0;
+    .content {
+      display: flex;
+      align-items: center;
+      margin-bottom: 12px;
+      img {
+        width: 24px;
+        height: 24px;
+        margin-right: 12px;
+      }
+      .fonts {
+        p {
+          margin-bottom: 0;
+        }
+        .title {
+          color: rgba(0,0,0,0.85);
+        }
+        .desc {
+          color: rgba(0,0,0,0.40);
+        }
+      }
+    }
+  }
+  .agrees {
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 140px;
+    color: rgba(0,0,0,0.40);
+    padding: 0 90px;
+    span {
+      color: #00A75D;
+    }
+  }
+  .bottom-btn {
+    position: fixed;
+    bottom: 16px;
+    left: 16px;
+    .btn {
+      width: 328px;
+      height: 50px;
+      line-height: 50px;
+      background: #00A75D;
+      color: #ffffff;
+      text-align: center;
+    }
+    .trans-btn {
+      background: transparent;
+      color: #00A75D;;
+    }
+    .unable {
+      background: #CCEDDF;
+    }
+  }
+}
