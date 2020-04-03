@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-25 21:49:06
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-01 21:15:52
+* @LastEditTime: 2020-04-03 23:56:24
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
@@ -70,37 +70,24 @@ function OrderList() {
 
       <div className='lists'>
         {
-          orders.list && orders.list.map((item, index) => {
-            return <div className='order radius4'>
-              <div className='head'>
-                <span className='font-14'><img src={Checked} alt='check' />{item.borrowStatus}</span>
-                <span className='font-14'>AED {item.amount}</span>
+          orders.list && orders.list.length > 0 ? (
+            orders.list.map((item, index) => {
+              return <div className='order radius4'>
+                <div className='head'>
+                  <span className='font-14'><img src={Checked} alt='check' />{item.borrowStatus}</span>
+                  <span className='font-14'>AED {item.amount}</span>
+                </div>
+                <div className='content font-14'>
+                  <p>Start time：{moment(item.borrowStartTime).format('YYYY/MM/DD hh:mm:ss')}</p>
+                  <p>Station：{item.borrowAddress}</p>
+                  <p>Order Number：{item.orderNumber}</p>
+                  <div className='detail font-12 text-center' onClick={()=>detail(item.orderNumber)}>Details</div>
+                </div>
               </div>
-              <div className='content font-14'>
-                <p>Start time：{moment(item.borrowStartTime).format('YYYY/MM/DD hh:mm:ss')}</p>
-                <p>Station：{item.borrowAddress}</p>
-                <p>Order Number：{item.orderNumber}</p>
-                <div className='detail font-12 text-center' onClick={()=>detail(item.orderNumber)}>Details</div>
-              </div>
-            </div>
-          })
+            })
+          ) : <p className='font-14 text-center'>no orders</p>
         }
-
-        {/* 这个是例子 */}
-        <div className='order radius4'>
-          <div className='head'>
-            <span className='font-14'><img src={Checked} alt='check' />Finished</span>
-            <span className='font-14'>AED 0</span>
-          </div>
-          <div className='content font-14'>
-            <p>Start time：{moment('2020-04-01T12:47:54.758Z').format('YYYY/MM/DD hh:mm:ss')}</p>
-            <p>Station：Address</p>
-            <p>Order Number：40200318270552</p>
-            <div className='detail font-12 text-center' onClick={()=>detail(1)}>Details</div>
-          </div>
-        </div>
       </div>
-      
     </div>
   );
 }

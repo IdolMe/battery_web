@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-25 21:49:06
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-01 20:18:28
+* @LastEditTime: 2020-04-03 22:53:20
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
@@ -47,13 +47,36 @@ function Login() {
 
   const doLogin = () => {
     Toast.show({type:'loading'});
-    // 使用选择的token来登录验证
+    // APP的token鉴权换token登录方式
+    // axios({
+    //   method: 'POST',
+    //   url: `${urlPrefix}/v1.0.0/authz`,
+    //   data: {},
+    //   headers: {
+    //     'authToken': getQueryString('access_token') || 'T3mkVFb1PhMVqGS7QfpiQg',
+    //     'client-platform': 'WEB',
+    //   }
+    // }).then(function(response) {
+    //   Toast.hide();
+    //   if(response.data.httpStatusCode === 200) {
+    //     setUSERTOKEN(response.data.data.token);
+    //     sessionStorage.setItem('USERTOKEN', response.data.data.token);
+    //     history.push(`/home`);
+    //   } else {
+    //     debugger
+    //     Toast.show({mess: response.data.error.message});
+    //   }
+    // });
+
+    // 手机号验证码登录方式
     axios({
       method: 'POST',
-      url: `${urlPrefix}/v1.0.0/authz`,
-      data: {},
+      url: `${urlPrefix}/v1.0.0/login`,
+      data: {
+        cellphone: "13344445555",
+        smsCode: "1234"
+      },
       headers: {
-        'authToken': getQueryString('access_token') || 'T3mkVFb1PhMVqGS7QfpiQg',
         'client-platform': 'WEB',
       }
     }).then(function(response) {

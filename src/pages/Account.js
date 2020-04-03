@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-25 21:49:06
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-01 20:44:56
+* @LastEditTime: 2020-04-01 22:34:07
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
@@ -61,7 +61,7 @@ function Account() {
           {/* <img src={AccountMark} alt='mark' className='markImg' /> */}
           <div className='info'>
             <img src={userInfo.profilePictureUrl || AccountHead} className='head' alt='head' />
-            <span className='font-18'>{userInfo.nickname || 'User'}</span>
+            <span className='font-18'>{userInfo.nickname || 'unnamed'}</span>
           </div>
           <div className='infos'>
             <div className='fonts'>

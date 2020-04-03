@@ -3,18 +3,41 @@
 * @author: huguantao
 * @Date: 2020-03-25 21:49:06
 * @LastEditors: huguantao
-* @LastEditTime: 2020-03-29 12:01:43
+* @LastEditTime: 2020-04-03 23:57:45
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
 import { Modal } from 'antd';
+import axios from 'axios';
+import Toast from '../components/Toast/Toast';
+import { urlPrefix } from '../utils/constants';
 import Heading from '../components/Heading';
 import {Payment, Checked, UnCheck, Term, Tip, PaySuccess} from '../assets/image/assetsImages';
 import '../styles/topup.scss';
 
 function TopUp() {
-
   const [visible, setVisible] = useState(false);
+  const [rechargeData, setRechargeData] = useState();
+  const [selectedIndex, setSelectIndex] = useState(0);   // 按照index来设置默认选中的充值item
+  useEffect(() => {
+    Toast.show({type:'loading'});
+    axios({
+      method: 'GET',
+      url: `${urlPrefix}/v1.0.0/users/recharge-item`,
+      data: {},
+      headers: {
+        'userToken': sessionStorage.getItem('USERTOKEN'),
+        'client-platform': 'WEB'
+      }
+    }).then(function(response) {
+      Toast.hide();
+      if(response.data.httpStatusCode === 200) {
+        setRechargeData(response.data.data.rechargeItem);
+      } else {
+        Toast.show({mess: response.data.error.message});
+      }
+    });
+  }, [])
 
   let history = useHistory();
   const doPay = () => {
@@ -33,9 +56,15 @@ function TopUp() {
       <div className='contents'>
         <p className='font-14 title'>Amount</p>
         <div className="amounts check text-center">
-          <div className="amount font-14 checkedAmount">AED<span className='font-32'>5</span></div>
-          <div className="amount font-14">AED<span className='font-32'>10</span></div>
-          <div className="amount font-14">AED<span className='font-32'>15</span></div>
+          {
+            rechargeData && rechargeData.length > 0 ? (
+              rechargeData.map((item, index) => {
+                return <div className={`amount font-14 ${index == selectedIndex ? 'checkedAmount' : ''}`} 
+                  onClick={()=>setSelectIndex(index)} key={index}>
+                  AED<span className='font-32'>5</span></div>
+              })
+            ) : null
+          }
         </div>
         <p className='font-14 title'>Payment method</p>
         <div className='method font-14'>
