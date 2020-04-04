@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-09 15:49:17
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-04 17:49:53
+* @LastEditTime: 2020-04-04 18:38:16
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
@@ -47,7 +47,6 @@ function Home() {
         'client-platform': 'WEB'
       }
     }).then(function(response) {
-      Toast.hide();
       if(response.data.httpStatusCode === 200) {
         // 租用状态 USING：使用中， OVERDRAFT：未结清， FINISH：完成，OVERDUE_SETTLEMENT：逾期结算： 扣押金，NONE：没有订单
         if(response.data.data.status == 'USING') {
@@ -63,7 +62,6 @@ function Home() {
         Toast.show({mess: response.data.error.message});
       }
     });
-
 
     fetchStationData();
   }, []);

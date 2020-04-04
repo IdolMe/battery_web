@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-25 21:49:06
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-04 17:46:14
+* @LastEditTime: 2020-04-04 19:10:21
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
@@ -11,12 +11,16 @@ import { Modal } from 'antd';
 import axios from 'axios';
 import Toast from '../components/Toast/Toast';
 import { urlPrefix } from '../utils/constants';
+import {payBy} from '../utils/appFunc';
 import Heading from '../components/Heading';
 import {Payment, Checked, Tip, PaySuccess} from '../assets/image/assetsImages';
 import '../styles/payDeposit.scss';
 
+import VConsole from 'vconsole';
+let vConsole = new VConsole();
+
 function PayDeposit() {
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
   const [rechargeData, setRechargeData] = useState();
 
   useEffect(() => {
@@ -56,12 +60,22 @@ function PayDeposit() {
     }).then(function(response) {
       Toast.hide();
       if(response.data.httpStatusCode === 200) {
-        setVisible(true)
-        setTimeout(() => {
-          setVisible(false);
-          // 付完押金去往租借页面
-          history.push(`/rentProcess/paid`);
-        }, 800)
+        const data = response.data.data;
+        console.log('payby接口返回：', data.appId, data.token, data.orderNumber)
+        const result = payBy(data.appId, data.token, data.orderNumber);
+        if(result) {
+          setVisible(true)
+          setTimeout(() => {
+            setVisible(false);
+            // 付完押金去往租借页面
+            history.push(`/rentProcess/paid`);
+          }, 800)
+        } else {
+          // 只对false的结果来提示，其他的不管
+          if(typeof result == 'boolean'){
+            Toast.show({mess: 'pay failed, please try again'});
+          }
+        }
       } else {
         Toast.show({mess: response.data.error.message});
       }

@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-25 21:49:06
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-03 23:56:24
+* @LastEditTime: 2020-04-04 21:50:11
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
@@ -79,7 +79,7 @@ function OrderList() {
                 </div>
                 <div className='content font-14'>
                   <p>Start time：{moment(item.borrowStartTime).format('YYYY/MM/DD hh:mm:ss')}</p>
-                  <p>Station：{item.borrowAddress}</p>
+                  <p>Station：{item.borrowStation.address}</p>
                   <p>Order Number：{item.orderNumber}</p>
                   <div className='detail font-12 text-center' onClick={()=>detail(item.orderNumber)}>Details</div>
                 </div>

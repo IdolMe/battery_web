@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-27 23:51:13
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-04 14:41:07
+* @LastEditTime: 2020-04-04 21:51:32
  */
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
@@ -88,7 +88,7 @@ function OrderDetail(prop) {
         </div>
         <div className='item'>
           <div className='font-14 title'>Station</div>
-          <div className='font-14 desc'>{orderDetail.borrowAddress}</div>
+          <div className='font-14 desc'>{orderDetail.borrowStation.address}</div>
         </div>
         <div className='item'>
           <div className='font-14 title'>End time</div>
@@ -96,7 +96,7 @@ function OrderDetail(prop) {
         </div>
         <div className='item'>
           <div className='font-14 title'>Returning station</div>
-          <div className='font-14 desc'>{orderDetail.returnAddress}</div>
+          <div className='font-14 desc'>{orderDetail.returnStation.address}</div>
         </div>
       </div>
     </div>
