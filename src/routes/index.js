@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-02-21 23:37:34
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-01 20:44:17
+* @LastEditTime: 2020-04-04 00:19:37
  */
 import React,{Component} from 'react';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
@@ -17,6 +17,7 @@ import Loading from '../pages/Loading';             // 过渡页 暂不用
 import RentProcess from '../pages/RentProcess';     // 租借流程：分付了押金和没付押金的
 import PayDeposit from '../pages/PayDeposit';       // 付押金
 import Renting from '../pages/Renting';             // 租借loading
+import Borrow from '../pages/Borrow';               // 租借页面
 import PaySuccess from '../pages/PaySuccess';       // 在去了充电宝很快还了，或者超时没拿充电宝触发
 
 import ErrorStatus from '../pages/ErrorStatus';     // 错误状态比如 机器损坏 设备未联网 信号不好
@@ -44,6 +45,7 @@ class Routes extends Component {
                     <Route path="/usingDetail" component={UsingDetail} />
                     <Route path="/unpaidDetail" component={UnpaidDetail} />
                     <Route path="/loading" component={Loading} />
+                    <Route path="/borrow" component={Borrow} />
                     <Route path="/rentProcess/:deposited" component={RentProcess} />
                     <Route path="/errorStatus/:type" component={ErrorStatus} />
                     <Route path="/payDeposit" component={PayDeposit} />
