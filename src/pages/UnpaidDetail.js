@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-26 11:46:07
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-01 21:28:14
+* @LastEditTime: 2020-04-04 14:42:19
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
@@ -57,11 +57,30 @@ function UnpaidDetail() {
 
   let history = useHistory();
   const doPay = () => {
-    setVisible(true)
-    setTimeout(() => {
-      setVisible(false)
-      // history.push(`/home`);
-    }, 1500)
+    Toast.show({type:'loading'});
+    axios({
+      method: 'POST',
+      url: `${urlPrefix}/v1.0.0/payments/payby`,
+      data: {
+        orderNumber: orderData.orderNumber,
+        type: "OVERDUE"
+      },
+      headers: {
+        'userToken': sessionStorage.getItem('USERTOKEN'),
+        'client-platform': 'WEB'
+      }
+    }).then(function(response) {
+      Toast.hide();
+      if(response.data.httpStatusCode === 200) {
+        setVisible(true)
+        setTimeout(() => {
+          setVisible(false)
+          history.push(`/home`);
+        }, 800)
+      } else {
+        Toast.show({mess: response.data.error.message});
+      }
+    });
   }
 
   return (
@@ -79,10 +98,8 @@ function UnpaidDetail() {
         <div className='item'>
           <div className='font-14 title'>Pricing</div>
           <div className='font-14 desc'>
-            <p>{orderData.chargingInfo}</p>
-            {/* <p>Free for 5 minutes. </p>
-            <p>1.5 AED/30 mins after, cap at 20 AED daily maximum.</p>
-            <p>Up to 99 AED rental maximum - the powerbank is yours!</p> */}
+            <p>{orderData.chargingInfo && orderData.chargingInfo.title}</p>
+            <p>{orderData.chargingInfo && orderData.chargingInfo.description}</p>
           </div>
         </div>
       </div>

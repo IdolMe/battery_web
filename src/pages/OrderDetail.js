@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-27 23:51:13
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-01 21:27:18
+* @LastEditTime: 2020-04-04 14:41:07
  */
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
@@ -56,10 +56,8 @@ function OrderDetail(prop) {
         <div className='item'>
           <div className='font-14 title'>Pricing</div>
           <div className='font-14 desc'>
-            <p>{orderDetail.chargingInfo}</p>
-            {/* <p>Free for 5 minutes. </p>
-            <p>1.5 AED/30 mins after, cap at 20 AED daily maximum.</p>
-            <p>Up to 99 AED rental maximum - the powerbank is yours!</p> */}
+            <p>{orderDetail.chargingInfo && orderDetail.chargingInfo.title}</p>
+            <p>{orderDetail.chargingInfo && orderDetail.chargingInfo.description}</p>
           </div>
         </div>
       </div>

@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-25 21:49:06
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-03 23:57:45
+* @LastEditTime: 2020-04-04 14:38:38
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
@@ -41,11 +41,31 @@ function TopUp() {
 
   let history = useHistory();
   const doPay = () => {
-    setVisible(true)
-    setTimeout(() => {
-      setVisible(false)
-      history.push(`/wallet`);
-    }, 1500)
+    Toast.show({type:'loading'});
+    axios({
+      method: 'POST',
+      url: `${urlPrefix}/v1.0.0/payments/payby`,
+      data: {
+        rechargeItemId: rechargeData[selectedIndex].id,
+        type: "TOPUP"
+      },
+      headers: {
+        'userToken': sessionStorage.getItem('USERTOKEN'),
+        'client-platform': 'WEB'
+      }
+    }).then(function(response) {
+      Toast.hide();
+      if(response.data.httpStatusCode === 200) {
+        setVisible(true)
+        setTimeout(() => {
+          setVisible(false);
+          // 充完钱去钱包
+          history.push(`/wallet`);
+        }, 800)
+      } else {
+        Toast.show({mess: response.data.error.message});
+      }
+    });
   }
 
   return (

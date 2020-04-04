@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-26 11:46:07
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-01 20:23:12
+* @LastEditTime: 2020-04-04 14:43:04
  */
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
@@ -72,8 +72,8 @@ function UsingDetail() {
           </div>
           <div className="full-content">
             <p className="title font-13">Pricing</p>
-            <p className="desc font-13">{orderData.chargingInfo}</p>
-            {/* <p className="desc font-13">Free for 5 minutes. 1.5 AED/30 mins after, cap at 20 AED daily maximum. Up to 99 AED maximum - the powerbank is yours!</p> */}
+            <p className="desc font-13">{orderData.chargingInfo && orderData.chargingInfo.title}</p>
+            <p className="desc font-13">{orderData.chargingInfo && orderData.chargingInfo.description}</p>
           </div>
         </div>
       </div>

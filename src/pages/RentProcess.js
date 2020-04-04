@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-27 12:31:58
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-01 20:31:02
+* @LastEditTime: 2020-04-04 13:55:43
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
@@ -29,11 +29,13 @@ const swips = [{
   desc: 'Push the side button to start charging your mobile devices'
 }];
 
-const contents = [{
-  img: ProcessIcon1,
-  title: 'Name',
-  desc: 'Address'
-},{
+const contents = [
+// {
+//   img: ProcessIcon1,
+//   title: 'Name',
+//   desc: 'Address'
+// },
+{
   img: ProcessIcon2,
   title: 'Supports most smartphones and mobile devices with 3 different types of connectors.',
   desc: ''
@@ -50,7 +52,7 @@ const contents = [{
 function RentProcess(prop) {
   // 根据是否付了押金来展示不同的按钮
   const deposited = prop.match.params.deposited || 'unpaid';
-  const [stationData, setStationData] = useState({});
+  const [stationData, setStationData] = useState();
 
   useEffect(() => {
     // /v1.0.0/staions/{boxId}  查询是否交了押金以及机柜状态
@@ -112,6 +114,13 @@ function RentProcess(prop) {
         </div>
       </div>
       <div className='contents'>
+        <div className='content'>
+          <img src={ProcessIcon1} alt='img' />
+          <div className='fonts'>
+            <p className='title font-14'>{stationData && stationData.station.name}</p>
+            <p className='desc font-11'>{stationData && stationData.station.address}</p>
+          </div>
+        </div>
         {
           contents.map((item, index) => {
             return <div className='content' key={index}>
@@ -135,7 +144,7 @@ function RentProcess(prop) {
           deposited === 'unpaid' ? 
             <div className='btn font-18 radius4' onClick={pay}>Pay a deposit</div> 
             : <>
-              <div className={`btn font-18 radius4 ${stationData.station && (stationData.station.remaining > 0 ? '' : 'unable')}`} onClick={rent}>Rent a powerbank</div> 
+              <div className={`btn font-18 radius4 ${stationData && stationData.station && (stationData.station.remaining > 0 ? '' : 'unable')}`} onClick={rent}>Rent a powerbank</div> 
               <div className='btn font-18 radius4 trans-btn' onClick={wallet}>Wallet</div> 
             </>
         }
