@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-25 21:49:06
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-04 14:35:00
+* @LastEditTime: 2020-04-04 17:46:14
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
@@ -16,7 +16,7 @@ import {Payment, Checked, Tip, PaySuccess} from '../assets/image/assetsImages';
 import '../styles/payDeposit.scss';
 
 function PayDeposit() {
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
   const [rechargeData, setRechargeData] = useState();
 
   useEffect(() => {

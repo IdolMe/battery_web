@@ -36,6 +36,7 @@
 
 #home-modal {
     color: rgba(0,0,0,0.80);
+    padding-bottom: 20px;
     .topImg {
         width: 100%;
         margin-top: 20px;
@@ -45,7 +46,7 @@
         height: 38px;
         line-height: 38px;
         background: #00A75D;
-        margin-top: 20px;
+        margin: 20px auto 0;
     }
     p {
         margin-bottom: 5px;
