@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-29 12:25:45
 * @LastEditors: huguantao
-* @LastEditTime: 2020-03-29 14:01:51
+* @LastEditTime: 2020-04-08 00:23:00
  */
 /**
 * @file: description
@@ -12,7 +12,7 @@
 * @LastEditors: huguantao
 * @LastEditTime: 2020-03-29 12:50:38
  */
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 import Heading from '../components/Heading';
 import {Checked} from '../assets/image/assetsImages';

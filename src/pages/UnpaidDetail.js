@@ -3,15 +3,14 @@
 * @author: huguantao
 * @Date: 2020-03-26 11:46:07
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-06 22:32:09
+* @LastEditTime: 2020-04-08 00:13:09
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
 import { Modal } from 'antd';
-import axios from 'axios';
 import Toast from '../components/Toast/Toast';
-import { urlPrefix } from '../utils/constants';
 import Heading from '../components/Heading';
+import {request} from '../utils/request';
 import {PaySuccess} from '../assets/image/assetsImages';
 import '../styles/unpaidDetail.scss';
 
@@ -33,52 +32,38 @@ function UnpaidDetail() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    // /v1.0.0/users/status 查询最近订单使用情况
-    Toast.show({type:'loading'});
-    axios({
-      method: 'GET',
-      url: `${urlPrefix}/v1.0.0/users/status`,
-      data: {},
-      headers: {
-        'userToken': sessionStorage.getItem('USERTOKEN'),
-        'client-platform': 'WEB'
-      }
-    }).then(function(response) {
-      Toast.hide();
-      if(response.data.httpStatusCode === 200) {
+    const headers = {
+      'userToken': sessionStorage.getItem('USERTOKEN'),
+      'client-platform': 'WEB'
+    };
+    request(`/v1.0.0/users/status`, 'GET', {}, headers ).then(res=> {
+      if(res.httpStatusCode === 200) {
         // status=OVERDRAFT   paymentdata就是未支付的订单详情
         // status=USING   usageData是使用中的详情  
-        setOrderData(response.data.data.paymentData)
-      } else {
-        Toast.show({mess: response.data.error.message});
+        setOrderData(res.data.paymentData)
       }
-    });
-  })
+    })
+
+  }, []);
 
   let history = useHistory();
   const doPay = () => {
-    Toast.show({type:'loading'});
-    axios({
-      method: 'POST',
-      url: `${urlPrefix}/v1.0.0/payments/payby`,
-      data: {
-        orderNumber: orderData.orderNumber,
-        type: "OVERDUE"
-      },
-      headers: {
-        'userToken': sessionStorage.getItem('USERTOKEN'),
-        'client-platform': 'WEB'
-      }
-    }).then(function(response) {
-      Toast.hide();
-      if(response.data.httpStatusCode === 200) {
-
-        const data = response.data.data;
+    const reqData = {
+      orderNumber: orderData.orderNumber,
+      type: "OVERDUE"
+    };
+    const headers = {
+      'userToken': sessionStorage.getItem('USERTOKEN'),
+      'client-platform': 'WEB'
+    };
+    request(`/v1.0.0/payments/payby`, 'POST', reqData, headers ).then(resp=> {
+      if(resp.httpStatusCode === 200) {
+        const resData = resp.data;
         window.ToPayJSBridge.invoke(
           'ToPayRequest',
           {
-            appId: data.appId, // partnerId 
-            token: data.token // For order token, refer to the token in interactionParams returned from the transaction creation interface
+            appId: resData.appId, // partnerId 
+            token: resData.token // For order token, refer to the token in interactionParams returned from the transaction creation interface
           },
           function(data) {
             const res = JSON.parse(data)
@@ -100,11 +85,8 @@ function UnpaidDetail() {
             }
           }
         )
-
-      } else {
-        Toast.show({mess: response.data.error.message});
       }
-    });
+    })
   }
 
   return (

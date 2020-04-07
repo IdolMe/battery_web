@@ -3,39 +3,30 @@
 * @author: huguantao
 * @Date: 2020-03-25 21:49:06
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-03 23:02:28
+* @LastEditTime: 2020-04-08 00:40:21
  */
 import React, {useState, useEffect} from 'react';
-import axios from 'axios';
 import moment from 'moment';
-import Toast from '../components/Toast/Toast';
-import { urlPrefix } from '../utils/constants';
 import Heading from '../components/Heading';
+import {request} from '../utils/request';
 import '../styles/message.scss';
 
 function Message() {
   const [messages, setMessages] = useState();
   useEffect(() => {
-    Toast.show({type:'loading'});
-    axios({
-      method: 'GET',
-      url: `${urlPrefix}/v1.0.0/messages`,
-      data: {
-        pageIndex: 1,
-        pageSize: 999
-      },
-      headers: {
-        'userToken': sessionStorage.getItem('USERTOKEN'),
-        'client-platform': 'WEB',
+    const data = {
+      pageIndex: 1,
+      pageSize: 999
+    };
+    const headers = {
+      'userToken': sessionStorage.getItem('USERTOKEN'),
+      'client-platform': 'WEB',
+    };
+    request(`/v1.0.0/messages`, 'GET', data, headers ).then(res=> {
+      if(res.httpStatusCode === 200) {
+        setMessages(res.data)
       }
-    }).then(function(response) {
-      Toast.hide();
-      if(response.data.httpStatusCode === 200) {
-        setMessages(response.data.data)
-      } else {
-        Toast.show({mess: response.data.error.message});
-      }
-    });
+    })
   }, [])
 
   return (

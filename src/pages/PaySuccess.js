@@ -3,9 +3,9 @@
 * @author: huguantao
 * @Date: 2020-03-25 21:49:06
 * @LastEditors: huguantao
-* @LastEditTime: 2020-03-27 21:39:39
+* @LastEditTime: 2020-04-08 00:23:29
  */
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 import Heading from '../components/Heading';
 import '../styles/paySuccess.scss';

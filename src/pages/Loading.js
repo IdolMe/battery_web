@@ -3,14 +3,12 @@
 * @author: huguantao
 * @Date: 2020-03-25 21:49:06
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-07 23:14:10
+* @LastEditTime: 2020-04-07 23:44:00
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
-import axios from 'axios';
-import Toast from '../components/Toast/Toast';
-import { urlPrefix } from '../utils/constants';
 import {getQueryString} from '../utils/helper';
+import {request} from '../utils/request';
 import {Loading} from '../assets/image/assetsImages';
 
 const style = {
@@ -27,22 +25,16 @@ function LoadingPage() {
 
   // APP的token鉴权换token登录方式
   useEffect(() => {
-    axios({
-      method: 'POST',
-      url: `${urlPrefix}/v1.0.0/authz`,
-      data: {},
-      headers: {
-        'access_token': access_token,
-        'client-platform': 'WEB',
-      }
-    }).then(function(response) {
-      if(response.data.httpStatusCode === 200) {
-        sessionStorage.setItem('USERTOKEN', response.data.data.token);
+    const headers = {
+      'access_token': access_token,
+      'client-platform': 'WEB',
+    };
+    request(`/v1.0.0/authz`, 'POST', {}, headers ).then(res=> {
+      if(res.httpStatusCode === 200) {
+        sessionStorage.setItem('USERTOKEN', res.data.token);
         history.push(`/home`);
-      } else {
-        Toast.show({mess: response.data.error.message});
       }
-    });
+    })
   })
 
   return (

@@ -3,15 +3,13 @@
 * @author: huguantao
 * @Date: 2020-03-25 21:49:06
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-07 23:14:25
+* @LastEditTime: 2020-04-08 00:42:27
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
 import { Select } from 'antd';
-import axios from 'axios';
-import Toast from '../components/Toast/Toast';
-import { urlPrefix } from '../utils/constants';
 import {getQueryString} from '../utils/helper';
+import {request} from '../utils/request';
 import {Logo, LoginGoDown} from '../assets/image/assetsImages';
 import '../styles/login.scss';
 
@@ -46,26 +44,17 @@ function Login() {
   let history = useHistory();
 
   const doLogin = () => {
-    Toast.show({type:'loading'});
-    // APP的token鉴权换token登录方式
-    axios({
-      method: 'POST',
-      url: `${urlPrefix}/v1.0.0/authz`,
-      data: {},
-      headers: {
-        'access_token': access_token,
-        'client-platform': 'WEB',
-      }
-    }).then(function(response) {
-      Toast.hide();
-      if(response.data.httpStatusCode === 200) {
-        setUSERTOKEN(response.data.data.token);
-        sessionStorage.setItem('USERTOKEN', response.data.data.token);
+    const headers = {
+      'access_token': access_token,
+      'client-platform': 'WEB',
+    };
+    request(`/v1.0.0/authz`, 'POST', {}, headers ).then(res=> {
+      if(res.httpStatusCode === 200) {
+        setUSERTOKEN(res.data.token);
+        sessionStorage.setItem('USERTOKEN', res.data.token);
         history.push(`/home`);
-      } else {
-        Toast.show({mess: response.data.error.message});
       }
-    });
+    })
 
     // 手机号验证码登录方式
     // axios({

@@ -3,16 +3,14 @@
 * @author: huguantao
 * @Date: 2020-03-25 21:49:06
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-07 23:15:33
+* @LastEditTime: 2020-04-08 00:28:28
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
 import { Modal } from 'antd';
-import axios from 'axios';
 import Toast from '../components/Toast/Toast';
-import { urlPrefix } from '../utils/constants';
-// import {payBy} from '../utils/appFunc';
 import Heading from '../components/Heading';
+import {request} from '../utils/request';
 import {Payment, Checked, Tip, PaySuccess} from '../assets/image/assetsImages';
 import '../styles/payDeposit.scss';
 
@@ -21,49 +19,37 @@ function PayDeposit() {
   const [rechargeData, setRechargeData] = useState();
 
   useEffect(() => {
-    Toast.show({type:'loading'});
-    axios({
-      method: 'GET',
-      url: `${urlPrefix}/v1.0.0/users/recharge-item`,
-      data: {},
-      headers: {
-        'userToken': sessionStorage.getItem('USERTOKEN'),
-        'client-platform': 'WEB'
+    const headers = {
+      'userToken': sessionStorage.getItem('USERTOKEN'),
+      'client-platform': 'WEB'
+    };
+    request(`/v1.0.0/users/recharge-item`, 'GET', {}, headers ).then(res=> {
+      if(res.httpStatusCode === 200) {
+        setRechargeData(res.data.deposit);
       }
-    }).then(function(response) {
-      Toast.hide();
-      if(response.data.httpStatusCode === 200) {
-        setRechargeData(response.data.data.deposit);
-      } else {
-        Toast.show({mess: response.data.error.message});
-      }
-    });
+    })
   }, [])
 
   let history = useHistory();
   const doPay = () => {
-    Toast.show({type:'loading'});
-    axios({
-      method: 'POST',
-      url: `${urlPrefix}/v1.0.0/payments/payby`,
-      data: {
-        rechargeItemId: rechargeData.id,
-        type: "DEPOSIT"
-      },
-      headers: {
-        'userToken': sessionStorage.getItem('USERTOKEN'),
-        'client-platform': 'WEB'
-      }
-    }).then(function(response) {
-      Toast.hide();
-      if(response.data.httpStatusCode === 200) {
-        const data = response.data.data;
+    const reqData = {
+      rechargeItemId: rechargeData.id,
+      type: "DEPOSIT"
+    };
+    const headers = {
+      'userToken': sessionStorage.getItem('USERTOKEN'),
+      'client-platform': 'WEB'
+    };
+    request(`/v1.0.0/payments/payby`, 'POST', reqData, headers ).then(resp=> {
+      if(resp.httpStatusCode === 200) {
+        
+        const resData = resp.data;
 
         window.ToPayJSBridge.invoke(
           'ToPayRequest',
           {
-            appId: data.appId, // partnerId 
-            token: data.token // For order token, refer to the token in interactionParams returned from the transaction creation interface
+            appId: resData.appId, // partnerId 
+            token: resData.token // For order token, refer to the token in interactionParams returned from the transaction creation interface
           },
           function(data) {
             const res = JSON.parse(data)
@@ -85,10 +71,9 @@ function PayDeposit() {
             }
           }
         )
-      } else {
-        Toast.show({mess: response.data.error.message});
+
       }
-    });
+    })
   }
 
   return (
@@ -98,7 +83,7 @@ function PayDeposit() {
         <p className='font-14 text-center'>You need to pay for the deposit before renting a powerbank.</p>
         <p className='font-14 text-center'>AED <span>{rechargeData && rechargeData.amount}</span></p>
         <div className='bottom'>
-          <p className='font-14'><img src={Payment} alt='pay' /> Wechat</p>
+          <p className='font-14'><img src={Payment} alt='pay' /> PayBy</p>
           <img src={Checked} alt='checked' />
         </div>
       </div>

@@ -3,14 +3,12 @@
 * @author: huguantao
 * @Date: 2020-03-09 15:49:17
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-04 18:38:16
+* @LastEditTime: 2020-04-08 00:46:32
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
 import { Modal } from 'antd';
-import axios from 'axios';
-import Toast from '../components/Toast/Toast';
-import { urlPrefix } from '../utils/constants';
+import {request} from '../utils/request';
 import '../styles/home.scss';
 import {Home_bg, Home_my, Home_exit, Home_scan, Home_using, Home_toPay} from '../assets/image/assetsImages';
 
@@ -36,35 +34,39 @@ function Home() {
   let history = useHistory();
   
   useEffect(() => {
-    // /v1.0.0/users/status 查询最近订单使用情况
-    Toast.show({type:'loading'});
-    axios({
-      method: 'GET',
-      url: `${urlPrefix}/v1.0.0/users/status`,
-      data: {},
-      headers: {
-        'userToken': sessionStorage.getItem('USERTOKEN'),
-        'client-platform': 'WEB'
-      }
-    }).then(function(response) {
-      if(response.data.httpStatusCode === 200) {
+    const headers = {
+      'userToken': sessionStorage.getItem('USERTOKEN'),
+      'client-platform': 'WEB'
+    };
+    request(`/v1.0.0/users/status`, 'GET', {}, headers ).then(res=> {
+      if(res.httpStatusCode === 200) {
         // 租用状态 USING：使用中， OVERDRAFT：未结清， FINISH：完成，OVERDUE_SETTLEMENT：逾期结算： 扣押金，NONE：没有订单
-        if(response.data.data.status == 'USING') {
+        if(res.data.status == 'USING') {
           setVisible(true);
           setTipMsg(msgs[0]);
-        } else if(response.data.data.status == 'OVERDRAFT') {
+        } else if(res.data.status == 'OVERDRAFT') {
           setVisible(true);
           setTipMsg(msgs[1]);
-        } else if(response.data.data.status == 'OVERDUE_SETTLEMENT') {
+        } else if(res.data.status == 'OVERDUE_SETTLEMENT') {
           // TODO 扣押金提示,这期不做
         }
-      } else {
-        Toast.show({mess: response.data.error.message});
       }
-    });
+    })
 
     fetchStationData();
   }, []);
+
+  const fetchStationData = () => {
+    const headers = {
+      'userToken': sessionStorage.getItem('USERTOKEN'),
+      'client-platform': 'WEB'
+    };
+    request(`/v1.0.0/staions/${sessionStorage.getItem('BOXID')}`, 'GET', {}, headers ).then(res=> {
+      if(res.httpStatusCode === 200) {
+        setStationData(res.data);
+      }
+    })
+  }
 
   const start = () => {
     if(stationData.station.status == 'REPAIR') {
@@ -82,27 +84,6 @@ function Home() {
         history.push(`/rentProcess/unpaid`);
       }
     }
-  }
-
-  const fetchStationData = () => {
-    // /v1.0.0/staions/{boxId}  查询是否交了押金以及机柜状态
-    Toast.show({type:'loading'});
-    axios({
-      method: 'GET',
-      url: `${urlPrefix}/v1.0.0/staions/${sessionStorage.getItem('BOXID')}`,
-      data: {},
-      headers: {
-        'userToken': sessionStorage.getItem('USERTOKEN'),
-        'client-platform': 'WEB'
-      }
-    }).then(function(response) {
-      Toast.hide();
-      if(response.data.httpStatusCode === 200) {
-        setStationData(response.data.data);
-      } else {
-        Toast.show({mess: response.data.error.message});
-      }
-    });
   }
 
   const exit = () => {

@@ -1,17 +1,33 @@
+/**
+* @file: description
+* @author: huguantao
+* @Date: 2020-02-04 15:05:53
+* @LastEditors: huguantao
+* @LastEditTime: 2020-04-07 23:54:45
+ */
 import axios from 'axios';
-import rectAxios from 'react-axios';
-import { request } from 'https';
-import { reject } from 'q';
-import { resolve } from 'url';
+import Toast from '../components/Toast/Toast';
 import {urlPrefix} from '../utils/constants';
 
-const requestData = (url, method, data={}, headerOptions = null) => {
-    const reqUrl = urlPrefix + url;
-    return axios({
-        method: method,
-        url: reqUrl,
-        data: data
+export function request(url, method, data={}, headers={}) {
+    Toast.show({type:'loading'});
+    return new Promise((resolve,reject)=>{
+        axios({
+            method: method,
+            url: urlPrefix + url,
+            data: data,
+            headers: headers
+        }).then(res=> {
+            Toast.hide();
+            resolve(res.data);
+        }).catch(error=> {
+            Toast.hide();
+            // 错误处理 http://www.axios-js.com/zh-cn/docs/#%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86
+            if (error.response) {
+                Toast.show({mess: error.response.data.error.message || 'something went wrong, please try again later'});
+                console.log(error.response.data);
+            }
+            console.log(error)
+        })
     });
 }
-
-export default requestData;

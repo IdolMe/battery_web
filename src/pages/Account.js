@@ -3,14 +3,12 @@
 * @author: huguantao
 * @Date: 2020-03-25 21:49:06
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-01 22:34:07
+* @LastEditTime: 2020-04-08 00:51:13
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
 import Heading from '../components/Heading';
-import axios from 'axios';
-import Toast from '../components/Toast/Toast';
-import { urlPrefix } from '../utils/constants';
+import {request} from '../utils/request';
 import {AccountOrder, AccountHead, AccountWallet, AccountMessage, AccountMark, AccountEdit} from '../assets/image/assetsImages';
 import '../styles/account.scss';
 
@@ -26,23 +24,15 @@ function Account() {
   });
 
   useEffect(() => {
-    Toast.show({type:'loading'});
-    axios({
-      method: 'GET',
-      url: `${urlPrefix}/v1.0.0/login`,
-      data: {},
-      headers: {
-        'userToken': sessionStorage.getItem('USERTOKEN'),
-        'client-platform': 'WEB',
+    const headers = {
+      'userToken': sessionStorage.getItem('USERTOKEN'),
+      'client-platform': 'WEB',
+    };
+    request(`/v1.0.0/login`, 'GET', {}, headers ).then(res=> {
+      if(res.httpStatusCode === 200) {
+        setUserInfo(res.data)
       }
-    }).then(function(response) {
-      Toast.hide();
-      if(response.data.httpStatusCode === 200) {
-        setUserInfo(response.data.data)
-      } else {
-        Toast.show({mess: response.data.error.message});
-      }
-    });
+    })
   }, [])
 
   const gotoPath = (path) => {

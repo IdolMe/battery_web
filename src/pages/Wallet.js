@@ -3,13 +3,11 @@
 * @author: huguantao
 * @Date: 2020-03-25 21:49:06
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-01 21:34:18
+* @LastEditTime: 2020-04-07 23:47:50
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
-import axios from 'axios';
-import Toast from '../components/Toast/Toast';
-import { urlPrefix } from '../utils/constants';
+import {request} from '../utils/request';
 import Heading from '../components/Heading';
 import {Expand, WalletIcon1, WalletIcon2} from '../assets/image/assetsImages';
 import '../styles/wallet.scss';
@@ -19,23 +17,15 @@ function Wallet() {
   const [userInfo, setUserInfo] = useState({});
 
   useEffect(() => {
-    Toast.show({type:'loading'});
-    axios({
-      method: 'GET',
-      url: `${urlPrefix}/v1.0.0/login`,
-      data: {},
-      headers: {
-        'userToken': sessionStorage.getItem('USERTOKEN'),
-        'client-platform': 'WEB',
+    const headers = {
+      'userToken': sessionStorage.getItem('USERTOKEN'),
+      'client-platform': 'WEB',
+    }
+    request(`/v1.0.0/login`, 'GET', {}, headers ).then(res=> {
+      if(res.httpStatusCode === 200) {
+        setUserInfo(res.data)
       }
-    }).then(function(response) {
-      Toast.hide();
-      if(response.data.httpStatusCode === 200) {
-        setUserInfo(response.data.data)
-      } else {
-        Toast.show({mess: response.data.error.message});
-      }
-    });
+    })
   }, [])
   
   const deposit = () => {

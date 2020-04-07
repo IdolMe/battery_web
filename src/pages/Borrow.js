@@ -3,16 +3,13 @@
 * @author: huguantao
 * @Date: 2020-03-09 15:49:17
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-06 22:45:13
+* @LastEditTime: 2020-04-08 00:48:40
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
 import { Progress, Modal } from 'antd';
-import axios from 'axios';
-import Toast from '../components/Toast/Toast';
-import { urlPrefix } from '../utils/constants';
 import Heading from '../components/Heading';
-import {getQueryString} from '../utils/helper';
+import {request} from '../utils/request';
 import '../styles/borrow.scss';
 import { TimeClock, Home_scan} from '../assets/image/assetsImages';
 
@@ -43,22 +40,17 @@ function Borrow() {
       }, 20);
     });
 
-    // /v1.0.0/staions/{boxId}/borrowing 借充电宝
-    axios({
-      method: 'POST',
-      url: `${urlPrefix}/v1.0.0/staions/${sessionStorage.getItem('BOXID')}/borrowing`,
-      data: {},
-      headers: {
-        'userToken': sessionStorage.getItem('USERTOKEN'),
-        'client-platform': 'WEB'
-      }
-    }).then(function(response) {
-      if(response.data.httpStatusCode === 200) {
+    const headers = {
+      'userToken': sessionStorage.getItem('USERTOKEN'),
+      'client-platform': 'WEB'
+    };;
+    request(`/v1.0.0/staions/${sessionStorage.getItem('BOXID')}/borrowing`, 'POST', {}, headers ).then(res=> {
+      if(res.httpStatusCode === 200) {
         // 借用成功，进度条设置为100，取消定时器。显示借用成功页面
         setPercent(100);
         clearInterval(interval);
 
-        setBorrowData(response.data.data);
+        setBorrowData(res.data);
         setBorrowSuccess(true);
 
         // 开始定时设置超时未取走的状态; 如果超时没取走，则提示
@@ -69,11 +61,8 @@ function Borrow() {
           }
           setTakeTime(takeTime--);
         }, 1000);
-      } else {
-        clearInterval(interval);
-        Toast.show({mess: response.data.error.message});
       }
-    });
+    })
   }
 
   const goBack = () => {
@@ -89,7 +78,6 @@ function Borrow() {
     setBorrowSuccess(false);
     doBorrow()
   };
-
 
   return (
     <div className="borrow-page font-fff">

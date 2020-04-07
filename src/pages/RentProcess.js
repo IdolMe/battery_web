@@ -3,15 +3,13 @@
 * @author: huguantao
 * @Date: 2020-03-27 12:31:58
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-06 22:18:44
+* @LastEditTime: 2020-04-08 00:17:04
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
 import {Carousel} from 'antd';
-import axios from 'axios';
-import Toast from '../components/Toast/Toast';
-import { urlPrefix } from '../utils/constants';
 import Heading from '../components/Heading';
+import {request} from '../utils/request';
 import {ProcessSwip1, ProcessSwip2, ProcessSwip3, ProcessIcon1, ProcessIcon2, ProcessIcon3, ProcessIcon4} from '../assets/image/assetsImages';
 import '../styles/rentProcess.scss';
 
@@ -55,24 +53,15 @@ function RentProcess(prop) {
   const [stationData, setStationData] = useState();
 
   useEffect(() => {
-    // /v1.0.0/staions/{boxId}  查询是否交了押金以及机柜状态
-    Toast.show({type:'loading'});
-    axios({
-      method: 'GET',
-      url: `${urlPrefix}/v1.0.0/staions/${sessionStorage.getItem('BOXID')}`,
-      data: {},
-      headers: {
-        'userToken': sessionStorage.getItem('USERTOKEN'),
-        'client-platform': 'WEB'
+    const headers = {
+      'userToken': sessionStorage.getItem('USERTOKEN'),
+      'client-platform': 'WEB'
+    };
+    request(`/v1.0.0/staions/${sessionStorage.getItem('BOXID')}`, 'GET', {}, headers ).then(res=> {
+      if(res.httpStatusCode === 200) {
+        setStationData(res.data);
       }
-    }).then(function(response) {
-      Toast.hide();
-      if(response.data.httpStatusCode === 200) {
-        setStationData(response.data.data);
-      } else {
-        Toast.show({mess: response.data.error.message});
-      }
-    });
+    })
   }, [])
 
   let history = useHistory();

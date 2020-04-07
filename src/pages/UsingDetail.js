@@ -3,13 +3,10 @@
 * @author: huguantao
 * @Date: 2020-03-26 11:46:07
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-04 14:43:04
+* @LastEditTime: 2020-04-07 23:55:45
  */
 import React, {useState, useEffect} from 'react';
-import axios from 'axios';
-import Toast from '../components/Toast/Toast';
-import { urlPrefix } from '../utils/constants';
-
+import {request} from '../utils/request';
 import {GoBackWhite, UsingDetail_banner, UsingDetail_top, Tip} from '../assets/image/assetsImages';
 import '../styles/usingDetail.scss';
 
@@ -22,27 +19,18 @@ function UsingDetail() {
     duration: 0
   });
   useEffect(() => {
-    // /v1.0.0/users/status 查询最近订单使用情况
-    Toast.show({type:'loading'});
-    axios({
-      method: 'GET',
-      url: `${urlPrefix}/v1.0.0/users/status`,
-      data: {},
-      headers: {
-        'userToken': sessionStorage.getItem('USERTOKEN'),
-        'client-platform': 'WEB'
-      }
-    }).then(function(response) {
-      Toast.hide();
-      if(response.data.httpStatusCode === 200) {
+    const headers = {
+      'userToken': sessionStorage.getItem('USERTOKEN'),
+      'client-platform': 'WEB'
+    }
+    request(`/v1.0.0/users/status`, 'GET', {}, headers ).then(res=> {
+      if(res.httpStatusCode === 200) {
         // status=OVERDRAFT   paymentdata就是未支付的订单详情
         // status=USING   usageData是使用中的详情  
-        setOrderData(response.data.data.usageData);
-      } else {
-        Toast.show({mess: response.data.error.message});
+        setOrderData(res.data.usageData);
       }
-    });
-  })
+    })
+  }, [])
 
   return (
     <div className="using-detail-page">
@@ -77,7 +65,6 @@ function UsingDetail() {
           </div>
         </div>
       </div>
-
 
       <p className='font-13 red descs'><img src={Tip} alt='tip' />How to return a powerbank</p>
       <p className='font-13 normal descs'>1. Find a station in the app with an empty returning slot.</p>

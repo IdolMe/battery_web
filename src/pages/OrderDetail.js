@@ -3,14 +3,13 @@
 * @author: huguantao
 * @Date: 2020-03-27 23:51:13
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-04 21:51:32
+* @LastEditTime: 2020-04-08 00:38:13
  */
 import React, {useState, useEffect} from 'react';
-import axios from 'axios';
 import moment from 'moment';
 import Toast from '../components/Toast/Toast';
-import { urlPrefix } from '../utils/constants';
 import Heading from '../components/Heading';
+import {request} from '../utils/request';
 import '../styles/orderDetail.scss';
 
 function OrderDetail(prop) {
@@ -21,23 +20,15 @@ function OrderDetail(prop) {
     if(orderId.length < 1) {
       Toast.show({mess:'No such order'});
     } else {
-      Toast.show({type:'loading'});
-      axios({
-        method: 'GET',
-        url: `${urlPrefix}/v1.0.0/orders/${orderId}`,
-        data: {},
-        headers: {
-          'userToken': sessionStorage.getItem('USERTOKEN'),
-          'client-platform': 'WEB'
+      const headers = {
+        'userToken': sessionStorage.getItem('USERTOKEN'),
+        'client-platform': 'WEB'
+      };
+      request(`/v1.0.0/orders/${orderId}`, 'GET', {}, headers ).then(res=> {
+        if(res.httpStatusCode === 200) {
+          setOrderDetail(res.data)
         }
-      }).then(function(response) {
-        Toast.hide();
-        if(response.data.httpStatusCode === 200) {
-          setOrderDetail(response.data.data)
-        } else {
-          Toast.show({mess: response.data.error.message});
-        }
-      });
+      })
     }
   }, [])
 
@@ -88,7 +79,7 @@ function OrderDetail(prop) {
         </div>
         <div className='item'>
           <div className='font-14 title'>Station</div>
-          <div className='font-14 desc'>{orderDetail.borrowStation.address}</div>
+          <div className='font-14 desc'>{orderDetail.borrowStation && orderDetail.borrowStation.address}</div>
         </div>
         <div className='item'>
           <div className='font-14 title'>End time</div>
@@ -96,7 +87,7 @@ function OrderDetail(prop) {
         </div>
         <div className='item'>
           <div className='font-14 title'>Returning station</div>
-          <div className='font-14 desc'>{orderDetail.returnStation.address}</div>
+          <div className='font-14 desc'>{orderDetail.borrowStation && orderDetail.returnStation.address}</div>
         </div>
       </div>
     </div>

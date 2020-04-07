@@ -3,15 +3,14 @@
 * @author: huguantao
 * @Date: 2020-03-25 21:49:06
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-06 22:28:54
+* @LastEditTime: 2020-04-08 00:14:35
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
 import { Modal } from 'antd';
-import axios from 'axios';
 import Toast from '../components/Toast/Toast';
-import { urlPrefix } from '../utils/constants';
 import Heading from '../components/Heading';
+import {request} from '../utils/request';
 import {Payment, Checked, UnCheck, Term, Tip, PaySuccess} from '../assets/image/assetsImages';
 import '../styles/topup.scss';
 
@@ -20,49 +19,37 @@ function TopUp() {
   const [rechargeData, setRechargeData] = useState();
   const [selectedIndex, setSelectIndex] = useState(0);   // 按照index来设置默认选中的充值item
   useEffect(() => {
-    Toast.show({type:'loading'});
-    axios({
-      method: 'GET',
-      url: `${urlPrefix}/v1.0.0/users/recharge-item`,
-      data: {},
-      headers: {
-        'userToken': sessionStorage.getItem('USERTOKEN'),
-        'client-platform': 'WEB'
+    const headers = {
+      'userToken': sessionStorage.getItem('USERTOKEN'),
+      'client-platform': 'WEB'
+    };
+    request(`/v1.0.0/users/recharge-item`, 'GET', {}, headers ).then(res=> {
+      if(res.httpStatusCode === 200) {
+        setRechargeData(res.data.rechargeItem);
       }
-    }).then(function(response) {
-      Toast.hide();
-      if(response.data.httpStatusCode === 200) {
-        setRechargeData(response.data.data.rechargeItem);
-      } else {
-        Toast.show({mess: response.data.error.message});
-      }
-    });
+    })
   }, [])
 
   let history = useHistory();
   const doPay = () => {
-    Toast.show({type:'loading'});
-    axios({
-      method: 'POST',
-      url: `${urlPrefix}/v1.0.0/payments/payby`,
-      data: {
-        rechargeItemId: rechargeData[selectedIndex].id,
-        type: "TOPUP"
-      },
-      headers: {
-        'userToken': sessionStorage.getItem('USERTOKEN'),
-        'client-platform': 'WEB'
-      }
-    }).then(function(response) {
-      Toast.hide();
-      if(response.data.httpStatusCode === 200) {
 
-        const data = response.data.data;
+    const reqData = {
+      rechargeItemId: rechargeData[selectedIndex].id,
+      type: "TOPUP"
+    };
+    const headers = {
+      'userToken': sessionStorage.getItem('USERTOKEN'),
+      'client-platform': 'WEB'
+    };
+    request(`/v1.0.0/payments/payby`, 'POST', reqData, headers ).then(resp=> {
+      if(resp.httpStatusCode === 200) {
+        
+        const resData = resp.data;
         window.ToPayJSBridge.invoke(
           'ToPayRequest',
           {
-            appId: data.appId, // partnerId 
-            token: data.token // For order token, refer to the token in interactionParams returned from the transaction creation interface
+            appId: resData.appId, // partnerId 
+            token: resData.token // For order token, refer to the token in interactionParams returned from the transaction creation interface
           },
           function(data) {
             const res = JSON.parse(data)
@@ -85,10 +72,8 @@ function TopUp() {
           }
         )
 
-      } else {
-        Toast.show({mess: response.data.error.message});
       }
-    });
+    })
   }
 
   return (
@@ -111,13 +96,13 @@ function TopUp() {
         </div>
         <p className='font-14 title'>Payment method</p>
         <div className='method font-14'>
-          <span><img src={Payment} alt="pay" className="logo" /> Pay1</span>
+          <span><img src={Payment} alt="pay" className="logo" /> PayBy</span>
           <img src={Checked} alt="check" className="check" />
         </div>
-        <div className='method font-14'>
+        {/* <div className='method font-14'>
           <span><img src={Payment} alt="pay" className="logo" /> Pay2</span>
           <img src={UnCheck} alt="check" className="check" />
-        </div>
+        </div> */}
       </div>
       <div className='btns'>
         <p className='font-11'>
