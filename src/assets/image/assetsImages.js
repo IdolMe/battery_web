@@ -3,10 +3,12 @@
 * @author: huguantao
 * @Date: 2020-03-09 15:49:17
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-04 11:47:22
+* @LastEditTime: 2020-04-07 22:37:30
  */
 // 通用图片和icon
 import Logo from './logo.png';
+import Payby from './payby.png';
+import Loading from './loading.gif';
 import GoBackWhite from './goBackWhite.png';
 import GoBackBlack from './goBackBlack.png';
 import Checked from './checked.png';
@@ -59,7 +61,7 @@ import WalletIcon1 from './wallet/icon1.png';
 import WalletIcon2 from './wallet/icon2.png';
 
 export {
-    Logo, GoBackWhite, GoBackBlack, Checked, UnCheck, Tip, TipRed, Expand, Term, LoginGoDown, Payment, TimeClock,
+    Logo, Payby, Loading, GoBackWhite, GoBackBlack, Checked, UnCheck, Tip, TipRed, Expand, Term, LoginGoDown, Payment, TimeClock,
     Home_bg, Home_my, Home_exit, Home_scan, Home_using, Home_toPay,
     UsingDetail_banner, UsingDetail_top,
     PaySuccess,

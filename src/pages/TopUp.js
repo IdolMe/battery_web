@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-25 21:49:06
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-04 14:38:38
+* @LastEditTime: 2020-04-06 22:28:54
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
@@ -56,12 +56,35 @@ function TopUp() {
     }).then(function(response) {
       Toast.hide();
       if(response.data.httpStatusCode === 200) {
-        setVisible(true)
-        setTimeout(() => {
-          setVisible(false);
-          // 充完钱去钱包
-          history.push(`/wallet`);
-        }, 800)
+
+        const data = response.data.data;
+        window.ToPayJSBridge.invoke(
+          'ToPayRequest',
+          {
+            appId: data.appId, // partnerId 
+            token: data.token // For order token, refer to the token in interactionParams returned from the transaction creation interface
+          },
+          function(data) {
+            const res = JSON.parse(data)
+            if (res.status === 'success') {
+              // 支付成功之后停留五秒等待结果同步，然后展示成功并跳转
+              Toast.show({type:'loading'});
+              setTimeout(() => {
+                Toast.hide();
+                setVisible(true)
+                setTimeout(() => {
+                  setVisible(false);
+                  // 付完押金去往租借页面
+                  history.push(`/wallet`);
+                }, 1500)
+              }, 3500);
+
+            } else {
+              Toast.show({mess: 'pay failed, please try again'});
+            }
+          }
+        )
+
       } else {
         Toast.show({mess: response.data.error.message});
       }

@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-27 12:31:58
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-04 13:55:43
+* @LastEditTime: 2020-04-06 22:18:44
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
@@ -82,7 +82,7 @@ function RentProcess(prop) {
   const rent = () => {
     // 租借,只在有充电宝的时候跳转
     if(stationData.station.remaining > 0) {
-      // TODO 租借流程
+      history.push(`/borrow`);
     } else {
       const conFirm = window.confirm('Sorry, no power bank available');
       if(conFirm == true) {

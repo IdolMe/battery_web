@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-25 21:49:06
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-04 14:21:40
+* @LastEditTime: 2020-04-07 23:14:25
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
@@ -24,8 +24,8 @@ const statusTokens = ['token_unDeposited', 'token_in_use', 'token_unpaid_order',
 function Login() {
   // 入口带过来机器码 boxId
   const BOXID = getQueryString('boxID') || 'RL3H042003250001';  // 机柜id，APP会带过来
+  const access_token = getQueryString('access_token') || 'T3mkVFb1PhMVqGS7QfpiQg'; // 用户token，APP会带过来
   const [USERTOKEN, setUSERTOKEN] = useState('');
-  // const [USERTOKEN, setUSERTOKEN] = useState(statusTokens[0]);   // TODO 从bridge取得用户token
 
   sessionStorage.setItem('BOXID', BOXID);
 
@@ -53,7 +53,7 @@ function Login() {
       url: `${urlPrefix}/v1.0.0/authz`,
       data: {},
       headers: {
-        'access_token': getQueryString('access_token') || 'T3mkVFb1PhMVqGS7QfpiQg',
+        'access_token': access_token,
         'client-platform': 'WEB',
       }
     }).then(function(response) {
@@ -63,7 +63,6 @@ function Login() {
         sessionStorage.setItem('USERTOKEN', response.data.data.token);
         history.push(`/home`);
       } else {
-        debugger
         Toast.show({mess: response.data.error.message});
       }
     });

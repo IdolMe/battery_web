@@ -3,31 +3,53 @@
 * @author: huguantao
 * @Date: 2020-03-25 21:49:06
 * @LastEditors: huguantao
-* @LastEditTime: 2020-03-27 16:22:28
+* @LastEditTime: 2020-04-07 23:14:10
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
-import Heading from '../components/Heading';
-import {Logo} from '../assets/image/assetsImages';
+import axios from 'axios';
+import Toast from '../components/Toast/Toast';
+import { urlPrefix } from '../utils/constants';
+import {getQueryString} from '../utils/helper';
+import {Loading} from '../assets/image/assetsImages';
 
 const style = {
   display: 'block',
-  margin: '25% auto 0',
-  width: '33%'
+  margin: '35% auto 0',
+  width: '50%'
 }
 
-function Loading() {
+function LoadingPage() {
   let history = useHistory();
-  const doLogin = () => {
-    history.push(`/rentProcess/unpaid`);
-  }
+  const BOXID = getQueryString('boxID') || 'RL3H042003250001';  // 机柜id，APP会带过来
+  const access_token = getQueryString('access_token') || 'T3mkVFb1PhMVqGS7QfpiQg'; // 用户token，APP会带过来
+  sessionStorage.setItem('BOXID', BOXID);
+
+  // APP的token鉴权换token登录方式
+  useEffect(() => {
+    axios({
+      method: 'POST',
+      url: `${urlPrefix}/v1.0.0/authz`,
+      data: {},
+      headers: {
+        'access_token': access_token,
+        'client-platform': 'WEB',
+      }
+    }).then(function(response) {
+      if(response.data.httpStatusCode === 200) {
+        sessionStorage.setItem('USERTOKEN', response.data.data.token);
+        history.push(`/home`);
+      } else {
+        Toast.show({mess: response.data.error.message});
+      }
+    });
+  })
 
   return (
     <div className="loading-page">
-      <Heading />
-      <img src={Logo} alt='logo' style={style} />
+      <img src={Loading} alt='logo' style={style} />
     </div>
   );
 }
 
-export default Loading;
+export default LoadingPage;

@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-26 11:46:07
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-04 14:42:19
+* @LastEditTime: 2020-04-06 22:32:09
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
@@ -72,11 +72,35 @@ function UnpaidDetail() {
     }).then(function(response) {
       Toast.hide();
       if(response.data.httpStatusCode === 200) {
-        setVisible(true)
-        setTimeout(() => {
-          setVisible(false)
-          history.push(`/home`);
-        }, 800)
+
+        const data = response.data.data;
+        window.ToPayJSBridge.invoke(
+          'ToPayRequest',
+          {
+            appId: data.appId, // partnerId 
+            token: data.token // For order token, refer to the token in interactionParams returned from the transaction creation interface
+          },
+          function(data) {
+            const res = JSON.parse(data)
+            if (res.status === 'success') {
+              // 支付成功之后停留五秒等待结果同步，然后展示成功并跳转
+              Toast.show({type:'loading'});
+              setTimeout(() => {
+                Toast.hide();
+                setVisible(true)
+                setTimeout(() => {
+                  setVisible(false);
+                  // 付完去首页
+                  history.push(`/home`);
+                }, 1500)
+              }, 3500);
+
+            } else {
+              Toast.show({mess: 'pay failed, please try again'});
+            }
+          }
+        )
+
       } else {
         Toast.show({mess: response.data.error.message});
       }

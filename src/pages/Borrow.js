@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-09 15:49:17
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-04 13:06:11
+* @LastEditTime: 2020-04-06 22:45:13
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
@@ -12,10 +12,11 @@ import axios from 'axios';
 import Toast from '../components/Toast/Toast';
 import { urlPrefix } from '../utils/constants';
 import Heading from '../components/Heading';
+import {getQueryString} from '../utils/helper';
 import '../styles/borrow.scss';
 import { TimeClock, Home_scan} from '../assets/image/assetsImages';
 
-const TIMEOUT = 90;
+const TIMEOUT = 9;
 
 function Borrow() {
   let [percent, setPercent] = useState(0);  // 借用中的进度条比例

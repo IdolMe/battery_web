@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-02-21 23:37:34
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-04 00:19:37
+* @LastEditTime: 2020-04-07 23:00:12
  */
 import React,{Component} from 'react';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
@@ -32,6 +32,7 @@ import Message from '../pages/Message';
 import Transactions from '../pages/Transactions';   // 交易记录，从钱包进
 import ReFund from '../pages/ReFund';               // 退押金
 import ReFundSuccess from '../pages/ReFundSuccess'; // 退押金成功
+import LoadingPage from '../pages/Loading';
 
 class Routes extends Component {
     render(){
@@ -44,7 +45,7 @@ class Routes extends Component {
                     <Route path="/home" component={Home} />
                     <Route path="/usingDetail" component={UsingDetail} />
                     <Route path="/unpaidDetail" component={UnpaidDetail} />
-                    <Route path="/loading" component={Loading} />
+                    <Route path="/loading" component={LoadingPage} />
                     <Route path="/borrow" component={Borrow} />
                     <Route path="/rentProcess/:deposited" component={RentProcess} />
                     <Route path="/errorStatus/:type" component={ErrorStatus} />

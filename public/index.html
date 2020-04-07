@@ -3,7 +3,7 @@
  * @author: huguantao
  * @Date: 2020-03-09 15:49:17
  * @LastEditors: huguantao
- * @LastEditTime: 2020-03-25 22:50:40
+ * @LastEditTime: 2020-04-04 23:58:39
  -->
 <!DOCTYPE html>
 <html lang="en">
@@ -45,6 +45,18 @@
           }, false);
           setFontSize();
       }(window, document));
+    </script>
+    <script>
+      // 注册payBy的bridge
+      function onBridgeReady() {
+        window.ToPayJSBridge.init(function(message, responseCallback) {})
+        Toast.show('onBridgeReady 方法注册bridge')
+      }
+      if (typeof window.ToPayJSBridge === 'undefined') {
+        document.addEventListener('ToPayJSBridgeReady', onBridgeReady, false)
+      } else {
+        onBridgeReady()
+      }
     </script>
   </head>
   <body>
