@@ -3,10 +3,9 @@
 * @author: huguantao
 * @Date: 2020-03-25 21:49:06
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-08 00:40:21
+* @LastEditTime: 2020-04-08 23:23:09
  */
 import React, {useState, useEffect} from 'react';
-import moment from 'moment';
 import Heading from '../components/Heading';
 import {request} from '../utils/request';
 import '../styles/message.scss';
@@ -42,7 +41,7 @@ function Message() {
               return <div className='message font-14 radius4' key={index}>
                 <div className='messageTitle'>
                   <span>{item.title}</span>
-                  <span>{moment(item.createTimestamp).format('YYYY/MM/DD hh:mm:ss')}</span>
+                  <span>{item.createTimestamp}</span>
                 </div>
             <div className='desc'>{item.content}</div>
               </div>

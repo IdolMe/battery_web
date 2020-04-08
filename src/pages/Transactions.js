@@ -3,10 +3,9 @@
 * @author: huguantao
 * @Date: 2020-03-25 21:49:06
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-08 00:06:15
+* @LastEditTime: 2020-04-08 23:23:46
  */
 import React, {useState, useEffect} from 'react';
-import moment from 'moment';
 import Heading from '../components/Heading';
 import {request} from '../utils/request';
 import '../styles/transactions.scss';
@@ -60,7 +59,7 @@ function Transactions() {
                     {item.isDebt ? '-' : '+'}{item.amount}
                   </span>
                 </p>
-                <p className='desc'>{moment(item.createTimestamp).format('YYYY/MM/DD hh:mm:ss')}</p>
+                <p className='desc'>{item.createTimestamp}</p>
               </div>
             })
           ): <p className='font-14 text-center'>no transactions</p>

@@ -3,10 +3,9 @@
 * @author: huguantao
 * @Date: 2020-03-27 23:51:13
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-08 00:38:13
+* @LastEditTime: 2020-04-08 23:23:31
  */
 import React, {useState, useEffect} from 'react';
-import moment from 'moment';
 import Toast from '../components/Toast/Toast';
 import Heading from '../components/Heading';
 import {request} from '../utils/request';
@@ -75,7 +74,7 @@ function OrderDetail(prop) {
         </div>
         <div className='item'>
           <div className='font-14 title'>Start time</div>
-          <div className='font-14 desc'>{moment(orderDetail.borrowStartTime).format('YYYY/MM/DD hh:mm:ss')}</div>
+          <div className='font-14 desc'>{orderDetail.borrowStartTime}</div>
         </div>
         <div className='item'>
           <div className='font-14 title'>Station</div>
@@ -83,7 +82,7 @@ function OrderDetail(prop) {
         </div>
         <div className='item'>
           <div className='font-14 title'>End time</div>
-          <div className='font-14 desc'>{moment(orderDetail.returnTime).format('YYYY/MM/DD hh:mm:ss')}</div>
+          <div className='font-14 desc'>{orderDetail.returnTime}</div>
         </div>
         <div className='item'>
           <div className='font-14 title'>Returning station</div>

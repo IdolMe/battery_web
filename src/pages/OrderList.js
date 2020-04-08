@@ -3,12 +3,11 @@
 * @author: huguantao
 * @Date: 2020-03-25 21:49:06
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-08 23:13:40
+* @LastEditTime: 2020-04-08 23:22:46
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
 import { Tabs } from 'antd';
-import moment from 'moment';
 import Heading from '../components/Heading';
 import {request} from '../utils/request';
 import {Checked} from '../assets/image/assetsImages';
@@ -67,7 +66,7 @@ function OrderList() {
                   <span className='font-14'>AED {item.amount}</span>
                 </div>
                 <div className='content font-14'>
-                  <p>Start time：{moment(item.type == 'RENT' ? item.borrowStartTime : item.createTimestamp).format('YYYY/MM/DD hh:mm:ss')}</p>
+                  <p>Start time：{item.type == 'RENT' ? item.borrowStartTime : item.createTimestamp}</p>
                   <p>Station：{item.borrowStation && item.borrowStation.address}</p>
                   <p>Order Number：{item.orderNumber}</p>
                   <div className='detail font-12 text-center' onClick={()=>detail(item.orderNumber)}>Details</div>
