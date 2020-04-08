@@ -3,11 +3,12 @@
 * @author: huguantao
 * @Date: 2020-03-09 15:49:17
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-08 00:46:32
+* @LastEditTime: 2020-04-08 22:54:35
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
 import { Modal } from 'antd';
+import Heading from '../components/Heading';
 import {request} from '../utils/request';
 import '../styles/home.scss';
 import {Home_bg, Home_my, Home_exit, Home_scan, Home_using, Home_toPay} from '../assets/image/assetsImages';
@@ -29,6 +30,7 @@ const msgs = [{
 function Home() {
   const [visible, setVisible] = useState(false);
   const [tipMsg, setTipMsg] = useState({ img: '', title: '', desc: [], btn: '', path: ''});
+  const [userData, setUserData] = useState({});
   const [stationData, setStationData] = useState({});
 
   let history = useHistory();
@@ -40,7 +42,8 @@ function Home() {
     };
     request(`/v1.0.0/users/status`, 'GET', {}, headers ).then(res=> {
       if(res.httpStatusCode === 200) {
-        // 租用状态 USING：使用中， OVERDRAFT：未结清， FINISH：完成，OVERDUE_SETTLEMENT：逾期结算： 扣押金，NONE：没有订单
+        setUserData(res.data);
+        // 租用状态 USING：使用中， OVERDRAFT：未结清， FINISH：完成，OVERDUE_SETTLEMENT：逾期结算扣押金，NONE：没有订单
         if(res.data.status == 'USING') {
           setVisible(true);
           setTipMsg(msgs[0]);
@@ -77,8 +80,17 @@ function Home() {
     } else if(stationData.station.status == 'TIMEOUT') {
       history.push(`/errorStatus/t0`);
     } else if(stationData.station.status == 'ONLINE') {
+
+      // 租用状态 USING：使用中， OVERDRAFT：未结清，
+      if(userData.status == 'USING') {
+        setVisible(true);
+        setTipMsg(msgs[0]);
+      } else if(userData.status == 'OVERDRAFT') {
+        setVisible(true);
+        setTipMsg(msgs[1]);
+      }
       // 根据是否交了押金跳转
-      if(stationData.hasDeposit) {
+      else if(stationData.hasDeposit) {
         history.push(`/rentProcess/paid`);
       } else {
         history.push(`/rentProcess/unpaid`);
@@ -103,6 +115,7 @@ function Home() {
 
   return (
     <div className="home-page">
+      <Heading type='exit' />
       <img src={Home_bg} alt="bg" className="bg" />
       <div className="content font-fff font-16">
         <img src={Home_scan} alt="scan" className="scan" onClick={start} />

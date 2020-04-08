@@ -3,10 +3,11 @@
 * @author: huguantao
 * @Date: 2020-03-25 21:49:06
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-07 23:44:00
+* @LastEditTime: 2020-04-08 22:30:08
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
+import Heading from '../components/Heading';
 import {getQueryString} from '../utils/helper';
 import {request} from '../utils/request';
 import {Loading} from '../assets/image/assetsImages';
@@ -39,6 +40,7 @@ function LoadingPage() {
 
   return (
     <div className="loading-page">
+      <Heading type='exit' />
       <img src={Loading} alt='logo' style={style} />
     </div>
   );

@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-27 12:31:58
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-08 00:17:04
+* @LastEditTime: 2020-04-08 23:09:31
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
@@ -16,7 +16,7 @@ import '../styles/rentProcess.scss';
 const swips = [{
   img: ProcessSwip1,
   title: 'Return to any station ',
-  desc: 'Over XXX stations in UAE and still expanding'
+  desc: 'Over 1000 stations in UAE and still expanding'
 },{
   img: ProcessSwip2,
   title: 'Support Most Mobile Devices',
@@ -51,6 +51,7 @@ function RentProcess(prop) {
   // 根据是否付了押金来展示不同的按钮
   const deposited = prop.match.params.deposited || 'unpaid';
   const [stationData, setStationData] = useState();
+  const [userData, setUserData] = useState({});
 
   useEffect(() => {
     const headers = {
@@ -61,6 +62,12 @@ function RentProcess(prop) {
       if(res.httpStatusCode === 200) {
         setStationData(res.data);
       }
+    });
+
+    request(`/v1.0.0/users/status`, 'GET', {}, headers ).then(res=> {
+      if(res.httpStatusCode === 200) {
+        setUserData(res.data);
+      }
     })
   }, [])
 
@@ -69,9 +76,16 @@ function RentProcess(prop) {
     history.push(`/payDeposit`);
   }
   const rent = () => {
-    // 租借,只在有充电宝的时候跳转
+    // 租借,只在有充电宝的时候跳转（且当前没订单的状态，如果有的话就不让去了）
     if(stationData.station.remaining > 0) {
-      history.push(`/borrow`);
+      // 租用状态 USING：使用中， OVERDRAFT：未结清，
+      if(userData.status == 'USING') {
+        history.push(`/usingDetail`);
+      } else if(userData.status == 'OVERDRAFT') {
+        history.push(`/unpaidDetail`);
+      } else {
+        history.push(`/borrow`);
+      }
     } else {
       const conFirm = window.confirm('Sorry, no power bank available');
       if(conFirm == true) {

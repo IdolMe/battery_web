@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-09 15:49:17
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-08 00:48:40
+* @LastEditTime: 2020-04-08 22:38:54
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
@@ -57,7 +57,9 @@ function Borrow() {
         let takeInterval = setInterval(() => {
           if(takeTime <=0) {
             clearInterval(takeInterval);
-            setVisible(true)
+
+            history.push('/home');
+            // setVisible(true)  这是超时的弹窗提示，改成直接跳转首页
           }
           setTakeTime(takeTime--);
         }, 1000);
@@ -87,7 +89,7 @@ function Borrow() {
         { borrowSuccess ? 
           <div className='borrowed'>
             <p className='remind text-center'>Please take the powerbank from slot #{borrowData && borrowData.slot}</p>
-            <img src={Home_scan} alt='slot' className='slot' />
+            <img src={borrowData && borrowData.slotImageUrl} alt='slot' className='slot' />
             <p className='font-fff text-center font-13 time'><img src={TimeClock} alt='time' />{takeTime}''</p>
             <p className='font-fff text-center font-13'>Please take the powerbank in time</p>
           </div> : 

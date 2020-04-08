@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-02-21 23:37:34
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-07 23:00:12
+* @LastEditTime: 2020-04-08 22:11:59
  */
 import React,{Component} from 'react';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
@@ -40,12 +40,12 @@ class Routes extends Component {
             <BrowserRouter>
                 {/* <Head  /> */}
                 <Switch>
-                    <Route path="/" component={Login} exact />
+                    <Route path="/" component={LoadingPage} exact />
                     <Route path="/login" component={Login} />
+                    <Route path="/loading" component={LoadingPage} />
                     <Route path="/home" component={Home} />
                     <Route path="/usingDetail" component={UsingDetail} />
                     <Route path="/unpaidDetail" component={UnpaidDetail} />
-                    <Route path="/loading" component={LoadingPage} />
                     <Route path="/borrow" component={Borrow} />
                     <Route path="/rentProcess/:deposited" component={RentProcess} />
                     <Route path="/errorStatus/:type" component={ErrorStatus} />
@@ -63,7 +63,7 @@ class Routes extends Component {
                     <Route path="/reFund" component={ReFund} />
                     <Route path="/reFundSuccess" component={ReFundSuccess} />
 
-                    <Route component={Login} /> 
+                    <Route component={LoadingPage} /> 
                 </Switch>
                 {/* <Footer /> */}
             </BrowserRouter>

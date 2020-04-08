@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-02-29 19:57:23
 * @LastEditors: huguantao
-* @LastEditTime: 2020-03-27 21:48:53
+* @LastEditTime: 2020-04-08 22:34:03
  */
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -14,12 +14,19 @@ function Heading(prop) {
   const [title, setTitle] = useState('');
 
   useEffect(() => {
-    setTitle(prop.title || 'PAYBY');
+    if(prop.type && prop.type != 'exit') {
+      setTitle(prop.title || 'PAYBY');
+    }
   }, [prop])
 
   let history = useHistory();
   const goBack = () => {
-    history.goBack();
+    if(prop.type && prop.type === 'exit') {
+      // 退出h5
+      window.ToPayJSBridge.invoke('leaveWeb');
+    } else {
+      history.goBack();
+    }
   }
 
   return (
