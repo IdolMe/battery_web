@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-26 11:46:07
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-08 00:13:09
+* @LastEditTime: 2020-04-08 23:36:34
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
@@ -136,7 +136,7 @@ function UnpaidDetail() {
         </div>
         <div className='item'>
           <div className='font-14 title'>Station</div>
-          <div className='font-14 desc'>{orderData.borrowAddress}</div>
+          <div className='font-14 desc'>{orderData.borrowStation && orderData.borrowStation.address}</div>
         </div>
         <div className='item'>
           <div className='font-14 title'>End time</div>
@@ -144,7 +144,7 @@ function UnpaidDetail() {
         </div>
         <div className='item'>
           <div className='font-14 title'>Returning station</div>
-          <div className='font-14 desc'>{orderData.returnAddress}</div>
+          <div className='font-14 desc'>{orderData.returnStation && orderData.returnStation.address}</div>
         </div>
       </div>
 
