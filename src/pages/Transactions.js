@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-25 21:49:06
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-08 23:23:46
+* @LastEditTime: 2020-04-09 23:22:54
  */
 import React, {useState, useEffect} from 'react';
 import Heading from '../components/Heading';
@@ -24,16 +24,12 @@ function Transactions() {
   }
 
   const getOrder = (type) => {
-    const data = {
-      pageIndex: 1,   // 从1开始
-      pageSize: 999,
-      queryType: type  // ALL DEBT CREDIT
-    };
     const headers = {
       'userToken': sessionStorage.getItem('USERTOKEN'),
       'client-platform': 'WEB'
     };
-    request(`/v1.0.0/users/transations?pageIndex=1&&pageSize=999&queryType=${type}`, 'GET', data, headers ).then(res=> {
+    // queryType: type  // ALL DEBT CREDIT
+    request(`/v1.0.0/users/transations?pageIndex=1&&pageSize=999&queryType=${type}`, 'GET', {}, headers ).then(res=> {
       if(res.httpStatusCode === 200) {
         setTransData(res.data);
       }

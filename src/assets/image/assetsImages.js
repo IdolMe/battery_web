@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-09 15:49:17
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-07 22:37:30
+* @LastEditTime: 2020-04-10 00:18:21
  */
 // 通用图片和icon
 import Logo from './logo.png';
@@ -43,6 +43,8 @@ import ProcessIcon2 from './process/icon2.png';
 import ProcessIcon3 from './process/icon3.png';
 import ProcessIcon4 from './process/icon4.png';
 
+import PowerBankDefault from './borrow/bank.png';
+
 // 错误状态
 import ConnectFail from './connectFail.png';
 import NetworkFail from './networkFail.png';
@@ -65,7 +67,7 @@ export {
     Home_bg, Home_my, Home_exit, Home_scan, Home_using, Home_toPay,
     UsingDetail_banner, UsingDetail_top,
     PaySuccess,
-    ProcessSwip1, ProcessSwip2, ProcessSwip3, ProcessIcon1, ProcessIcon2, ProcessIcon3, ProcessIcon4,
+    ProcessSwip1, ProcessSwip2, ProcessSwip3, ProcessIcon1, ProcessIcon2, ProcessIcon3, ProcessIcon4, PowerBankDefault,
     ConnectFail, NetworkFail, Repairing,
     AccountOrder, AccountHead, AccountWallet, AccountMessage, AccountMark, AccountEdit,
     WalletIcon1, WalletIcon2

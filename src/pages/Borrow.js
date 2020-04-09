@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-09 15:49:17
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-08 22:38:54
+* @LastEditTime: 2020-04-10 00:28:09
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
@@ -11,7 +11,7 @@ import { Progress, Modal } from 'antd';
 import Heading from '../components/Heading';
 import {request} from '../utils/request';
 import '../styles/borrow.scss';
-import { TimeClock, Home_scan} from '../assets/image/assetsImages';
+import { TimeClock, PowerBankDefault} from '../assets/image/assetsImages';
 
 const TIMEOUT = 9;
 
@@ -24,8 +24,14 @@ function Borrow() {
 
   let history = useHistory();
 
+  let takeInterval;
+
   useEffect(() => {
     doBorrow();
+    return () => {
+      // 清除设置的超时未取走的定时器
+      clearInterval(takeInterval)
+    }
   }, []);
 
   const doBorrow = () => {
@@ -43,7 +49,7 @@ function Borrow() {
     const headers = {
       'userToken': sessionStorage.getItem('USERTOKEN'),
       'client-platform': 'WEB'
-    };;
+    };
     request(`/v1.0.0/staions/${sessionStorage.getItem('BOXID')}/borrowing`, 'POST', {}, headers ).then(res=> {
       if(res.httpStatusCode === 200) {
         // 借用成功，进度条设置为100，取消定时器。显示借用成功页面
@@ -54,7 +60,7 @@ function Borrow() {
         setBorrowSuccess(true);
 
         // 开始定时设置超时未取走的状态; 如果超时没取走，则提示
-        let takeInterval = setInterval(() => {
+        takeInterval = setInterval(() => {
           if(takeTime <=0) {
             clearInterval(takeInterval);
 
@@ -89,11 +95,13 @@ function Borrow() {
         { borrowSuccess ? 
           <div className='borrowed'>
             <p className='remind text-center'>Please take the powerbank from slot #{borrowData && borrowData.slot}</p>
-            <img src={borrowData && borrowData.slotImageUrl} alt='slot' className='slot' />
+            {/* <img src={borrowData && borrowData.slotImageUrl} alt='slot' className='slot' /> */}
+            <img src={PowerBankDefault} alt='slot' className='slot' />
             <p className='font-fff text-center font-13 time'><img src={TimeClock} alt='time' />{takeTime}''</p>
             <p className='font-fff text-center font-13'>Please take the powerbank in time</p>
           </div> : 
           <div className='processing padding'>
+            <img src={PowerBankDefault} alt='slot' className='slot' />
             <div className='percentBar'>
               <span className='tip font-13 text-center' style={{left: `${percent}%`}}>{percent}%</span>
               <Progress percent={percent} showInfo={false} strokeColor="#ffffff" />

@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-27 23:51:13
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-08 23:23:31
+* @LastEditTime: 2020-04-09 23:28:24
  */
 import React, {useState, useEffect} from 'react';
 import Toast from '../components/Toast/Toast';
@@ -55,7 +55,7 @@ function OrderDetail(prop) {
       <div className="items">
         <div className='item'>
           <div className='font-14 title'>Duration</div>
-          <div className='font-14 desc'>{orderDetail.duration} min</div>
+          <div className='font-14 desc'>{orderDetail.duration}</div>
         </div>
         <div className='item'>
           <div className='font-14 title'>Payment method</div>

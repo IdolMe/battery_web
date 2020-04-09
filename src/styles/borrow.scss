@@ -9,7 +9,12 @@
     margin-bottom: 0;
   }
   .processing {
-    margin-top: 250px;
+    margin-top: 50px;
+    .slot {
+      display: block;
+      margin: 0 auto 30px;
+      width: 190px;
+    }
     .percentBar {
       width: 260px;
       margin: 0 auto;
@@ -49,11 +54,12 @@
       background-size: contain;
       font-size: 15px;
       color: #00A75D;
-      margin: 45px auto;
+      margin: 45px auto 10px;
     }
     .slot {
       display: block;
       margin: 0 auto 20px;
+      width: 190px;
     }
     .time {
       line-height: 20px;

@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-25 21:49:06
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-08 23:23:09
+* @LastEditTime: 2020-04-09 23:22:30
  */
 import React, {useState, useEffect} from 'react';
 import Heading from '../components/Heading';
@@ -13,15 +13,11 @@ import '../styles/message.scss';
 function Message() {
   const [messages, setMessages] = useState();
   useEffect(() => {
-    const data = {
-      pageIndex: 1,
-      pageSize: 999
-    };
     const headers = {
       'userToken': sessionStorage.getItem('USERTOKEN'),
       'client-platform': 'WEB',
     };
-    request(`/v1.0.0/messages`, 'GET', data, headers ).then(res=> {
+    request(`/v1.0.0/messages?pageIndex=1&pageSize=999`, 'GET', {}, headers ).then(res=> {
       if(res.httpStatusCode === 200) {
         setMessages(res.data)
       }

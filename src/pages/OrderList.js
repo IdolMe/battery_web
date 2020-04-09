@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-25 21:49:06
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-08 23:22:46
+* @LastEditTime: 2020-04-09 23:18:29
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
@@ -20,12 +20,9 @@ function OrderList() {
   useEffect(() => {
     const headers = {
       'userToken': sessionStorage.getItem('USERTOKEN'),
-      'client-platform': 'WEB',
-      'pageIndex': 1,   // 从1开始
-      'pageSize': 999,
-      'type': 'RENT'  // DEPOSIT RENT TOPUP
     };
-    request(`/v1.0.0/orders`, 'GET', {}, headers ).then(res=> {
+    // 'type': 'RENT'  // DEPOSIT RENT TOPUP   先不做分页
+    request(`/v1.0.0/orders?pageIndex=1&pageSize=999&type=RENT`, 'GET', {}, headers ).then(res=> {
       if(res.httpStatusCode === 200) {
         setOrders(res.data)
       }
@@ -67,7 +64,7 @@ function OrderList() {
                 </div>
                 <div className='content font-14'>
                   <p>Start time：{item.type == 'RENT' ? item.borrowStartTime : item.createTimestamp}</p>
-                  <p>Station：{item.borrowStation && item.borrowStation.address}</p>
+                  {item.type == 'RENT' ? <p>Station：{item.borrowStation && item.borrowStation.address}</p> : null }
                   <p>Order Number：{item.orderNumber}</p>
                   <div className='detail font-12 text-center' onClick={()=>detail(item.orderNumber)}>Details</div>
                 </div>

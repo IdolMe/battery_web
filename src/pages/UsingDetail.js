@@ -3,9 +3,10 @@
 * @author: huguantao
 * @Date: 2020-03-26 11:46:07
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-07 23:55:45
+* @LastEditTime: 2020-04-10 00:04:17
  */
 import React, {useState, useEffect} from 'react';
+import { useHistory } from 'react-router-dom';
 import {request} from '../utils/request';
 import {GoBackWhite, UsingDetail_banner, UsingDetail_top, Tip} from '../assets/image/assetsImages';
 import '../styles/usingDetail.scss';
@@ -18,7 +19,20 @@ function UsingDetail() {
     chargingInfo: "",
     duration: 0
   });
+
   useEffect(() => {
+    checkStatus();
+    const intervalCheck = setInterval(() => {
+      // 30秒查一次状态，跳转
+      checkStatus();
+    }, 30000);
+
+    return ()=> {
+      clearInterval(intervalCheck);
+    }
+  }, []);
+
+  const checkStatus = () => {
     const headers = {
       'userToken': sessionStorage.getItem('USERTOKEN'),
       'client-platform': 'WEB'
@@ -27,16 +41,38 @@ function UsingDetail() {
       if(res.httpStatusCode === 200) {
         // status=OVERDRAFT   paymentdata就是未支付的订单详情
         // status=USING   usageData是使用中的详情  
-        setOrderData(res.data.usageData);
+        
+        switch(res.data.status) {
+          case 'OVERDRAFT':
+            // 已完成未支付
+            history.push('/unpaidDetail');
+            break;
+          case 'FINISH': 
+            history.push(`/orderDetail/${res.data.paymentData.orderNumber}`);
+            break;
+          case 'OVERDUE_SETTLEMENT':
+            history.push(`/payDeposit`);
+            break;
+          case 'NONE':
+            history.push('/home');
+            break;
+          default: 
+            setOrderData(res.data.usageData);
+        }
       }
     })
-  }, [])
+  }
+
+  let history = useHistory();
+  const goback = () => {
+    history.goBack();
+  }
 
   return (
     <div className="using-detail-page">
       <div className='banner-wrap'>
         <img src={UsingDetail_banner} alt="banner" className="banner" />
-        <img src={GoBackWhite} alt="back" className="back" />
+        <img src={GoBackWhite} alt="back" className="back" onClick={goback} />
       </div>
       <h3 className='fonts desc font-24'>In Use ...</h3>
       <p className='fonts title font-13'>Please return the powerbank to a nearby station after you finished.</p>
@@ -56,7 +92,7 @@ function UsingDetail() {
           </div>
           <div className="half-content">
             <p className="title font-13">Station</p>
-            <p className="desc font-13">{orderData.borrowAddress}</p>
+            <p className="desc font-13">{orderData.borrowStation && orderData.borrowStation.address}</p>
           </div>
           <div className="full-content">
             <p className="title font-13">Pricing</p>
