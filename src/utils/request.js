@@ -3,14 +3,14 @@
 * @author: huguantao
 * @Date: 2020-02-04 15:05:53
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-07 23:54:45
+* @LastEditTime: 2020-04-10 22:19:08
  */
 import axios from 'axios';
 import Toast from '../components/Toast/Toast';
 import {urlPrefix} from '../utils/constants';
 
-export function request(url, method, data={}, headers={}) {
-    Toast.show({type:'loading'});
+export function request(url, method, data={}, headers={}, noHide=false) {
+    !noHide && Toast.show({type:'loading'});
     return new Promise((resolve,reject)=>{
         axios({
             method: method,

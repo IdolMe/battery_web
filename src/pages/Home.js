@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-09 15:49:17
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-08 22:54:35
+* @LastEditTime: 2020-04-10 21:46:43
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
@@ -51,7 +51,7 @@ function Home() {
           setVisible(true);
           setTipMsg(msgs[1]);
         } else if(res.data.status == 'OVERDUE_SETTLEMENT') {
-          // TODO 扣押金提示,这期不做
+          history.push(`/payDeposit`);
         }
       }
     })

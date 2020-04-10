@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-26 11:46:07
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-08 23:36:34
+* @LastEditTime: 2020-04-10 22:11:25
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
@@ -75,8 +75,9 @@ function UnpaidDetail() {
                 setVisible(true)
                 setTimeout(() => {
                   setVisible(false);
-                  // 付完去首页
-                  history.push(`/home`);
+                  // 付完去支付成功页面
+                  history.push(`/paySuccess`);
+                  // history.push(`/home`);
                 }, 1500)
               }, 3500);
 
@@ -92,7 +93,7 @@ function UnpaidDetail() {
   return (
     <div className="unpaid-detail-page">
       <div className='heading-wrap'>
-        <Heading title='Order Details' />
+        <Heading title='Order Details' goto='/home' />
         <p className='font-14 status'>Unpaid Order</p>
         <p className='amount'>
           <span className='desc font-14'>AED</span>

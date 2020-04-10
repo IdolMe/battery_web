@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-27 12:31:58
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-09 23:43:18
+* @LastEditTime: 2020-04-10 21:35:46
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
@@ -58,16 +58,16 @@ function RentProcess(prop) {
       'userToken': sessionStorage.getItem('USERTOKEN'),
       'client-platform': 'WEB'
     };
-    
-    request(`/v1.0.0/staions/${sessionStorage.getItem('BOXID')}`, 'GET', {}, headers ).then(res=> {
-      if(res.httpStatusCode === 200) {
-        setStationData(res.data);
-      }
-    });
 
     request(`/v1.0.0/users/status`, 'GET', {}, headers ).then(res=> {
       if(res.httpStatusCode === 200) {
         setUserData(res.data);
+
+        request(`/v1.0.0/staions/${sessionStorage.getItem('BOXID')}`, 'GET', {}, headers ).then(res1=> {
+          if(res1.httpStatusCode === 200) {
+            setStationData(res1.data);
+          }
+        });
       }
     })
   }, [])

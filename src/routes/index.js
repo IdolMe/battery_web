@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-02-21 23:37:34
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-08 22:11:59
+* @LastEditTime: 2020-04-10 22:16:54
  */
 import React,{Component} from 'react';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
@@ -13,7 +13,8 @@ import Home from '../pages/Home';
 import UsingDetail from '../pages/UsingDetail';     // 使用中的详情
 import UnpaidDetail from '../pages/UnpaidDetail';   // 已归还未支付的详情
 
-import Loading from '../pages/Loading';             // 过渡页 暂不用
+import Loading from '../pages/Loading';             // 过渡页 APP点击进来
+import Scan from '../pages/Scan';                   // 过渡页 app扫码进来
 import RentProcess from '../pages/RentProcess';     // 租借流程：分付了押金和没付押金的
 import PayDeposit from '../pages/PayDeposit';       // 付押金
 import Renting from '../pages/Renting';             // 租借loading
@@ -32,17 +33,16 @@ import Message from '../pages/Message';
 import Transactions from '../pages/Transactions';   // 交易记录，从钱包进
 import ReFund from '../pages/ReFund';               // 退押金
 import ReFundSuccess from '../pages/ReFundSuccess'; // 退押金成功
-import LoadingPage from '../pages/Loading';
 
 class Routes extends Component {
     render(){
         return (
             <BrowserRouter>
-                {/* <Head  /> */}
                 <Switch>
-                    <Route path="/" component={LoadingPage} exact />
+                    <Route path="/" component={Loading} exact />
                     <Route path="/login" component={Login} />
-                    <Route path="/loading" component={LoadingPage} />
+                    <Route path="/loading" component={Loading} />
+                    <Route path="/scan" component={Scan} />
                     <Route path="/home" component={Home} />
                     <Route path="/usingDetail" component={UsingDetail} />
                     <Route path="/unpaidDetail" component={UnpaidDetail} />
@@ -63,9 +63,8 @@ class Routes extends Component {
                     <Route path="/reFund" component={ReFund} />
                     <Route path="/reFundSuccess" component={ReFundSuccess} />
 
-                    <Route component={LoadingPage} /> 
+                    <Route component={Loading} /> 
                 </Switch>
-                {/* <Footer /> */}
             </BrowserRouter>
         )
     }

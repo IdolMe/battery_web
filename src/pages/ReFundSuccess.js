@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-29 12:25:45
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-08 00:23:00
+* @LastEditTime: 2020-04-10 21:52:11
  */
 /**
 * @file: description
@@ -27,7 +27,7 @@ function ReFundSuccess() {
 
   return (
     <div className="reFund-page">
-      <Heading title='Refund Request' />
+      <Heading title='Refund Request' goto='/home' />
       <div className='card radius4'>
         <img src={Checked} alt='checked' className='img' />
         <p className='font-14 text-center'>Deposit withdrawal succeed</p>

@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-09 15:49:17
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-10 00:28:09
+* @LastEditTime: 2020-04-10 21:39:57
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
@@ -13,7 +13,7 @@ import {request} from '../utils/request';
 import '../styles/borrow.scss';
 import { TimeClock, PowerBankDefault} from '../assets/image/assetsImages';
 
-const TIMEOUT = 9;
+const TIMEOUT = 90;
 
 function Borrow() {
   let [percent, setPercent] = useState(0);  // 借用中的进度条比例
@@ -95,8 +95,7 @@ function Borrow() {
         { borrowSuccess ? 
           <div className='borrowed'>
             <p className='remind text-center'>Please take the powerbank from slot #{borrowData && borrowData.slot}</p>
-            {/* <img src={borrowData && borrowData.slotImageUrl} alt='slot' className='slot' /> */}
-            <img src={PowerBankDefault} alt='slot' className='slot' />
+            <img src={borrowData && borrowData.slotImageUrl} alt='slot' className='slot' />
             <p className='font-fff text-center font-13 time'><img src={TimeClock} alt='time' />{takeTime}''</p>
             <p className='font-fff text-center font-13'>Please take the powerbank in time</p>
           </div> : 
