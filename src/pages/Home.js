@@ -3,12 +3,11 @@
 * @author: huguantao
 * @Date: 2020-03-09 15:49:17
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-10 21:46:43
+* @LastEditTime: 2020-04-13 20:32:47
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
 import { Modal } from 'antd';
-import Heading from '../components/Heading';
 import {request} from '../utils/request';
 import '../styles/home.scss';
 import {Home_bg, Home_my, Home_exit, Home_scan, Home_using, Home_toPay} from '../assets/image/assetsImages';
@@ -99,8 +98,8 @@ function Home() {
   }
 
   const exit = () => {
-    // TODO 退出登录
-    history.push(`/login`);
+    // 退出h5
+    window.ToPayJSBridge.invoke('leaveWeb');
   }
 
   const gotoMy = () => {
@@ -113,9 +112,9 @@ function Home() {
     history.push(`/${path}`);
   }
 
+
   return (
     <div className="home-page">
-      <Heading type='exit' />
       <img src={Home_bg} alt="bg" className="bg" />
       <div className="content font-fff font-16">
         <img src={Home_scan} alt="scan" className="scan" onClick={start} />
@@ -136,6 +135,7 @@ function Home() {
         closable={false}
         footer={[]} // 设置footer为空，去掉 取消 确定默认按钮
         destroyOnClose={true}
+        maskClosable={true}
         onCancel={()=> {setVisible(false)}}
       >
         <div id="home-modal" className="text-center">

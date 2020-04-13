@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-25 21:49:06
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-08 00:51:13
+* @LastEditTime: 2020-04-13 20:04:51
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
@@ -55,7 +55,7 @@ function Account() {
           </div>
           <div className='infos'>
             <div className='fonts'>
-              <p className='font-14'>ID:{userInfo.cellphone}</p>
+              <p className='font-14'>ID:{userInfo.account}</p>
               <p className='font-14'>
                 {userInfo.cellphone}
                 {/* <img src={AccountEdit} className='edit' alt='edit' /> */}

@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-26 11:46:07
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-10 00:04:17
+* @LastEditTime: 2020-04-13 22:02:29
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
@@ -27,8 +27,18 @@ function UsingDetail() {
       checkStatus();
     }, 30000);
 
+    // 监听touchend事件，下拉刷新
+    let parent = document.querySelector('.using-detail-page');
+    parent.addEventListener('touchend', () => { 
+      if(isTop()){
+        checkStatus();
+      }
+      return;
+    })
+
     return ()=> {
       clearInterval(intervalCheck);
+      parent.removeEventListener('touchend', () => { });
     }
   }, []);
 
@@ -48,7 +58,8 @@ function UsingDetail() {
             history.push('/unpaidDetail');
             break;
           case 'FINISH': 
-            history.push(`/orderDetail/${res.data.paymentData.orderNumber}`);
+            // history.push(`/orderDetail/${res.data.paymentData.orderNumber}`);
+            history.push(`/paySuccess`);
             break;
           case 'OVERDUE_SETTLEMENT':
             history.push(`/payDeposit`);
@@ -63,9 +74,14 @@ function UsingDetail() {
     })
   }
 
+  const isTop = () => {
+    var t = document.documentElement.scrollTop||document.body.scrollTop;
+    return t === 0 ? true : false;
+  }
+
   let history = useHistory();
   const goback = () => {
-    history.goBack();
+    history.push('/home');
   }
 
   return (
@@ -113,3 +129,4 @@ function UsingDetail() {
 }
 
 export default UsingDetail;
+

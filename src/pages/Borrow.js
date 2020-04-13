@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-09 15:49:17
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-10 21:39:57
+* @LastEditTime: 2020-04-13 19:35:59
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
@@ -13,13 +13,11 @@ import {request} from '../utils/request';
 import '../styles/borrow.scss';
 import { TimeClock, PowerBankDefault} from '../assets/image/assetsImages';
 
-const TIMEOUT = 90;
-
 function Borrow() {
   let [percent, setPercent] = useState(0);  // 借用中的进度条比例
   const [borrowSuccess, setBorrowSuccess] = useState(false); 
   const [borrowData, setBorrowData] = useState();  // 借用成功的插槽数据
-  let [takeTime, setTakeTime] = useState(TIMEOUT);    // 借用超时时间
+  let [takeTime, setTakeTime] = useState(0);    // 借用超时时间
   const [visible, setVisible] = useState(false);
 
   let history = useHistory();
@@ -56,6 +54,9 @@ function Borrow() {
         setPercent(100);
         clearInterval(interval);
 
+        // 设置超时未取走的时间
+        setTakeTime(res.data.automaticReturnDuration);
+
         setBorrowData(res.data);
         setBorrowSuccess(true);
 
@@ -81,7 +82,6 @@ function Borrow() {
   const tryAgain = () => {
     setVisible(false);
     // 重试，需要重置超时、进度条、借用状态； 并重新请求接口
-    setTakeTime(TIMEOUT);
     setPercent(0);
     setBorrowSuccess(false);
     doBorrow()

@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-27 23:51:13
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-09 23:28:24
+* @LastEditTime: 2020-04-13 19:15:26
  */
 import React, {useState, useEffect} from 'react';
 import Toast from '../components/Toast/Toast';
@@ -57,10 +57,13 @@ function OrderDetail(prop) {
           <div className='font-14 title'>Duration</div>
           <div className='font-14 desc'>{orderDetail.duration}</div>
         </div>
-        <div className='item'>
-          <div className='font-14 title'>Payment method</div>
-          <div className='font-14 desc'>{orderDetail.paymentMethod}</div>
-        </div>
+        {
+          orderDetail.borrowStatus == 'USING' ? null : 
+          <div className='item'>
+            <div className='font-14 title'>Payment method</div>
+            <div className='font-14 desc'>{orderDetail.paymentMethod}</div>
+          </div>
+        }
       </div>
 
       <div className="items">
@@ -80,14 +83,20 @@ function OrderDetail(prop) {
           <div className='font-14 title'>Station</div>
           <div className='font-14 desc'>{orderDetail.borrowStation && orderDetail.borrowStation.address}</div>
         </div>
-        <div className='item'>
-          <div className='font-14 title'>End time</div>
-          <div className='font-14 desc'>{orderDetail.returnTime}</div>
-        </div>
-        <div className='item'>
-          <div className='font-14 title'>Returning station</div>
-          <div className='font-14 desc'>{orderDetail.borrowStation && orderDetail.returnStation.address}</div>
-        </div>
+        {
+          orderDetail.borrowStatus == 'USING' ? null : 
+          <div className='item'>
+            <div className='font-14 title'>End time</div>
+            <div className='font-14 desc'>{orderDetail.returnTime}</div>
+          </div>
+        }
+        {
+          orderDetail.borrowStatus == 'USING' ? null : 
+          <div className='item'>
+            <div className='font-14 title'>Returning station</div>
+            <div className='font-14 desc'>{orderDetail.borrowStation && orderDetail.returnStation.address}</div>
+          </div>
+        }
       </div>
     </div>
   );

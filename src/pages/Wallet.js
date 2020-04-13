@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-25 21:49:06
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-07 23:47:50
+* @LastEditTime: 2020-04-13 20:42:00
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
@@ -15,6 +15,7 @@ import '../styles/wallet.scss';
 function Wallet() {
   let history = useHistory();
   const [userInfo, setUserInfo] = useState({});
+  const [rechargeData, setRechargeData] = useState(); // 押金信息
 
   useEffect(() => {
     const headers = {
@@ -24,6 +25,12 @@ function Wallet() {
     request(`/v1.0.0/login`, 'GET', {}, headers ).then(res=> {
       if(res.httpStatusCode === 200) {
         setUserInfo(res.data)
+      }
+    });
+    // 这个接口主要是为了拿押金金额
+    request(`/v1.0.0/users/recharge-item`, 'GET', {}, headers ).then(res=> {
+      if(res.httpStatusCode === 200) {
+        setRechargeData(res.data.deposit);
       }
     })
   }, [])
@@ -60,7 +67,7 @@ function Wallet() {
 
       <div className='list radius4 font-14' onClick={deposit}>
         <p><img src={WalletIcon1} alt='icon'/>Deposit</p>
-        <p className='red'>{ userInfo.hasDeposit ? '' : 'Deposit Unpaid'}<img src={Expand} className='expand' alt='expand'></img></p>
+        <p className='red'>{ userInfo.hasDeposit ? `AED ${rechargeData && rechargeData.amount}` : 'Deposit Unpaid'}<img src={Expand} className='expand' alt='expand'></img></p>
       </div>
       <div className='list radius4 font-14' onClick={transaction}>
         <p><img src={WalletIcon2} alt='icon'/>Transactions</p>
