@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-25 21:49:06
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-10 22:20:16
+* @LastEditTime: 2020-04-14 23:59:56
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
@@ -20,7 +20,7 @@ const style = {
 
 function Scan() {
   let history = useHistory();
-  const BOXID = getQueryString('boxID') || 'RL3H042003250001';  // 机柜id，APP会带过来
+  const BOXID = getQueryString('boxId') || 'RL3H042003250001';  // 机柜id，APP会带过来
   const access_token = getQueryString('access_token') || 'T3mkVFb1PhMVqGS7QfpiQg'; // 用户token，APP会带过来
   sessionStorage.setItem('BOXID', BOXID);
 
@@ -32,6 +32,7 @@ function Scan() {
     };
     request(`/v1.0.0/authz`, 'POST', {}, headers, true ).then(res1=> {
       if(res1.httpStatusCode === 200) {
+        sessionStorage.setItem('USERTOKEN', res1.data.token);
         // 先查看机柜状态：{ONLINE：在线, REPAIR：维修中, NOT_FIND：没有发现机柜,TIMEOUT: 超时}
         // 机柜正常之后再查看用户状态，跳转对应地址
 

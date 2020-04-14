@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-09 15:49:17
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-14 23:38:23
+* @LastEditTime: 2020-04-14 23:47:25
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
@@ -67,19 +67,28 @@ function Home() {
         needResult: true, // 商户ID
       },
       function (data) {
-        const res = JSON.parse(data)
-        Toast.show({mess: res});
+        Toast.show({mess: JSON.parse(data)});
         // 拿到扫码的数据，截取boxId参数并存入缓存
 
-        const param = res.split('?');
-        for(let i=0; i<PerformanceNavigationTiming.length; i++) {
-          if(param[i].indexOf('boxId') > -1) {
-            sessionStorage.setItem('BOXID', param[i].split('=')[1]);
-            if(userData.status == 'OVERDUE_SETTLEMENT') {
-              history.push(`/payDeposit`);
-            } else {
-              fetchStationData()
+        if(data.indexOf('powerbank') > -1) {
+          const param = data.split('?')[1].split('&');
+          for(let i=0; i<PerformanceNavigationTiming.length; i++) {
+            if(param[i].indexOf('boxId') > -1) {
+              sessionStorage.setItem('BOXID', param[i].split('=')[1]);
+              if(userData.status == 'OVERDUE_SETTLEMENT') {
+                history.push(`/payDeposit`);
+              } else {
+                fetchStationData()
+              }
             }
+          }
+        } else {
+          // TODO测试用 默认boxid代码  后面要删除
+          sessionStorage.setItem('BOXID', 'RL3H081911090084');
+          if(userData.status == 'OVERDUE_SETTLEMENT') {
+            history.push(`/payDeposit`);
+          } else {
+            fetchStationData()
           }
         }
 

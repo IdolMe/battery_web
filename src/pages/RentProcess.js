@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-27 12:31:58
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-14 23:18:10
+* @LastEditTime: 2020-04-15 00:09:31
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
@@ -111,7 +111,7 @@ function RentProcess(prop) {
   return (
     <div className="rentProcess-page">
       <div className='top-swip'>
-        <Heading />
+        <Heading goto='/home' />
         <div className='swips'>
           <Carousel autoplay>
             {
