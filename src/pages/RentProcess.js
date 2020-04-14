@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-27 12:31:58
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-10 21:35:46
+* @LastEditTime: 2020-04-14 23:18:10
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
@@ -65,7 +65,16 @@ function RentProcess(prop) {
 
         request(`/v1.0.0/staions/${sessionStorage.getItem('BOXID')}`, 'GET', {}, headers ).then(res1=> {
           if(res1.httpStatusCode === 200) {
-            setStationData(res1.data);
+            if(res1.data.station.status == 'REPAIR') {
+              // 机柜状态：{ONLINE：在线, REPAIR：维修中, NOT_FIND：没有发现机柜,TIMEOUT: 超时}
+              history.push(`/errorStatus/t2`);
+            } else if(res1.data.station.status == 'NOT_FIND') {
+              history.push(`/errorStatus/t1`);
+            } else if(res1.data.station.status == 'TIMEOUT') {
+              history.push(`/errorStatus/t0`);
+            } else {
+              setStationData(res1.data);
+            }
           }
         });
       }

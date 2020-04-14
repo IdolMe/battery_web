@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-09 15:49:17
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-13 20:32:47
+* @LastEditTime: 2020-04-14 23:38:23
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
@@ -11,6 +11,7 @@ import { Modal } from 'antd';
 import {request} from '../utils/request';
 import '../styles/home.scss';
 import {Home_bg, Home_my, Home_exit, Home_scan, Home_using, Home_toPay} from '../assets/image/assetsImages';
+import Toast from '../components/Toast/Toast';
 
 const msgs = [{
   img: Home_using,
@@ -49,15 +50,44 @@ function Home() {
         } else if(res.data.status == 'OVERDRAFT') {
           setVisible(true);
           setTipMsg(msgs[1]);
-        } else if(res.data.status == 'OVERDUE_SETTLEMENT') {
-          history.push(`/payDeposit`);
         }
+        //  else if(res.data.status == 'OVERDUE_SETTLEMENT') {
+        //   history.push(`/payDeposit`);
+        // }
       }
     })
 
-    fetchStationData();
   }, []);
 
+  // 扫二维码，拿到boxid，查询机柜状态，然后再走start函数
+  const scan = () => {
+    window.ToPayJSBridge.invoke(
+      'scanQRCode',
+      {
+        needResult: true, // 商户ID
+      },
+      function (data) {
+        const res = JSON.parse(data)
+        Toast.show({mess: res});
+        // 拿到扫码的数据，截取boxId参数并存入缓存
+
+        const param = res.split('?');
+        for(let i=0; i<PerformanceNavigationTiming.length; i++) {
+          if(param[i].indexOf('boxId') > -1) {
+            sessionStorage.setItem('BOXID', param[i].split('=')[1]);
+            if(userData.status == 'OVERDUE_SETTLEMENT') {
+              history.push(`/payDeposit`);
+            } else {
+              fetchStationData()
+            }
+          }
+        }
+
+      }
+    )
+  }
+
+  // 获取机柜状态
   const fetchStationData = () => {
     const headers = {
       'userToken': sessionStorage.getItem('USERTOKEN'),
@@ -66,6 +96,7 @@ function Home() {
     request(`/v1.0.0/staions/${sessionStorage.getItem('BOXID')}`, 'GET', {}, headers ).then(res=> {
       if(res.httpStatusCode === 200) {
         setStationData(res.data);
+        start();
       }
     })
   }
@@ -117,7 +148,7 @@ function Home() {
     <div className="home-page">
       <img src={Home_bg} alt="bg" className="bg" />
       <div className="content font-fff font-16">
-        <img src={Home_scan} alt="scan" className="scan" onClick={start} />
+        <img src={Home_scan} alt="scan" className="scan" onClick={scan} />
         <div className='items'>
           <div className="item" onClick={exit}>
             <img src={Home_exit} alt="exit" />
@@ -135,7 +166,8 @@ function Home() {
         closable={false}
         footer={[]} // 设置footer为空，去掉 取消 确定默认按钮
         destroyOnClose={true}
-        maskClosable={true}
+        mask={false}
+        zIndex={1000}
         onCancel={()=> {setVisible(false)}}
       >
         <div id="home-modal" className="text-center">

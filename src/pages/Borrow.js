@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-09 15:49:17
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-13 19:35:59
+* @LastEditTime: 2020-04-14 23:05:55
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
@@ -89,7 +89,7 @@ function Borrow() {
 
   return (
     <div className="borrow-page font-fff">
-      <Heading />
+      <Heading goto='/home' />
       <div className="content font-fff font-16">
         <h3 className='font-fff font-24 padding'>{borrowSuccess ? 'Please take the powerbank' : 'Processing, Please wait'}</h3>
         { borrowSuccess ? 

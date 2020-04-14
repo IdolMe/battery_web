@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-25 21:49:06
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-08 22:30:08
+* @LastEditTime: 2020-04-14 23:08:48
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
@@ -20,9 +20,7 @@ const style = {
 
 function LoadingPage() {
   let history = useHistory();
-  const BOXID = getQueryString('boxID') || 'RL3H042003250001';  // 机柜id，APP会带过来
   const access_token = getQueryString('access_token') || 'T3mkVFb1PhMVqGS7QfpiQg'; // 用户token，APP会带过来
-  sessionStorage.setItem('BOXID', BOXID);
 
   // APP的token鉴权换token登录方式
   useEffect(() => {
