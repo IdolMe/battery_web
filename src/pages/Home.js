@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-09 15:49:17
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-14 23:47:25
+* @LastEditTime: 2020-04-15 16:39:35
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
@@ -72,7 +72,7 @@ function Home() {
 
         if(data.indexOf('powerbank') > -1) {
           const param = data.split('?')[1].split('&');
-          for(let i=0; i<PerformanceNavigationTiming.length; i++) {
+          for(let i=0; i<param.length; i++) {
             if(param[i].indexOf('boxId') > -1) {
               sessionStorage.setItem('BOXID', param[i].split('=')[1]);
               if(userData.status == 'OVERDUE_SETTLEMENT') {
