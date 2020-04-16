@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-09 15:49:17
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-14 23:05:55
+* @LastEditTime: 2020-04-16 15:53:56
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
@@ -65,8 +65,8 @@ function Borrow() {
           if(takeTime <=0) {
             clearInterval(takeInterval);
 
-            history.push('/home');
-            // setVisible(true)  这是超时的弹窗提示，改成直接跳转首页
+            history.push('/usingDetail');
+            // setVisible(true)  这是超时的弹窗提示，改成直接跳转
           }
           setTakeTime(takeTime--);
         }, 1000);
