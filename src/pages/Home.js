@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-09 15:49:17
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-15 16:39:35
+* @LastEditTime: 2020-04-15 23:38:26
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
@@ -176,6 +176,7 @@ function Home() {
         footer={[]} // 设置footer为空，去掉 取消 确定默认按钮
         destroyOnClose={true}
         mask={false}
+        maskClosable={false}
         zIndex={1000}
         onCancel={()=> {setVisible(false)}}
       >

@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-02-29 19:57:23
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-13 19:11:16
+* @LastEditTime: 2020-04-15 23:29:07
  */
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -16,11 +16,11 @@ import Toast from '../Toast/Toast';
  * @param {*} prop : type=exit 则调原生方法退出h5  有goto则跳转goto，否则回退到上页
  */
 function Heading(prop) {
-  const [title, setTitle] = useState('');
+  const [title, setTitle] = useState(prop.title || 'PAYBY');
 
   useEffect(() => {
-    if(prop.type && prop.type != 'exit') {
-      setTitle(prop.title || 'PAYBY');
+    if(prop.type && prop.type == 'exit') {
+      setTitle('');
     }
   }, [prop])
 
