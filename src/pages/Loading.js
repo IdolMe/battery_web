@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-25 21:49:06
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-14 23:08:48
+* @LastEditTime: 2020-04-16 23:22:05
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
@@ -20,7 +20,7 @@ const style = {
 
 function LoadingPage() {
   let history = useHistory();
-  const access_token = getQueryString('access_token') || 'T3mkVFb1PhMVqGS7QfpiQg'; // 用户token，APP会带过来
+  const access_token = getQueryString('access_token'); // 用户token，APP会带过来
 
   // APP的token鉴权换token登录方式
   useEffect(() => {

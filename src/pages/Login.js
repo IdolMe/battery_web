@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-25 21:49:06
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-14 23:54:03
+* @LastEditTime: 2020-04-16 23:22:35
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
@@ -21,8 +21,8 @@ const statusTokens = ['token_unDeposited', 'token_in_use', 'token_unpaid_order',
 
 function Login() {
   // 入口带过来机器码 boxId
-  const BOXID = getQueryString('boxId') || 'RL3H042003250001';  // 机柜id，APP会带过来
-  const access_token = getQueryString('access_token') || 'T3mkVFb1PhMVqGS7QfpiQg'; // 用户token，APP会带过来
+  const BOXID = getQueryString('boxId');  // 机柜id，APP会带过来
+  const access_token = getQueryString('access_token'); // 用户token，APP会带过来
   const [USERTOKEN, setUSERTOKEN] = useState('');
 
   sessionStorage.setItem('BOXID', BOXID);

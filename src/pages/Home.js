@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-09 15:49:17
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-15 23:38:26
+* @LastEditTime: 2020-04-16 23:21:49
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
@@ -11,7 +11,6 @@ import { Modal } from 'antd';
 import {request} from '../utils/request';
 import '../styles/home.scss';
 import {Home_bg, Home_my, Home_exit, Home_scan, Home_using, Home_toPay} from '../assets/image/assetsImages';
-import Toast from '../components/Toast/Toast';
 
 const msgs = [{
   img: Home_using,
@@ -32,6 +31,8 @@ function Home() {
   const [tipMsg, setTipMsg] = useState({ img: '', title: '', desc: [], btn: '', path: ''});
   const [userData, setUserData] = useState({});
   const [stationData, setStationData] = useState({});
+
+  const [timeoutCount, setTimeoutCount] = useState(0);  // 如果机柜超时，请求三次
 
   let history = useHistory();
   
@@ -67,31 +68,18 @@ function Home() {
         needResult: true, // 商户ID
       },
       function (data) {
-        Toast.show({mess: JSON.parse(data)});
         // 拿到扫码的数据，截取boxId参数并存入缓存
-
-        if(data.indexOf('powerbank') > -1) {
-          const param = data.split('?')[1].split('&');
-          for(let i=0; i<param.length; i++) {
-            if(param[i].indexOf('boxId') > -1) {
-              sessionStorage.setItem('BOXID', param[i].split('=')[1]);
-              if(userData.status == 'OVERDUE_SETTLEMENT') {
-                history.push(`/payDeposit`);
-              } else {
-                fetchStationData()
-              }
+        const param = data.split('?')[1].split('&');
+        for(let i=0; i<param.length; i++) {
+          if(param[i].indexOf('boxId') > -1) {
+            sessionStorage.setItem('BOXID', param[i].split('=')[1]);
+            if(userData.status == 'OVERDUE_SETTLEMENT') {
+              history.push(`/payDeposit`);
+            } else {
+              fetchStationData()
             }
           }
-        } else {
-          // TODO测试用 默认boxid代码  后面要删除
-          sessionStorage.setItem('BOXID', 'RL3H081911090084');
-          if(userData.status == 'OVERDUE_SETTLEMENT') {
-            history.push(`/payDeposit`);
-          } else {
-            fetchStationData()
-          }
         }
-
       }
     )
   }
@@ -105,6 +93,7 @@ function Home() {
     request(`/v1.0.0/staions/${sessionStorage.getItem('BOXID')}`, 'GET', {}, headers ).then(res=> {
       if(res.httpStatusCode === 200) {
         setStationData(res.data);
+        setTimeoutCount(timeoutCount + 1);
         start();
       }
     })
@@ -117,8 +106,13 @@ function Home() {
     } else if(stationData.station.status == 'NOT_FIND') {
       history.push(`/errorStatus/t1`);
     } else if(stationData.station.status == 'TIMEOUT') {
-      history.push(`/errorStatus/t0`);
+      if(timeoutCount >= 3) {
+        history.push(`/errorStatus/t0`);
+      } else {
+        fetchStationData();
+      }
     } else if(stationData.station.status == 'ONLINE') {
+      setTimeoutCount(0);
 
       // 租用状态 USING：使用中， OVERDRAFT：未结清，
       if(userData.status == 'USING') {
