@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-09 15:49:17
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-16 23:21:49
+* @LastEditTime: 2020-04-17 15:46:12
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
@@ -109,7 +109,9 @@ function Home() {
       if(timeoutCount >= 3) {
         history.push(`/errorStatus/t0`);
       } else {
-        fetchStationData();
+        setTimeout(() => {
+          fetchStationData();
+        }, 600);
       }
     } else if(stationData.station.status == 'ONLINE') {
       setTimeoutCount(0);
