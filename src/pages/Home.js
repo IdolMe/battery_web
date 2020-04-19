@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-09 15:49:17
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-17 15:46:12
+* @LastEditTime: 2020-04-19 21:56:07
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
@@ -94,12 +94,12 @@ function Home() {
       if(res.httpStatusCode === 200) {
         setStationData(res.data);
         setTimeoutCount(timeoutCount + 1);
-        start();
+        start(res.data);
       }
     })
   }
 
-  const start = () => {
+  const start = (stationData) => {
     if(stationData.station.status == 'REPAIR') {
       // 机柜状态：{ONLINE：在线, REPAIR：维修中, NOT_FIND：没有发现机柜,TIMEOUT: 超时}
       history.push(`/errorStatus/t2`);
@@ -175,6 +175,7 @@ function Home() {
         maskClosable={false}
         zIndex={1000}
         onCancel={()=> {setVisible(false)}}
+        className='home-modal-wrap'
       >
         <div id="home-modal" className="text-center">
           <img src={tipMsg.img} alt="tip-img" className="topImg" />

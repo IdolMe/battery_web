@@ -36,6 +36,13 @@
     }
 }
 
+.home-modal-wrap {
+    position: fixed!important;
+    bottom: 150px;
+    top: auto!important;
+    left: 35px;
+}
+
 #home-modal {
     color: rgba(0,0,0,0.80);
     padding-bottom: 20px;
