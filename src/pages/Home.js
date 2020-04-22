@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-09 15:49:17
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-19 21:56:07
+* @LastEditTime: 2020-04-22 21:35:08
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
@@ -11,6 +11,9 @@ import { Modal } from 'antd';
 import {request} from '../utils/request';
 import '../styles/home.scss';
 import {Home_bg, Home_my, Home_exit, Home_scan, Home_using, Home_toPay} from '../assets/image/assetsImages';
+
+import VConsole from 'vconsole';
+var vConsole = new VConsole();
 
 const msgs = [{
   img: Home_using,
