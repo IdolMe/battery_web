@@ -3,13 +3,12 @@
 * @author: huguantao
 * @Date: 2020-03-25 21:49:06
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-10 22:04:26
+* @LastEditTime: 2020-04-22 21:51:47
  */
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import {request} from '../utils/request';
 import Heading from '../components/Heading';
-import Toast from '../components/Toast/Toast';
 import '../styles/paySuccess.scss';
 
 function PaySuccess() {

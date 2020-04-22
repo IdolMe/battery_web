@@ -3,13 +3,12 @@
 * @author: huguantao
 * @Date: 2020-02-29 19:57:23
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-15 23:29:07
+* @LastEditTime: 2020-04-22 21:50:40
  */
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { GoBackBlack } from '../../assets/image/assetsImages';
 import './index.scss';
-import Toast from '../Toast/Toast';
 
 /**
  * 
