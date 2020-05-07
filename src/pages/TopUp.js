@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-25 21:49:06
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-14 22:30:15
+* @LastEditTime: 2020-05-07 22:58:22
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
@@ -67,7 +67,7 @@ function TopUp() {
               }, 3500);
 
             } else {
-              Toast.show({mess: 'pay failed, please try again'});
+              Toast.show({mess: 'Payment failed. Please try again later.'});
             }
           }
         )
@@ -87,9 +87,10 @@ function TopUp() {
           {
             rechargeData && rechargeData.length > 0 ? (
               rechargeData.map((item, index) => {
+                console.log(item)
                 return <div className={`amount font-14 ${index == selectedIndex ? 'checkedAmount' : ''}`} 
                   onClick={()=>setSelectIndex(index)} key={index}>
-                  AED<span className='font-32'>5</span></div>
+                  AED<span className='font-32'>{item.amount}</span></div>
               })
             ) : null
           }
@@ -105,7 +106,7 @@ function TopUp() {
         </div> */}
       </div>
       <div className='btns'>
-        <p className='font-11'>
+        <p className='font-11' onClick={() => {history.push('/topupIntro')}}>
           <img src={Term} alt="term" />
           I agree to the terms & conditions of the Pricing Agreement.
           <img src={Tip} alt="tip" />

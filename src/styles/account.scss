@@ -13,19 +13,16 @@
       background-size: cover;
       padding: 20px;
       box-sizing: border-box;
+      text-align: center;
       .info {
         img {
           vertical-align: top;
           width: 44px;
           height: 44px;
           border-radius: 44px;
-          margin-right: 12px;
-          margin-bottom: 20px;
         }
-      }
-      .infos {
         p {
-          margin-bottom: 0;
+          margin-bottom: 5px;
         }
       }
     }

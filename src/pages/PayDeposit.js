@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-25 21:49:06
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-14 22:31:05
+* @LastEditTime: 2020-05-07 23:13:00
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
@@ -62,12 +62,16 @@ function PayDeposit() {
                 setTimeout(() => {
                   setVisible(false);
                   // 付完押金去往租借页面
-                  history.push(`/rentProcess/paid`);
+                  if(sessionStorage.getItem('BOXID')) {
+                    history.push(`/rentProcess/paid`);
+                  } else {
+                    history.push(`/home`);
+                  }
                 }, 1500)
               }, 3500);
 
             } else {
-              Toast.show({mess: 'pay failed, please try again'});
+              Toast.show({mess: 'Payment failed. Please try again later.'});
             }
           }
         )

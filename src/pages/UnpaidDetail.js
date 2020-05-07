@@ -82,7 +82,7 @@ function UnpaidDetail() {
               }, 3500);
 
             } else {
-              Toast.show({mess: 'pay failed, please try again'});
+              Toast.show({mess: 'Payment failed. Please try again later.'});
             }
           }
         )

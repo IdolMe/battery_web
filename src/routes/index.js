@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-02-21 23:37:34
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-10 22:16:54
+* @LastEditTime: 2020-05-07 22:36:27
  */
 import React,{Component} from 'react';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
@@ -15,6 +15,7 @@ import UnpaidDetail from '../pages/UnpaidDetail';   // 已归还未支付的详�
 
 import Loading from '../pages/Loading';             // 过渡页 APP点击进来
 import Scan from '../pages/Scan';                   // 过渡页 app扫码进来
+import UserAgreement from '../pages/UserAgreement'; // 过渡页 app扫码进来
 import RentProcess from '../pages/RentProcess';     // 租借流程：分付了押金和没付押金的
 import PayDeposit from '../pages/PayDeposit';       // 付押金
 import Renting from '../pages/Renting';             // 租借loading
@@ -29,6 +30,7 @@ import Wallet from '../pages/Wallet';               // 钱包
 import OrderList from '../pages/OrderList';         // 订单列表，从账户页进   
 import OrderDetail from '../pages/OrderDetail';
 import TopUp from '../pages/TopUp';                 // 充值
+import TopupIntro from '../pages/TopupInstructions';   // 充值说明
 import Message from '../pages/Message';
 import Transactions from '../pages/Transactions';   // 交易记录，从钱包进
 import ReFund from '../pages/ReFund';               // 退押金
@@ -43,6 +45,7 @@ class Routes extends Component {
                     <Route path="/login" component={Login} />
                     <Route path="/loading" component={Loading} />
                     <Route path="/scan" component={Scan} />
+                    <Route path="/userAgreement" component={UserAgreement} />
                     <Route path="/home" component={Home} />
                     <Route path="/usingDetail" component={UsingDetail} />
                     <Route path="/unpaidDetail" component={UnpaidDetail} />
@@ -58,6 +61,7 @@ class Routes extends Component {
                     <Route path="/orderList" component={OrderList} />
                     <Route path="/orderDetail/:id" component={OrderDetail} />
                     <Route path="/topup" component={TopUp} />
+                    <Route path="/topupIntro" component={TopupIntro} />
                     <Route path="/message" component={Message} />
                     <Route path="/transactions" component={Transactions} />
                     <Route path="/reFund" component={ReFund} />

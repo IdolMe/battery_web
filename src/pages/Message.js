@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-25 21:49:06
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-09 23:22:30
+* @LastEditTime: 2020-05-07 22:48:18
  */
 import React, {useState, useEffect} from 'react';
 import Heading from '../components/Heading';
@@ -27,10 +27,10 @@ function Message() {
   return (
     <div className="message-page">
       <div className='header-wrap'>
-        <Heading />
+        <Heading title='Message' />
       </div>
       <div className='messages'>
-        <h3 className='font-24 title'>Message</h3>
+        <h3 className='font-24 title' />
         {
           messages && messages.list && messages.list.length > 0 ? (
             messages.list.map((item, index) => {

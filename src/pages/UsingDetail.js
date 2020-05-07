@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-26 11:46:07
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-17 00:00:50
+* @LastEditTime: 2020-05-07 22:14:38
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
@@ -134,7 +134,9 @@ function UsingDetail() {
         <p className='font-13 normal descs'>2. Plug the cables back to the powerbank and place the powerbank back to the staion with the arrow signs facing forward. A tone will ring in 3 seconds if the return is successful.</p>
         <p className='font-13 normal descs'>3. If you encountered any issue, please contact our customer service for aid.</p>
       
-        <p className='bottom-service font-13 text-center'>Customer service</p>
+        <p className='bottom-service font-13 text-center' onClick={() => {
+          window.location.href = 'https://m.payby.com/platform/payby/customerService';
+        }}>Customer service</p>
       </div>
     </div>
   );

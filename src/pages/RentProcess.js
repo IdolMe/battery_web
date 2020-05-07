@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-27 12:31:58
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-15 00:09:31
+* @LastEditTime: 2020-05-07 22:43:14
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
@@ -146,7 +146,7 @@ function RentProcess(prop) {
           })
         }
       </div>
-      <p className='agrees font-11'>
+      <p className='agrees font-11' onClick={() => {history.push('/userAgreement')}}>
         I agree to the terms and conditions of the End User License
         {/* <span>《用户协议》</span>
         <span>《充值说明》</span>

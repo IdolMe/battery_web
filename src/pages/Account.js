@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-25 21:49:06
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-13 20:04:51
+* @LastEditTime: 2020-05-07 22:54:19
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
@@ -37,7 +37,8 @@ function Account() {
 
   const gotoPath = (path) => {
     if(path == 'service') {
-      window.location.href = "tel://10086";
+      // window.location.href = "tel://10086";
+      window.location.href = 'https://m.payby.com/platform/payby/customerService';
     } else {
       history.push(`/${path}`);
     }
@@ -48,20 +49,10 @@ function Account() {
       <div className='header-wrap'>
         <Heading title='Account' />
         <div className='headCard margin-auto font-fff'>
-          {/* <img src={AccountMark} alt='mark' className='markImg' /> */}
           <div className='info'>
             <img src={userInfo.profilePictureUrl || AccountHead} className='head' alt='head' />
-            <span className='font-18'>{userInfo.nickname || 'unnamed'}</span>
-          </div>
-          <div className='infos'>
-            <div className='fonts'>
-              <p className='font-14'>ID:{userInfo.account}</p>
-              <p className='font-14'>
-                {userInfo.cellphone}
-                {/* <img src={AccountEdit} className='edit' alt='edit' /> */}
-              </p>
-            </div>
-            {/* <div className='check'>查看特权 ></div> */}
+            <p className='font-18'>{userInfo.nickname || 'unnamed'}</p>
+            <p className='font-14'>ID:{userInfo.account}</p>
           </div>
         </div>
       </div>

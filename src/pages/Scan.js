@@ -20,8 +20,8 @@ const style = {
 
 function Scan() {
   let history = useHistory();
-  const BOXID = getQueryString('boxId');  // 机柜id，APP会带过来
-  const access_token = getQueryString('access_token'); // 用户token，APP会带过来
+  const BOXID = getQueryString('boxId') || 'RL3H042003250001';  // 机柜id，APP会带过来 RL3H042003250001
+  const access_token = getQueryString('access_token') || 'QUAqLHmzSDm6UYM6m1thx8'; // 用户token，APP会带过来
   sessionStorage.setItem('BOXID', BOXID);
 
   // APP的token鉴权换token登录方式
