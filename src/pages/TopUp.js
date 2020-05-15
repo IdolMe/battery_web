@@ -107,9 +107,9 @@ function TopUp() {
       </div>
       <div className='btns'>
         <p className='font-11' onClick={() => {history.push('/topupIntro')}}>
-          <img src={Term} alt="term" />
+          {/* <img src={Term} alt="term" /> */}
           I agree to the terms & conditions of the Pricing Agreement.
-          <img src={Tip} alt="tip" />
+          {/* <img src={Tip} alt="tip" /> */}
         </p>
         <div className="btn radius4 text-center font-fff font-18" onClick={doPay}>Top-up Now</div>
       </div>

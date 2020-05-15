@@ -48,7 +48,7 @@ function Borrow() {
       'userToken': sessionStorage.getItem('USERTOKEN'),
       'client-platform': 'WEB'
     };
-    request(`/v1.0.0/staions/${sessionStorage.getItem('BOXID')}/borrowing`, 'POST', {}, headers ).then(res=> {
+    request(`/v1.0.0/stations/${sessionStorage.getItem('BOXID')}/borrowing`, 'POST', {}, headers ).then(res=> {
       if(res.httpStatusCode === 200) {
         // 借用成功，进度条设置为100，取消定时器。显示借用成功页面
         setPercent(100);

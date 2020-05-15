@@ -22,6 +22,7 @@ function LoadingPage() {
   let history = useHistory();
   const access_token = getQueryString('access_token'); // 用户token，APP会带过来 QUAqLHmzSDm6UYM6m1thx8
 
+  // const access_token = 'QUAqLHmzSDm6UYM6m1thx8';
   // APP的token鉴权换token登录方式
   useEffect(() => {
     const headers = {

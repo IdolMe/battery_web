@@ -12,8 +12,8 @@ import {request} from '../utils/request';
 import '../styles/home.scss';
 import {Home_bg, Home_my, Home_exit, Home_scan, Home_using, Home_toPay} from '../assets/image/assetsImages';
 
-import VConsole from 'vconsole';
-var vConsole = new VConsole();
+// import VConsole from 'vconsole';
+// var vConsole = new VConsole();
 
 const msgs = [{
   img: Home_using,
@@ -93,7 +93,7 @@ function Home() {
       'userToken': sessionStorage.getItem('USERTOKEN'),
       'client-platform': 'WEB'
     };
-    request(`/v1.0.0/staions/${sessionStorage.getItem('BOXID')}`, 'GET', {}, headers ).then(res=> {
+    request(`/v1.0.0/stations/${sessionStorage.getItem('BOXID')}`, 'GET', {}, headers ).then(res=> {
       if(res.httpStatusCode === 200) {
         setStationData(res.data);
         setTimeoutCount(timeoutCount + 1);

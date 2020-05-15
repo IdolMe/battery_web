@@ -40,7 +40,7 @@ function Scan() {
           'userToken': res1.data.token,
           'client-platform': 'WEB'
         };
-        request(`/v1.0.0/staions/${sessionStorage.getItem('BOXID')}`, 'GET', {}, headers, true ).then(res2=> {
+        request(`/v1.0.0/stations/${sessionStorage.getItem('BOXID')}`, 'GET', {}, headers, true ).then(res2=> {
           if(res2.httpStatusCode === 200) {
             const stationData = res2.data;
             if(stationData.station.status == 'REPAIR') {
