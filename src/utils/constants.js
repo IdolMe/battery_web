@@ -5,7 +5,7 @@
 * @LastEditors: huguantao
 * @LastEditTime: 2020-04-13 20:20:01
  */
-let urlPrefix = "https://powerbank.zodme.com/api";
+let urlPrefix = "http://powerbank.zodme.com/api";
 const IOSOpenUrl = "ios://";
 const androidOpenUrl = "android://";
 
