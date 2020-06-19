@@ -3,17 +3,17 @@
 * @author: huguantao
 * @Date: 2020-02-21 23:37:34
 * @LastEditors: huguantao
-* @LastEditTime: 2020-05-07 22:36:27
+* @LastEditTime: 2020-06-19 22:58:14
  */
 import React,{Component} from 'react';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
 
-import Login from '../pages/Login';
+// import Login from '../pages/Login';
 import Home from '../pages/Home';
 import UsingDetail from '../pages/UsingDetail';     // 使用中的详情
 import UnpaidDetail from '../pages/UnpaidDetail';   // 已归还未支付的详情
 
-import Loading from '../pages/Loading';             // 过渡页 APP点击进来
+// import Loading from '../pages/Loading';             // 过渡页 APP点击进来,逻辑直接放进home页面
 import Scan from '../pages/Scan';                   // 过渡页 app扫码进来
 import UserAgreement from '../pages/UserAgreement'; // 过渡页 app扫码进来
 import RentProcess from '../pages/RentProcess';     // 租借流程：分付了押金和没付押金的
@@ -41,9 +41,9 @@ class Routes extends Component {
         return (
             <BrowserRouter>
                 <Switch>
-                    <Route path="/" component={Loading} exact />
-                    <Route path="/login" component={Login} />
-                    <Route path="/loading" component={Loading} />
+                    <Route path="/" component={Home} exact />
+                    {/* <Route path="/login" component={Login} /> */}
+                    <Route path="/loading" component={Home} />
                     <Route path="/scan" component={Scan} />
                     <Route path="/userAgreement" component={UserAgreement} />
                     <Route path="/home" component={Home} />
@@ -67,7 +67,7 @@ class Routes extends Component {
                     <Route path="/reFund" component={ReFund} />
                     <Route path="/reFundSuccess" component={ReFundSuccess} />
 
-                    <Route component={Loading} /> 
+                    <Route component={Home} /> 
                 </Switch>
             </BrowserRouter>
         )

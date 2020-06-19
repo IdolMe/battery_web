@@ -3,12 +3,13 @@
 * @author: huguantao
 * @Date: 2020-03-09 15:49:17
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-22 21:35:08
+* @LastEditTime: 2020-06-19 22:56:59
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
 import { Modal } from 'antd';
 import {request} from '../utils/request';
+import {getQueryString} from '../utils/helper';
 import '../styles/home.scss';
 import {Home_bg, Home_my, Home_exit, Home_scan, Home_using, Home_toPay} from '../assets/image/assetsImages';
 
@@ -31,6 +32,7 @@ const msgs = [{
 
 function Home() {
   const [visible, setVisible] = useState(false);
+  const [authFail, setAuthFail] = useState(false);
   const [tipMsg, setTipMsg] = useState({ img: '', title: '', desc: [], btn: '', path: ''});
   const [userData, setUserData] = useState({});
   const [stationData, setStationData] = useState({});
@@ -39,12 +41,35 @@ function Home() {
 
   let history = useHistory();
   
+  // loading页面的逻辑放到这里，做鉴权
   useEffect(() => {
-    const headers = {
+    const access_token = getQueryString('access_token');
+    console.log(access_token)
+    if(access_token && access_token.length > 5) {
+      const headers = {
+        'access_token': access_token,
+        'client-platform': 'WEB',
+      };
+      request(`/v1.0.0/authz`, 'POST', {}, headers, false, true ).then(resp=> {
+        if(resp.httpStatusCode === 200) {
+          sessionStorage.setItem('USERTOKEN', resp.data.token);
+          getUserStatus()
+        } else {
+          setAuthFail(true);
+        }
+      })
+    } else {
+      sessionStorage.getItem('USERTOKEN') && getUserStatus();
+    }
+    
+  }, []);
+
+  const getUserStatus = () => {
+    const headers1 = {
       'userToken': sessionStorage.getItem('USERTOKEN'),
       'client-platform': 'WEB'
     };
-    request(`/v1.0.0/users/status`, 'GET', {}, headers ).then(res=> {
+    request(`/v1.0.0/users/status`, 'GET', {}, headers1 ).then(res=> {
       if(res.httpStatusCode === 200) {
         setUserData(res.data);
         // 租用状态 USING：使用中， OVERDRAFT：未结清， FINISH：完成，OVERDUE_SETTLEMENT：逾期结算扣押金，NONE：没有订单
@@ -60,11 +85,13 @@ function Home() {
         // }
       }
     })
-
-  }, []);
+  }
 
   // 扫二维码，拿到boxid，查询机柜状态，然后再走start函数
   const scan = () => {
+    if(authFail) {
+      return false;
+    }
     window.ToPayJSBridge.invoke(
       'scanQRCode',
       {
@@ -142,6 +169,9 @@ function Home() {
   }
 
   const gotoMy = () => {
+    if(authFail) {
+      return false;
+    }
     history.push(`/account`);
   }
 
