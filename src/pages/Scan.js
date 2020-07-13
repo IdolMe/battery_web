@@ -3,7 +3,7 @@
 * @author: huguantao
 * @Date: 2020-03-25 21:49:06
 * @LastEditors: huguantao
-* @LastEditTime: 2020-04-22 21:52:26
+* @LastEditTime: 2020-07-13 20:53:52
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
@@ -45,24 +45,24 @@ function Scan() {
             const stationData = res2.data;
             if(stationData.station.status == 'REPAIR') {
               // 机柜状态：{ONLINE：在线, REPAIR：维修中, NOT_FIND：没有发现机柜,TIMEOUT: 超时}
-              history.push(`/errorStatus/t2`);
+              history.replace(`/errorStatus/t2`);
             } else if(stationData.station.status == 'NOT_FIND') {
-              history.push(`/errorStatus/t1`);
+              history.replace(`/errorStatus/t1`);
             } else if(stationData.station.status == 'TIMEOUT') {
-              history.push(`/errorStatus/t0`);
+              history.replace(`/errorStatus/t0`);
             } else {
               request(`/v1.0.0/users/status`, 'GET', {}, headers, true ).then(res3=> {
                 if(res3.httpStatusCode === 200) {
                   // 租用状态 USING：使用中， OVERDRAFT：未结清， FINISH：完成，OVERDUE_SETTLEMENT：逾期结算扣押金，NONE：没有订单
                   if (res3.data.status == 'OVERDUE_SETTLEMENT') {
-                    history.push(`/payDeposit`);
+                    history.replace(`/payDeposit`);
                   } else if(res3.data.status == 'USING' || res3.data.status == 'OVERDRAFT') {
-                    history.push(`/home`);
+                    history.replace(`/home`);
                   } else {
                     if(stationData.hasDeposit) {
-                      history.push(`/rentProcess/paid`);
+                      history.replace(`/rentProcess/paid`);
                     } else {
-                      history.push(`/rentProcess/unpaid`);
+                      history.replace(`/rentProcess/unpaid`);
                     }
                   }
                 }
