@@ -5,12 +5,12 @@
 * @LastEditors: huguantao
 * @LastEditTime: 2020-04-13 20:20:01
  */
-let urlPrefix = "http://powerbank.zodme.com/api";
+let urlPrefix = "http://test.powerbank.zodme.com/api";
 const IOSOpenUrl = "ios://";
 const androidOpenUrl = "android://";
 
 if(window.location.href.indexOf('qa') > -1 || window.location.href.indexOf('localhost') > -1) {
-    urlPrefix = "http://powerbank.zodme.com/api";
+    urlPrefix = "http://test.powerbank.zodme.com/api";
 }
 export {
     urlPrefix,

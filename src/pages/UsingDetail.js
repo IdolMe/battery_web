@@ -23,11 +23,14 @@ function UsingDetail() {
   });
 
   useEffect(() => {
+    window.addEventListener("popstate", function(){
+      history.push('/home');
+  }, false);
     checkStatus();
     const intervalCheck = setInterval(() => {
-      // 30秒查一次状态，跳转
+      // 5秒查一次状态，跳转
       checkStatus();
-    }, 30000);
+    }, 3000);
 
     // 监听touch事件，下拉刷新
     let parent = document.querySelector('.touch-zone');
@@ -57,7 +60,7 @@ function UsingDetail() {
       'userToken': sessionStorage.getItem('USERTOKEN'),
       'client-platform': 'WEB'
     }
-    request(`/v1.0.0/users/status`, 'GET', {}, headers ).then(res=> {
+    request(`/v1.0.0/users/status`, 'GET', {}, headers,true ).then(res=> {
       if(res.httpStatusCode === 200) {
         // status=OVERDRAFT   paymentdata就是未支付的订单详情
         // status=USING   usageData是使用中的详情  
@@ -130,8 +133,8 @@ function UsingDetail() {
         </div>
 
         <p className='font-13 red descs'><img src={Tip} alt='tip' />How to return a powerbank</p>
-        <p className='font-13 normal descs'>1. Find a station in the app with an empty returning slot.</p>
-        <p className='font-13 normal descs'>2. Plug the cables back to the powerbank and place the powerbank back to the staion with the arrow signs facing forward. A tone will ring in 3 seconds if the return is successful.</p>
+        <p className='font-13 normal descs'>1. Find a station with an empty returning slot.</p>
+        <p className='font-13 normal descs'>2. Plug the cables back to the powerbank and place the powerbank back to the station with the arrow signs facing forward. A tone will ring in 3 seconds if the return is successful.</p>
         <p className='font-13 normal descs'>3. If you encountered any issue, please contact our customer service for aid.</p>
       
         <p className='bottom-service font-13 text-center' onClick={() => {

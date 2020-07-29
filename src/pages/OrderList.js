@@ -57,7 +57,7 @@ function OrderList() {
         {
           orders.list && orders.list.length > 0 ? (
             orders.list.map((item, index) => {
-              return <div className='order radius4' key={index}>
+              return <div className='order radius4' key={index} onClick={()=>detail(item.orderNumber)}>
                 <div className='head'>
                   <span className='font-14'><img src={Checked} alt='check' />{item.borrowStatus}</span>
                   <span className='font-14'>AED {item.amount}</span>
@@ -66,7 +66,7 @@ function OrderList() {
                   <p>Start time：{item.type == 'RENT' ? item.borrowStartTime : item.createTimestamp}</p>
                   {item.type == 'RENT' ? <p>Station：{item.borrowStation && item.borrowStation.address}</p> : null }
                   <p>Order Number：{item.orderNumber}</p>
-                  <div className='detail font-12 text-center' onClick={()=>detail(item.orderNumber)}>Details</div>
+                  <div className='detail font-12 text-center'>Details</div>
                 </div>
               </div>
             })

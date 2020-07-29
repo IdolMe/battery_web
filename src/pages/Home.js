@@ -5,13 +5,13 @@
 * @LastEditors: huguantao
 * @LastEditTime: 2020-06-19 22:56:59
  */
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Modal } from 'antd';
-import {request} from '../utils/request';
-import {getQueryString} from '../utils/helper';
+import { request } from '../utils/request';
+import { getQueryString } from '../utils/helper';
 import '../styles/home.scss';
-import {Home_bg, Home_my, Home_exit, Home_scan, Home_using, Home_toPay} from '../assets/image/assetsImages';
+import { Home_bg, Home_my, Home_exit, Home_scan, Home_using, Home_toPay } from '../assets/image/assetsImages';
 
 // import VConsole from 'vconsole';
 // var vConsole = new VConsole();
@@ -22,7 +22,7 @@ const msgs = [{
   desc: ['You have a in-use powerbank', 'Thank you for your trust and support'],
   btn: 'View details',
   path: 'usingDetail'
-},{
+}, {
   img: Home_toPay,
   title: 'Tips',
   desc: ['You have an unpaid order. ', 'Please finish the previous payment to proceed.', 'Thank you.'],
@@ -33,25 +33,34 @@ const msgs = [{
 function Home() {
   const [visible, setVisible] = useState(false);
   const [authFail, setAuthFail] = useState(false);
-  const [tipMsg, setTipMsg] = useState({ img: '', title: '', desc: [], btn: '', path: ''});
+  const [tipMsg, setTipMsg] = useState({ img: '', title: '', desc: [], btn: '', path: '' });
   const [userData, setUserData] = useState({});
   const [stationData, setStationData] = useState({});
 
   const [timeoutCount, setTimeoutCount] = useState(0);  // 如果机柜超时，请求三次
 
   let history = useHistory();
-  
+
   // loading页面的逻辑放到这里，做鉴权
   useEffect(() => {
+    const userToken = sessionStorage.getItem('USERTOKEN');
+    if (userToken) {
+      getUserStatus();
+    } else {
+      authenticate();
+    }
+
+  }, []);
+  const authenticate = () => {
     const access_token = getQueryString('access_token');
     console.log(access_token)
-    if(access_token && access_token.length > 5) {
+    if (access_token && access_token.length > 5) {
       const headers = {
         'access_token': access_token,
         'client-platform': 'WEB',
       };
-      request(`/v1.0.0/authz`, 'POST', {}, headers, false, true ).then(resp=> {
-        if(resp.httpStatusCode === 200) {
+      request(`/v1.0.0/authz`, 'POST', {}, headers, false, true).then(resp => {
+        if (resp.httpStatusCode === 200) {
           sessionStorage.setItem('USERTOKEN', resp.data.token);
           getUserStatus()
         } else {
@@ -61,22 +70,21 @@ function Home() {
     } else {
       sessionStorage.getItem('USERTOKEN') && getUserStatus();
     }
-    
-  }, []);
+  }
 
   const getUserStatus = () => {
     const headers1 = {
       'userToken': sessionStorage.getItem('USERTOKEN'),
       'client-platform': 'WEB'
     };
-    request(`/v1.0.0/users/status`, 'GET', {}, headers1 ).then(res=> {
-      if(res.httpStatusCode === 200) {
+    request(`/v1.0.0/users/status`, 'GET', {}, headers1,true).then(res => {
+      if (res.httpStatusCode === 200) {
         setUserData(res.data);
         // 租用状态 USING：使用中， OVERDRAFT：未结清， FINISH：完成，OVERDUE_SETTLEMENT：逾期结算扣押金，NONE：没有订单
-        if(res.data.status == 'USING') {
+        if (res.data.status == 'USING') {
           setVisible(true);
           setTipMsg(msgs[0]);
-        } else if(res.data.status == 'OVERDRAFT') {
+        } else if (res.data.status == 'OVERDRAFT') {
           setVisible(true);
           setTipMsg(msgs[1]);
         }
@@ -89,7 +97,7 @@ function Home() {
 
   // 扫二维码，拿到boxid，查询机柜状态，然后再走start函数
   const scan = () => {
-    if(authFail) {
+    if (authFail) {
       return false;
     }
     window.ToPayJSBridge.invoke(
@@ -100,10 +108,10 @@ function Home() {
       function (data) {
         // 拿到扫码的数据，截取boxId参数并存入缓存
         const param = data.split('?')[1].split('&');
-        for(let i=0; i<param.length; i++) {
-          if(param[i].indexOf('boxId') > -1) {
+        for (let i = 0; i < param.length; i++) {
+          if (param[i].indexOf('boxId') > -1) {
             sessionStorage.setItem('BOXID', param[i].split('=')[1]);
-            if(userData.status == 'OVERDUE_SETTLEMENT') {
+            if (userData.status == 'OVERDUE_SETTLEMENT') {
               history.push(`/payDeposit`);
             } else {
               fetchStationData()
@@ -120,8 +128,8 @@ function Home() {
       'userToken': sessionStorage.getItem('USERTOKEN'),
       'client-platform': 'WEB'
     };
-    request(`/v1.0.0/stations/${sessionStorage.getItem('BOXID')}`, 'GET', {}, headers ).then(res=> {
-      if(res.httpStatusCode === 200) {
+    request(`/v1.0.0/stations/${sessionStorage.getItem('BOXID')}`, 'GET', {}, headers).then(res => {
+      if (res.httpStatusCode === 200) {
         setStationData(res.data);
         setTimeoutCount(timeoutCount + 1);
         start(res.data);
@@ -130,32 +138,32 @@ function Home() {
   }
 
   const start = (stationData) => {
-    if(stationData.station.status == 'REPAIR') {
+    if (stationData.station.status == 'REPAIR') {
       // 机柜状态：{ONLINE：在线, REPAIR：维修中, NOT_FIND：没有发现机柜,TIMEOUT: 超时}
       history.push(`/errorStatus/t2`);
-    } else if(stationData.station.status == 'NOT_FIND') {
+    } else if (stationData.station.status == 'NOT_FIND') {
       history.push(`/errorStatus/t1`);
-    } else if(stationData.station.status == 'TIMEOUT') {
-      if(timeoutCount >= 3) {
+    } else if (stationData.station.status == 'TIMEOUT') {
+      if (timeoutCount >= 3) {
         history.push(`/errorStatus/t0`);
       } else {
         setTimeout(() => {
           fetchStationData();
         }, 600);
       }
-    } else if(stationData.station.status == 'ONLINE') {
+    } else if (stationData.station.status == 'ONLINE') {
       setTimeoutCount(0);
 
       // 租用状态 USING：使用中， OVERDRAFT：未结清，
-      if(userData.status == 'USING') {
+      if (userData.status == 'USING') {
         setVisible(true);
         setTipMsg(msgs[0]);
-      } else if(userData.status == 'OVERDRAFT') {
+      } else if (userData.status == 'OVERDRAFT') {
         setVisible(true);
         setTipMsg(msgs[1]);
       }
       // 根据是否交了押金跳转
-      else if(stationData.hasDeposit) {
+      else if (stationData.hasDeposit) {
         history.push(`/rentProcess/paid`);
       } else {
         history.push(`/rentProcess/unpaid`);
@@ -169,7 +177,7 @@ function Home() {
   }
 
   const gotoMy = () => {
-    if(authFail) {
+    if (authFail) {
       return false;
     }
     history.push(`/account`);
@@ -207,7 +215,7 @@ function Home() {
         mask={false}
         maskClosable={false}
         zIndex={1000}
-        onCancel={()=> {setVisible(false)}}
+        onCancel={() => { setVisible(false) }}
         className='home-modal-wrap'
       >
         <div id="home-modal" className="text-center">
@@ -218,7 +226,7 @@ function Home() {
               return <p className="font-12" key={index}>{item}</p>
             })
           }
-          <div className="btn radius4 font-fff font-14" onClick={()=>gotoDetail(tipMsg.path)}>{tipMsg.btn}</div>
+          <div className="btn radius4 font-fff font-14" onClick={() => gotoDetail(tipMsg.path)}>{tipMsg.btn}</div>
         </div>
       </Modal>
     </div>

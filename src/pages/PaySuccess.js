@@ -7,7 +7,7 @@
  */
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import {request} from '../utils/request';
+import { request } from '../utils/request';
 import Heading from '../components/Heading';
 import '../styles/paySuccess.scss';
 
@@ -16,12 +16,15 @@ function PaySuccess() {
   let history = useHistory();
 
   useEffect(() => {
+    window.addEventListener("popstate", function () {
+      history.push('/home');
+    }, false);
     const headers = {
       'userToken': sessionStorage.getItem('USERTOKEN'),
       'client-platform': 'WEB'
     };
-    request(`/v1.0.0/users/status`, 'GET', {}, headers ).then(res=> {
-      if(res.httpStatusCode === 200) {
+    request(`/v1.0.0/users/status`, 'GET', {}, headers).then(res => {
+      if (res.httpStatusCode === 200) {
         setOrderDetail(res.data.paymentData)
       }
     })
@@ -47,7 +50,7 @@ function PaySuccess() {
           <p className='flex'><span>Deposit</span><span>AED {orderDetail.depositAmount}</span></p>
         </div>
         <div className='btns font-18 padding flex'>
-          <div className='btn radius4 text-center'  onClick={goDetail}>Order Details</div>
+          <div className='btn radius4 text-center' onClick={goDetail}>Order Details</div>
           <div className='btn radius4 text-center green' onClick={goHome}>Back to home</div>
         </div>
       </div>
