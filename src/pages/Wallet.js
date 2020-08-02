@@ -37,7 +37,7 @@ function Wallet() {
   
   const deposit = () => {
     if(userInfo.hasDeposit) {
-      history.push(`/payDeposit?from=wallet`);
+      history.push(`/reFund`);
     } else {
       history.push(`/payDeposit?from=wallet`);
     }
