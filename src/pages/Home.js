@@ -61,8 +61,8 @@ function Home() {
       };
       request(`/v1.0.0/authz`, 'POST', {}, headers, false, true).then(resp => {
         if (resp.httpStatusCode === 200) {
-          // sessionStorage.setItem('USERTOKEN', resp.data.token);
-          sessionStorage.setItem('USERTOKEN', '1405c7746ab5e44af90ee497b9d9f7d3efdb07f7a9790b4b0f7d7df722325223');
+          sessionStorage.setItem('USERTOKEN', resp.data.token);
+          // sessionStorage.setItem('USERTOKEN', '1405c7746ab5e44af90ee497b9d9f7d3efdb07f7a9790b4b0f7d7df722325223');
           getUserStatus()
         } else {
           setAuthFail(true);

@@ -25,7 +25,7 @@ function Account() {
 
   useEffect(() => {
     const headers = {
-      'userToken': '1405c7746ab5e44af90ee497b9d9f7d3efdb07f7a9790b4b0f7d7df722325223',
+      'userToken': sessionStorage.getItem('USERTOKEN'),
       'client-platform': 'WEB',
     };
     request(`/v1.0.0/login`, 'GET', {}, headers ).then(res=> {
