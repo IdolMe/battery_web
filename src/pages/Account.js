@@ -25,7 +25,7 @@ function Account() {
 
   useEffect(() => {
     const headers = {
-      'userToken': sessionStorage.getItem('USERTOKEN'),
+      'userToken': '1405c7746ab5e44af90ee497b9d9f7d3efdb07f7a9790b4b0f7d7df722325223',
       'client-platform': 'WEB',
     };
     request(`/v1.0.0/login`, 'GET', {}, headers ).then(res=> {
@@ -38,7 +38,7 @@ function Account() {
   const gotoPath = (path) => {
     if(path == 'service') {
       // window.location.href = "tel://10086";
-      window.location.href = 'https://m.payby.com/platform/payby/customerService';
+      history.push('/customerService')
     } else {
       history.push(`/${path}`);
     }

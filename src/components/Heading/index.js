@@ -19,7 +19,7 @@ function Heading(prop) {
 
   useEffect(() => {
     if(prop.type && prop.type == 'exit') {
-      setTitle('');
+      setTitle(''); 
     }
   }, [prop])
 

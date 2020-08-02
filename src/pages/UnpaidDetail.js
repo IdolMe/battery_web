@@ -7,7 +7,7 @@
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
-import { Modal } from 'antd';
+import { Modal } from 'antd-mobile';
 import Toast from '../components/Toast/Toast';
 import Heading from '../components/Heading';
 import {request} from '../utils/request';

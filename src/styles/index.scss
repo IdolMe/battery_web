@@ -32,6 +32,17 @@ body {
 	// font-family: 'Roboto', "Heiti SC", 'STHeiti', sans-serif;
 }
 
+html, body {
+	height: 100vh;
+}
+.am-pull-to-refresh-indicator {
+	font-size: 12px;
+}
+
+* {
+	box-sizing: border-box;
+}
+
 .img-100 {
 	display: block;
 	width: 100%;
@@ -81,6 +92,17 @@ body {
 }
 .radius4 {
 	border-radius: 4px;
+}
+
+.am-modal-transparent {
+	width: 290px !important;
+	box-shadow: 0 0 15px 0 rgba(0,0,0,0.15);
+	border-radius: 4px;
+	.am-modal-content {
+		.am-modal-body {
+			padding: 16px;
+		}
+	}
 }
 
 .ant-modal {

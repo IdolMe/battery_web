@@ -7,7 +7,7 @@
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
-import { Progress, Modal } from 'antd';
+import { Progress, Modal } from 'antd-mobile';
 import Heading from '../components/Heading';
 import {request} from '../utils/request';
 import '../styles/borrow.scss';
@@ -62,7 +62,7 @@ function Borrow() {
 
         // 开始定时设置超时未取走的状态; 如果超时没取走，则提示
         takeInterval = setInterval(() => {
-          if(takeTime <=0) {
+          if(takeTime <= 0) {
             clearInterval(takeInterval);
 
             history.push('/usingDetail');
@@ -103,7 +103,11 @@ function Borrow() {
             <img src={PowerBankDefault} alt='slot' className='slot' />
             <div className='percentBar'>
               <span className='tip font-13 text-center' style={{left: `${percent}%`}}>{percent}%</span>
-              <Progress percent={percent} showInfo={false} strokeColor="#ffffff" />
+              <Progress percent={percent} showInfo={false} position='normal' unfilled={true} strokeColor="#ffffff" barStyle={{
+                borderColor: '#ffffff',
+                borderWidth: '3px',
+                borderRadius: '4px'
+              }}/>
               <p className='font-fff text-center font-13'>Please wait</p>
             </div>
           </div>

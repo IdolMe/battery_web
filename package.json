@@ -8,7 +8,8 @@
     "@types/react-transition-group": "^4.2.3",
     "@typescript-eslint/eslint-plugin": "^2.2.0",
     "@typescript-eslint/parser": "^2.2.0",
-    "antd": "^3.24.3",
+    "antd-mobile": "^3.24.3",
+    "antd-mobile-mobile": "^2.3.3",
     "axios": "^0.19.0",
     "babel-eslint": "10.0.3",
     "babel-jest": "^24.9.0",
@@ -154,7 +155,8 @@
     ]
   },
   "devDependencies": {
+    "babel-plugin-import": "^1.13.0",
     "node-sass": "^4.13.1",
-    "webpack-bundle-analyzer": "^3.7.0"
+    "webpack-bundle-analyzer": "^3.8.0"
   }
 }

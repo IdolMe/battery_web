@@ -7,7 +7,7 @@
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
-import { Select } from 'antd';
+import { Select } from 'antd-mobile';
 import {getQueryString} from '../utils/helper';
 import {request} from '../utils/request';
 import {Logo, LoginGoDown} from '../assets/image/assetsImages';

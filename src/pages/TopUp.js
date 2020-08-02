@@ -7,7 +7,7 @@
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
-import { Modal } from 'antd';
+import { Modal } from 'antd-mobile';
 import Toast from '../components/Toast/Toast';
 import Heading from '../components/Heading';
 import {request} from '../utils/request';
@@ -52,8 +52,7 @@ function TopUp() {
             token: resData.token // For order token, refer to the token in interactionParams returned from the transaction creation interface
           },
           function(data) {
-            const res = JSON.parse(data)
-            if (res.status === 'success') {
+            if (data === 'success') {
               // 支付成功之后停留五秒等待结果同步，然后展示成功并跳转
               Toast.show({type:'loading'});
               setTimeout(() => {
@@ -87,7 +86,6 @@ function TopUp() {
           {
             rechargeData && rechargeData.length > 0 ? (
               rechargeData.map((item, index) => {
-                console.log(item)
                 return <div className={`amount font-14 ${index == selectedIndex ? 'checkedAmount' : ''}`} 
                   onClick={()=>setSelectIndex(index)} key={index}>
                   AED<span className='font-32'>{item.amount}</span></div>

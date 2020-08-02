@@ -7,7 +7,7 @@
  */
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Carousel } from 'antd';
+import { Carousel } from 'antd-mobile';
 import Heading from '../components/Heading';
 import { request } from '../utils/request';
 import { ProcessSwip1, ProcessSwip2, ProcessSwip3, ProcessIcon1, ProcessIcon2, ProcessIcon3, ProcessIcon4 } from '../assets/image/assetsImages';

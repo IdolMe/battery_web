@@ -7,14 +7,14 @@
  */
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Modal } from 'antd';
-import { request } from '../utils/request';
-import { getQueryString } from '../utils/helper';
+import { Modal } from 'antd-mobile';
+import {request} from '../utils/request';
+import {getQueryString} from '../utils/helper';
 import '../styles/home.scss';
 import { Home_bg, Home_my, Home_exit, Home_scan, Home_using, Home_toPay } from '../assets/image/assetsImages';
 
-// import VConsole from 'vconsole';
-// var vConsole = new VConsole();
+import VConsole from 'vconsole';
+var vConsole = new VConsole();
 
 const msgs = [{
   img: Home_using,
@@ -61,7 +61,8 @@ function Home() {
       };
       request(`/v1.0.0/authz`, 'POST', {}, headers, false, true).then(resp => {
         if (resp.httpStatusCode === 200) {
-          sessionStorage.setItem('USERTOKEN', resp.data.token);
+          // sessionStorage.setItem('USERTOKEN', resp.data.token);
+          sessionStorage.setItem('USERTOKEN', '1405c7746ab5e44af90ee497b9d9f7d3efdb07f7a9790b4b0f7d7df722325223');
           getUserStatus()
         } else {
           setAuthFail(true);
@@ -79,6 +80,7 @@ function Home() {
     };
     request(`/v1.0.0/users/status`, 'GET', {}, headers1,true).then(res => {
       if (res.httpStatusCode === 200) {
+        console.log(res.data)
         setUserData(res.data);
         // 租用状态 USING：使用中， OVERDRAFT：未结清， FINISH：完成，OVERDUE_SETTLEMENT：逾期结算扣押金，NONE：没有订单
         if (res.data.status == 'USING') {
@@ -209,14 +211,10 @@ function Home() {
       <Modal
         title=""
         visible={visible}
+        transparent
         closable={false}
         footer={[]} // 设置footer为空，去掉 取消 确定默认按钮
-        destroyOnClose={true}
-        mask={false}
-        maskClosable={false}
-        zIndex={1000}
         onCancel={() => { setVisible(false) }}
-        className='home-modal-wrap'
       >
         <div id="home-modal" className="text-center">
           <img src={tipMsg.img} alt="tip-img" className="topImg" />

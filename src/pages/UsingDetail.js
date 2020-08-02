@@ -138,7 +138,7 @@ function UsingDetail() {
         <p className='font-13 normal descs'>3. If you encountered any issue, please contact our customer service for aid.</p>
       
         <p className='bottom-service font-13 text-center' onClick={() => {
-          window.location.href = 'https://m.payby.com/platform/payby/customerService';
+           history.push('/customerService');
         }}>Customer service</p>
       </div>
     </div>
