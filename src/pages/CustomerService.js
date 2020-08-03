@@ -8,7 +8,6 @@
 import React, {useState, useEffect} from 'react';
 import Heading from '../components/Heading';
 import ReactDOM from 'react-dom';
-import '../styles/wallet.scss';
 
 function CustomerService() {
   const [height, setHeight] = useState(document.documentElement.clientHeight);
@@ -31,7 +30,6 @@ function CustomerService() {
         scrolling='no'
         frameBorder={0}
       />
-      
     </div>
   );
 }

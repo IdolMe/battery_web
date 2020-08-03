@@ -32,6 +32,54 @@ function PayDeposit() {
   }, [])
 
   let history = useHistory();
+
+  const retry = (orderId, time, interval) => {
+    let initalTime = 0;
+    const headers = {
+      'userToken': sessionStorage.getItem('USERTOKEN'),
+      'client-platform': 'WEB'
+    };
+    const fn = () => {
+      request(`/v1.0.0/orders/${orderId}`, 'GET', {}, headers).then(res=> {
+        if(res.httpStatusCode === 200) {
+          initalTime++;
+          if (res.data.paymentStatus === 'PAID') {
+            Toast.show({type:'loading'});
+            setTimeout(() => {
+              Toast.hide();
+              setVisible(true)
+              setTimeout(() => {
+                setVisible(false);
+                // 付完押金去往租借页面
+                const from = getQueryString('from')
+                if (from === 'wallet') {
+                  history.push(`/wallet`);
+                  return;
+                }
+                if(sessionStorage.getItem('BOXID')) {
+                  history.push(`/rentProcess/paid`);
+                  return;
+                } 
+
+                history.push(`/home`);
+              }, 1500)
+            }, 3500);
+            return;
+          }
+          
+          if (initalTime >= time) {
+            Toast.show({mess: 'Payment failed. Please try again later.'});
+            return;
+          }
+          setTimeout(() => {
+            fn();
+          }, interval)
+        }
+      })
+    }
+    fn();
+  }
+
   const doPay = () => {
     const reqData = {
       rechargeItemId: rechargeData.id,
@@ -75,10 +123,15 @@ function PayDeposit() {
                   history.push(`/home`);
                 }, 1500)
               }, 3500);
-
-            } else {
-              Toast.show({mess: 'Payment failed. Please try again later.'});
+              return;
             }
+
+            if (data === 'paying') {
+              retry(resData.orderNumber, 2, 300);
+              return;
+            }
+            
+            Toast.show({mess: 'Payment failed. Please try again later.'});
           }
         )
 
