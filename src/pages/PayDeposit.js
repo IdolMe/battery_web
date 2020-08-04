@@ -122,7 +122,7 @@ function PayDeposit() {
 
                   history.push(`/home`);
                 }, 1500)
-              }, 3500);
+              }, 1500);
               return;
             }
 

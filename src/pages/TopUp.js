@@ -102,7 +102,7 @@ function TopUp() {
                   // 付完押金去往租借页面
                   history.push(`/wallet`);
                 }, 1500)
-              }, 3500);
+              }, 1500);
               return;
             } 
 
