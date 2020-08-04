@@ -12,6 +12,7 @@ import "lib-flexible"
 
 import * as serviceWorker from './serviceWorker';
 import './styles/index.scss';
+import './utils/promise.js';
 
 ReactDOM.render(
     <Routes />, document.getElementById('root')
