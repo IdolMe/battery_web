@@ -69,7 +69,7 @@ function UnpaidDetail() {
                 history.push(`/paySuccess`);
                 // history.push(`/home`);
               }, 1500)
-            }, 3500);
+            }, 1500);
             return;
           }
           
@@ -119,7 +119,7 @@ function UnpaidDetail() {
                 }, 1500)
               }, 1500);
               return;
-            } 
+            }
 
             if (data === 'paying') {
               retry(resData.orderNumber, 2, 300);
