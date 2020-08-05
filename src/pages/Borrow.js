@@ -65,7 +65,7 @@ function Borrow() {
           if(takeTime <= 0) {
             clearInterval(takeInterval);
 
-            history.push('/usingDetail');
+            history.replace('/usingDetail');
             // setVisible(true)  这是超时的弹窗提示，改成直接跳转
           }
           setTakeTime(takeTime--);

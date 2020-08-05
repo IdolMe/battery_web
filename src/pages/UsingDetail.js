@@ -65,17 +65,17 @@ function UsingDetail() {
         switch(res.data.status) {
           case 'OVERDRAFT':
             // 已完成未支付
-            history.push('/unpaidDetail');
+            history.replace('/unpaidDetail');
             break;
           case 'FINISH': 
             // history.push(`/orderDetail/${res.data.paymentData.orderNumber}`);
-            history.push(`/paySuccess`);
+            history.replace(`/paySuccess`);
             break;
           case 'OVERDUE_SETTLEMENT':
-            history.push(`/payDeposit`);
+            history.replace(`/payDeposit`);
             break;
           case 'NONE':
-            history.push('/home');
+            history.replace('/home');
             break;
           default: 
             setOrderData(res.data.usageData);
