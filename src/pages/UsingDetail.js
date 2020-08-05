@@ -23,9 +23,6 @@ function UsingDetail() {
   });
 
   useEffect(() => {
-    window.addEventListener("popstate", function(){
-      history.push('/home');
-  }, false);
     checkStatus();
     const intervalCheck = setInterval(() => {
       // 5秒查一次状态，跳转
