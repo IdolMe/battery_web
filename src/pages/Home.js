@@ -52,7 +52,7 @@ function Home() {
 
   }, []);
   const authenticate = () => {
-    const access_token = getQueryString('access_token')||'RxJ4k6psaGybE2WoZYQeKj';
+    const access_token = getQueryString('access_token')||'FiSKZEfxotEvSQSdqLXhCn';
     console.log(access_token)
     if (access_token && access_token.length > 5) {
       const headers = {
