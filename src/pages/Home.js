@@ -13,8 +13,8 @@ import {getQueryString} from '../utils/helper';
 import '../styles/home.scss';
 import { Home_bg, Home_my, Home_exit, Home_scan, Home_using, Home_toPay } from '../assets/image/assetsImages';
 
-import VConsole from 'vconsole';
-var vConsole = new VConsole();
+// import VConsole from 'vconsole';
+// var vConsole = new VConsole();
 
 const msgs = [{
   img: Home_using,
@@ -52,7 +52,7 @@ function Home() {
 
   }, []);
   const authenticate = () => {
-    const access_token = getQueryString('access_token');
+    const access_token = getQueryString('access_token')||'RxJ4k6psaGybE2WoZYQeKj';
     console.log(access_token)
     if (access_token && access_token.length > 5) {
       const headers = {

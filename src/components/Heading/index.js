@@ -15,7 +15,7 @@ import './index.scss';
  * @param {*} prop : type=exit 则调原生方法退出h5  有goto则跳转goto，否则回退到上页
  */
 function Heading(prop) {
-  const [title, setTitle] = useState(prop.title || 'PAYBY');
+  const [title, setTitle] = useState(prop.title || 'PayBy');
 
   useEffect(() => {
     if(prop.type && prop.type == 'exit') {

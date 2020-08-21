@@ -163,7 +163,7 @@ function RentProcess(prop) {
       <div className='bottom-btn'>
         {
           deposited === 'unpaid' ?
-            <div className='btn font-18 radius4' onClick={pay}>Pay a deposit</div>
+            <div className='btn font-18 radius4' onClick={pay}>Pay Deposit</div>
             : <>
               <div className={`btn font-18 radius4 ${stationData && stationData.station && (stationData.station.remaining > 0 ? '' : 'unable')}`} onClick={rent}>Rent a powerbank</div>
               <div className='btn font-18 radius4 trans-btn' onClick={wallet}>Wallet</div>

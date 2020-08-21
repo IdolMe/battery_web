@@ -47,33 +47,32 @@ function UnpaidDetail() {
   }, []);
 
   let history = useHistory();
+  const retry = (orderId, time, interval) => {
+    let initalTime = 0;
+    const headers = {
+      'userToken': sessionStorage.getItem('USERTOKEN'),
+      'client-platform': 'WEB'
+    };
+    const fn = () => {
+      request(`/v1.0.0/orders/${orderId}`, 'GET', {}, headers,true).then(res => {
+        if (res.httpStatusCode === 200) {
+          initalTime++;
+          if (res.data.paymentStatus === 'PAID') {
+            history.push(`/paySuccess`);
+            return;
+          }
 
-  const getOrderInfo = (orderNum) => {
-    return async function() {
-      const headers = {
-        'userToken': sessionStorage.getItem('USERTOKEN'),
-        'client-platform': 'WEB'
-      };
-      const res = await request(`/v1.0.0/orders/${orderNum}`, 'GET', {}, headers);
-      if (res.httpStatusCode === 200) {
-        if (res.data.paymentStatus === 'PAID') {
-          Toast.show({type:'loading'});
+          if (initalTime >= time) {
+            Toast.show({ mess: 'Payment failed. Please try again later.' });
+            return;
+          }
           setTimeout(() => {
-            Toast.hide();
-            setVisible(true)
-            setTimeout(() => {
-              setVisible(false);
-              // 付完去支付成功页面
-              history.push(`/paySuccess`);
-              // history.push(`/home`);
-            }, 1500)
-          }, 1500);
-          return;
+            fn();
+          }, interval)
         }
-        return Promise.reject('error');
-      }
-      return Promise.reject('error');
+      })
     }
+    fn();
   }
 
   const doPay = () => {
@@ -95,29 +94,16 @@ function UnpaidDetail() {
             token: resData.token // For order token, refer to the token in interactionParams returned from the transaction creation interface
           },
           function(data) {
-            if (data === 'success') {
-              // 支付成功之后停留五秒等待结果同步，然后展示成功并跳转
-              Toast.show({type:'loading'});
-              setTimeout(() => {
-                Toast.hide();
-                setVisible(true)
-                setTimeout(() => {
-                  setVisible(false);
-                  // 付完去支付成功页面
-                  history.push(`/paySuccess`);
-                  // history.push(`/home`);
-                }, 1500)
-              }, 1500);
+            data = JSON.parse(data)
+            if (data.status === 'failed') {
+              Toast.show({ mess: 'Payment failed. Please try again later.' });
               return;
             }
-
-            if (data === 'paying') {
-              Promise.retry(getOrderInfo(resData.orderNumber), 2, 300);
-              return;
-            }
-            
-            Toast.show({mess: 'Payment failed. Please try again later.'});
-            
+            Toast.show({ type: 'loading' });
+            retry(resData.orderNumber, 5, 800);
+            Toast.hide();
+            Toast.show({ mess: 'Payment failed. Please try again later.' });
+            return;
           }
         )
       }
