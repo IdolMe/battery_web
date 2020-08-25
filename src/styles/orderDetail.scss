@@ -30,6 +30,12 @@
       justify-content: space-between;
       align-items: flex-start;
       margin-bottom: 10px;
+
+      .desc {
+        word-wrap: break-word;
+        word-break: break-all;
+        max-width: 250px;
+      }
     }
   }
   .items1 {
