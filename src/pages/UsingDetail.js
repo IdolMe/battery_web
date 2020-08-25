@@ -23,9 +23,6 @@ function UsingDetail() {
   });
 
   useEffect(() => {
-    window.addEventListener("popstate", function(){
-      history.push('/home');
-  }, false);
     checkStatus();
     const intervalCheck = setInterval(() => {
       // 5秒查一次状态，跳转
@@ -68,17 +65,17 @@ function UsingDetail() {
         switch(res.data.status) {
           case 'OVERDRAFT':
             // 已完成未支付
-            history.push('/unpaidDetail');
+            history.replace('/unpaidDetail');
             break;
           case 'FINISH': 
             // history.push(`/orderDetail/${res.data.paymentData.orderNumber}`);
-            history.push(`/paySuccess`);
+            history.replace(`/paySuccess`);
             break;
           case 'OVERDUE_SETTLEMENT':
-            history.push(`/payDeposit`);
+            history.replace(`/payDeposit`);
             break;
           case 'NONE':
-            history.push('/home');
+            history.replace('/home');
             break;
           default: 
             setOrderData(res.data.usageData);
@@ -138,7 +135,7 @@ function UsingDetail() {
         <p className='font-13 normal descs'>3. If you encountered any issue, please contact our customer service for aid.</p>
       
         <p className='bottom-service font-13 text-center' onClick={() => {
-          window.location.href = 'https://m.payby.com/platform/payby/customerService';
+           history.push('/customerService');
         }}>Customer service</p>
       </div>
     </div>
@@ -146,4 +143,3 @@ function UsingDetail() {
 }
 
 export default UsingDetail;
-
