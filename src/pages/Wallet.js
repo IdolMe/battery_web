@@ -39,7 +39,7 @@ function Wallet() {
     if(userInfo.hasDeposit) {
       history.push(`/reFund`);
     } else {
-      history.push(`/payDeposit`);
+      history.push(`/payDeposit?from=wallet`);
     }
   }
 
