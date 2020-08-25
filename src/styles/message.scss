@@ -7,8 +7,8 @@
   }
   .messages {
     color: rgba(0,0,0,0.85);
-    .title {
-      margin: 12px 16px 20px;
+    .am-list-body {
+      background-color: transparent;
     }
     .message {
       width: 328px;
@@ -16,6 +16,12 @@
       background: #ffffff;
       padding: 12px;
       box-sizing: border-box;
+      &:first-child {
+        margin-top: 18px;
+      }
+      &:last-child {
+        margin-bottom: 0;
+      }
       .messageTitle {
         display: flex;
         justify-content: space-between;

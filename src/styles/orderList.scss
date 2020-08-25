@@ -5,7 +5,6 @@
   .header-wrap {
     background: #FFFFFF;
     box-shadow: 0 0 15px 0 rgba(0,0,0,0.15);
-    margin-bottom: 20px;
     .navs-wrap {
       padding-left: 16px;
       .ant-tabs {
@@ -40,6 +39,12 @@
       box-shadow: 0 0 15px 0 rgba(0,0,0,0.15);
       margin: 0 auto 16px;
       padding: 0 12px 14px 12px;
+      &:last-child {
+        margin-bottom: 0px;
+      }
+      &:first-child {
+        margin-top: 18px;
+      }
       .head {
         color: rgba(0,0,0,0.85);
         display: flex;

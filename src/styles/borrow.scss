@@ -31,6 +31,13 @@
         background-size: cover;
         color: #00A75D;
       }
+
+      .am-progress-outer {
+        border-radius: 4px;
+        width: 260px;
+        height: 6px;
+      }
+
       .ant-progress-outer {
         text-align: center;
         .ant-progress-inner {
