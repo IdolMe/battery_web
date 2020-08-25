@@ -42,4 +42,3 @@ export function getUA () {
     }
     return 'h5';
 }
-
