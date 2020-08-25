@@ -5,7 +5,7 @@
 * @LastEditors: huguantao
 * @LastEditTime: 2020-06-19 22:58:14
  */
-import React,{Component} from 'react';
+import React,{ Component } from 'react';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
 
 // import Login from '../pages/Login';
@@ -35,6 +35,7 @@ import Message from '../pages/Message';
 import Transactions from '../pages/Transactions';   // 交易记录，从钱包进
 import ReFund from '../pages/ReFund';               // 退押金
 import ReFundSuccess from '../pages/ReFundSuccess'; // 退押金成功
+import CustomerService from '../pages/CustomerService'; // 客户服务
 
 class Routes extends Component {
     render(){
@@ -66,6 +67,7 @@ class Routes extends Component {
                     <Route path="/transactions" component={Transactions} />
                     <Route path="/reFund" component={ReFund} />
                     <Route path="/reFundSuccess" component={ReFundSuccess} />
+                    <Route path="/customerService" component={CustomerService} />
 
                     <Route component={Home} /> 
                 </Switch>
