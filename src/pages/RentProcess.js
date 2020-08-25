@@ -27,26 +27,6 @@ const swips = [{
   desc: 'Push the side button to start charging your mobile devices'
 }];
 
-// const contents = [
-//   // {
-//   //   img: ProcessIcon1,
-//   //   title: 'Name',
-//   //   desc: 'Address'
-//   // },
-//   {
-//     img: ProcessIcon2,
-//     title: 'Supports most smartphones and mobile devices with 3 different types of connectors.',
-//     desc: ''
-//   }, {
-//     img: ProcessIcon3,
-//     title: '1.5 AED/30 mins, Free for 5 minutes usage. ',
-//     desc: 'Cap at 20 AED daily maximum. Up to 99 AED maximum - the powerbank is yours!'
-//   }, {
-//     img: ProcessIcon4,
-//     title: 'Over XXX stations in UAE and still expanding',
-//     desc: ''
-//   }];
-
 function RentProcess(prop) {
   // 根据是否付了押金来展示不同的按钮
   const deposited = prop.match.params.deposited || 'unpaid';
@@ -170,7 +150,6 @@ function RentProcess(prop) {
             </>
         }
       </div>
-
     </div>
   );
 }
