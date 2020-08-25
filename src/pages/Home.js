@@ -7,9 +7,9 @@
  */
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Modal } from 'antd';
-import { request } from '../utils/request';
-import { getQueryString } from '../utils/helper';
+import { Modal } from 'antd-mobile';
+import {request} from '../utils/request';
+import {getQueryString} from '../utils/helper';
 import '../styles/home.scss';
 import { Home_bg, Home_my, Home_exit, Home_scan, Home_using, Home_toPay } from '../assets/image/assetsImages';
 
@@ -52,7 +52,7 @@ function Home() {
 
   }, []);
   const authenticate = () => {
-    const access_token = getQueryString('access_token');
+    const access_token = getQueryString('access_token')||'RxJ4k6psaGybE2WoZYQeKj';
     console.log(access_token)
     if (access_token && access_token.length > 5) {
       const headers = {
@@ -209,14 +209,10 @@ function Home() {
       <Modal
         title=""
         visible={visible}
+        transparent
         closable={false}
         footer={[]} // 设置footer为空，去掉 取消 确定默认按钮
-        destroyOnClose={true}
-        mask={false}
-        maskClosable={false}
-        zIndex={1000}
         onCancel={() => { setVisible(false) }}
-        className='home-modal-wrap'
       >
         <div id="home-modal" className="text-center">
           <img src={tipMsg.img} alt="tip-img" className="topImg" />

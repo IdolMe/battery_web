@@ -7,7 +7,7 @@
  */
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
-import { Select } from 'antd';
+import { Select } from 'antd-mobile';
 import {getQueryString} from '../utils/helper';
 import {request} from '../utils/request';
 import {Logo, LoginGoDown} from '../assets/image/assetsImages';
@@ -55,28 +55,6 @@ function Login() {
         history.push(`/home`);
       }
     })
-
-    // 手机号验证码登录方式
-    // axios({
-    //   method: 'POST',
-    //   url: `${urlPrefix}/v1.0.0/login`,
-    //   data: {
-    //     cellphone: "13344445555",
-    //     smsCode: "1234"
-    //   },
-    //   headers: {
-    //     'client-platform': 'WEB',
-    //   }
-    // }).then(function(response) {
-    //   Toast.hide();
-    //   if(response.data.httpStatusCode === 200) {
-    //     setUSERTOKEN(response.data.data.token);
-    //     sessionStorage.setItem('USERTOKEN', response.data.data.token);
-    //     history.push(`/home`);
-    //   } else {
-    //     Toast.show({mess: response.data.error.message});
-    //   }
-    // });
   }
 
   return (

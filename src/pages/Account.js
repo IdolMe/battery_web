@@ -38,7 +38,7 @@ function Account() {
   const gotoPath = (path) => {
     if(path == 'service') {
       // window.location.href = "tel://10086";
-      window.location.href = 'https://m.payby.com/platform/payby/customerService';
+      history.push('/customerService')
     } else {
       history.push(`/${path}`);
     }
