@@ -1,18 +1,17 @@
 /**
-* @file: description
-* @author: huguantao
-* @Date: 2020-03-25 21:49:06
-* @LastEditors: huguantao
-* @LastEditTime: 2020-05-07 22:48:18
+ * @file: description
+ * @author: huguantao
+ * @Date: 2020-03-25 21:49:06
+ * @LastEditors: huguantao
+ * @LastEditTime: 2020-05-07 22:48:18
  */
 import React, { useState, useEffect } from 'react';
 import Heading from '../components/Heading';
 import { request } from '../utils/request';
 import { PullToRefresh, ListView, Button } from 'antd-mobile';
+import { DEFAULT_PAGESIZE } from '../utils/constants';
 import ReactDOM from 'react-dom';
 import '../styles/message.scss';
-
-const DEFAULT_PAGESIZE = 10;
 
 function Message() {
   const [data, setData] = useState([]);
@@ -24,12 +23,12 @@ function Message() {
   const [pageNo, setPageNo] = useState(1);
   const [total, setTotal] = useState(0);
 
-  const getMessageList = async (pageNo, pageSize = 10) => {
+  const getMessageList = async (pageNo, pageSize = DEFAULT_PAGESIZE) => {
     const headers = {
       'userToken': sessionStorage.getItem('USERTOKEN'),
       'client-platform': 'WEB',
     };
-    const res = await request(`/v1.0.0/messages?pageIndex=${pageNo}&pageSize=${pageSize}`, 'GET', {}, headers);
+    const res = await request(`/v1.0.0/messages?pageIndex=${ pageNo }&pageSize=${ pageSize }`, 'GET', {}, headers);
     if (res.httpStatusCode === 200) {
       const prevData = pageNo === 1 ? [] : data;
       const nextData = [...prevData, ...res.data.list];
@@ -67,12 +66,12 @@ function Message() {
 
   const row = (rowData, sectionID, rowID) => {
     return (
-      <div className='message font-14 radius4' key={rowID}>
+      <div className='message font-14 radius4' key={ rowID }>
         <div className='messageTitle'>
-          <span>{rowData.title}</span>
-          <span>{rowData.createTimestamp}</span>
+          <span>{ rowData.title }</span>
+          <span>{ rowData.createTimestamp }</span>
         </div>
-        <div className='desc'>{rowData.content}</div>
+        <div className='desc'>{ rowData.content }</div>
       </div>
     );
   };
@@ -80,31 +79,31 @@ function Message() {
   return (
     <div className="message-page">
       <div className='header-wrap'>
-        <Heading title='Message' />
+        <Heading title='Message'/>
       </div>
       <div className='messages'>
         {
           data && data.length ?
             <ListView
-              dataSource={dataSource}
-              renderFooter={() => (<div style={{ padding: 30, textAlign: 'center' }}>
-                {isLoading ? 'Loading...' : 'Loaded'}
-              </div>)}
-              renderRow={row}
-              useBodyScroll={true}
-              pullToRefresh={<PullToRefresh
-                refreshing={refreshing}
-                onRefresh={onRefresh}
-                indicator={{
+              dataSource={ dataSource }
+              renderFooter={ () => (<div style={ { padding: 30, textAlign: 'center' } }>
+                { isLoading ? 'Loading...' : 'Loaded' }
+              </div>) }
+              renderRow={ row }
+              useBodyScroll={ true }
+              pullToRefresh={ <PullToRefresh
+                refreshing={ refreshing }
+                onRefresh={ onRefresh }
+                indicator={ {
                   activate: null,
                   finish: null,
                   deactivate: null,
                   release: null,
-                }}
-              />}
-              onEndReachedThreshold={30}
-              onEndReached={onEndReached}
-              pageSize={10}
+                } }
+              /> }
+              onEndReachedThreshold={ 30 }
+              onEndReached={ onEndReached }
+              pageSize={ DEFAULT_PAGESIZE }
             /> :
             <p className='font-14 title'>no message</p>
         }

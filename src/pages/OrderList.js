@@ -1,20 +1,19 @@
 /**
-* @file: description
-* @author: huguantao
-* @Date: 2020-03-25 21:49:06
-* @LastEditors: huguantao
-* @LastEditTime: 2020-04-09 23:18:29
+ * @file: description
+ * @author: huguantao
+ * @Date: 2020-03-25 21:49:06
+ * @LastEditors: huguantao
+ * @LastEditTime: 2020-04-09 23:18:29
  */
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Tabs } from 'antd-mobile';
 import Heading from '../components/Heading';
-import {request} from '../utils/request';
-import {Checked} from '../assets/image/assetsImages';
+import { request } from '../utils/request';
+import { Checked } from '../assets/image/assetsImages';
 import { PullToRefresh, ListView, Button } from 'antd-mobile';
+import { DEFAULT_PAGESIZE } from '../utils/constants';
 import '../styles/orderList.scss';
-
-const DEFAULT_PAGESIZE = 10;
 
 function OrderList() {
   let history = useHistory();
@@ -32,7 +31,7 @@ function OrderList() {
       'userToken': sessionStorage.getItem('USERTOKEN'),
       'client-platform': 'WEB',
     };
-    const res = await request(`/v1.0.0/orders?pageIndex=${pageNo}&pageSize=${pageSize}&type=RENT`, 'GET', {}, headers);
+    const res = await request(`/v1.0.0/orders?pageIndex=${ pageNo }&pageSize=${ pageSize }&type=RENT`, 'GET', {}, headers);
     if (res.httpStatusCode === 200) {
       const prevData = pageNo === 1 ? [] : data;
       const nextData = [...prevData, ...res.data.list];
@@ -66,15 +65,15 @@ function OrderList() {
 
   const row = (item, sectionID, rowID) => {
     return (
-      <div className='order radius4' key={rowID} onClick={()=>detail(item.orderNumber)}>
+      <div className='order radius4' key={ rowID } onClick={ () => detail(item.orderNumber) }>
         <div className='head'>
-          <span className='font-14'><img src={Checked} alt='check' />{item.borrowStatus}</span>
-          <span className='font-14'>AED {item.amount}</span>
+          <span className='font-14'><img src={ Checked } alt='check'/>{ item.borrowStatus }</span>
+          <span className='font-14'>AED { item.amount }</span>
         </div>
         <div className='content font-14'>
-          <p>Start time：{item.type == 'RENT' ? item.borrowStartTime : item.createTimestamp}</p>
-          {item.type == 'RENT' ? <p>Station：{item.borrowStation && item.borrowStation.address}</p> : null }
-          <p>Order Number：{item.orderNumber}</p>
+          <p>Start time：{ item.type == 'RENT' ? item.borrowStartTime : item.createTimestamp }</p>
+          { item.type == 'RENT' ? <p>Station：{ item.borrowStation && item.borrowStation.address }</p> : null }
+          <p>Order Number：{ item.orderNumber }</p>
           <div className='detail font-12 text-center'>Details</div>
         </div>
       </div>
@@ -87,38 +86,38 @@ function OrderList() {
   }
 
   const detail = (id) => {
-    history.push(`/orderDetail/${id}`);
+    history.push(`/orderDetail/${ id }`);
   }
 
   return (
     <div className="order-list-page">
       <div className='header-wrap'>
-        <Heading title='Orders' />
+        <Heading title='Orders'/>
       </div>
 
       <div className='lists'>
         {
           data && data.length ?
             <ListView
-              dataSource={dataSource}
-              renderFooter={() => (<div style={{ padding: 30, textAlign: 'center' }}>
-                {isLoading ? 'Loading...' : 'Loaded'}
-              </div>)}
-              renderRow={row}
-              useBodyScroll={true}
-              pullToRefresh={<PullToRefresh
-                refreshing={refreshing}
-                onRefresh={onRefresh}
-                indicator={{
+              dataSource={ dataSource }
+              renderFooter={ () => (<div style={ { padding: 30, textAlign: 'center' } }>
+                { isLoading ? 'Loading...' : 'Loaded' }
+              </div>) }
+              renderRow={ row }
+              useBodyScroll={ true }
+              pullToRefresh={ <PullToRefresh
+                refreshing={ refreshing }
+                onRefresh={ onRefresh }
+                indicator={ {
                   activate: null,
                   finish: null,
                   deactivate: null,
                   release: null,
-                }}
-              />}
-              onEndReachedThreshold={30}
-              onEndReached={onEndReached}
-              pageSize={10}
+                } }
+              /> }
+              onEndReachedThreshold={ 30 }
+              onEndReached={ onEndReached }
+              pageSize={ DEFAULT_PAGESIZE }
             /> :
             <p className='font-14 title'>no order</p>
         }

@@ -1,9 +1,9 @@
 /**
-* @file: description
-* @author: huguantao
-* @Date: 2020-03-25 21:49:06
-* @LastEditors: huguantao
-* @LastEditTime: 2020-05-07 23:13:00
+ * @file: description
+ * @author: huguantao
+ * @Date: 2020-03-25 21:49:06
+ * @LastEditors: huguantao
+ * @LastEditTime: 2020-05-07 23:13:00
  */
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -24,7 +24,7 @@ function PayDeposit() {
       'userToken': sessionStorage.getItem('USERTOKEN'),
       'client-platform': 'WEB'
     };
-    request(`/v1.0.0/users/recharge-item`, 'GET', {}, headers,false, true).then(res => {
+    request(`/v1.0.0/users/recharge-item`, 'GET', {}, headers, false, true).then(res => {
       if (res.httpStatusCode === 200) {
         setRechargeData(res.data.deposit);
       }
@@ -33,14 +33,14 @@ function PayDeposit() {
 
   let history = useHistory();
 
-  const retry = (orderId, time, interval) => {
+  const retry = (orderNumber, time, interval) => {
     let initalTime = 0;
     const headers = {
       'userToken': sessionStorage.getItem('USERTOKEN'),
       'client-platform': 'WEB'
     };
     const fn = () => {
-      request(`/v1.0.0/orders/${orderId}`, 'GET', {}, headers,true).then(res => {
+      request(`/v1.0.0/orders/${ orderNumber }`, 'GET', {}, headers, true).then(res => {
         if (res.httpStatusCode === 200) {
           initalTime++;
           if (res.data.paymentStatus === 'PAID') {
@@ -111,29 +111,32 @@ function PayDeposit() {
 
   return (
     <div className="payDeposit-page">
-      <Heading />
+      <Heading/>
       <div className='card radius4'>
         <p className='font-14 text-center'>You need to pay for the deposit before renting a powerbank.</p>
-        <p className='font-14 text-center'>AED <span>{rechargeData && rechargeData.amount}</span></p>
+        <p className='font-14 text-center'>AED <span>{ rechargeData && rechargeData.amount }</span></p>
         <div className='bottom'>
-          <p className='font-14'><img src={Payment} alt='pay' /> PayBy</p>
-          <img src={Checked} alt='checked' />
+          <p className='font-14'><img src={ Payment } alt='pay'/> PayBy</p>
+          <img src={ Checked } alt='checked'/>
         </div>
       </div>
-      <p className='font-13 red descs'><img src={Tip} alt='tip' />How to refund the deposit?</p>
-      <p className='font-13 normal descs'>How to refund the deposit? In Payby> power bank> account> wallet> click deposit, you can refund to Payby account</p>
-      <div className="btn radius4" onClick={doPay}>Pay Deposit</div>
+      <p className='font-13 red descs'><img src={ Tip } alt='tip'/>How to refund the deposit?</p>
+      <p className='font-13 normal descs'>How to refund the deposit? In Payby> power bank> account> wallet> click
+        deposit, you can refund to Payby account</p>
+      <div className="btn radius4" onClick={ doPay }>Pay Deposit</div>
 
       <Modal
         title=""
-        visible={visible}
-        closable={false}
-        footer={[]} // 设置footer为空，去掉 取消 确定默认按钮
-        destroyOnClose={true}
-        onCancel={() => { setVisible(false) }}
+        visible={ visible }
+        closable={ false }
+        footer={ [] } // 设置footer为空，去掉 取消 确定默认按钮
+        destroyOnClose={ true }
+        onCancel={ () => {
+          setVisible(false)
+        } }
       >
         <div id="home-modal" className="text-center">
-          <img src={PaySuccess} alt="tip-img" className="topImg" />
+          <img src={ PaySuccess } alt="tip-img" className="topImg"/>
           <h4 className="font-16">Success</h4>
         </div>
       </Modal>
