@@ -16,9 +16,6 @@ function PaySuccess() {
   let history = useHistory();
 
   useEffect(() => {
-    window.addEventListener("popstate", function () {
-      history.push('/home');
-    }, false);
     const headers = {
       'userToken': sessionStorage.getItem('USERTOKEN'),
       'client-platform': 'WEB'

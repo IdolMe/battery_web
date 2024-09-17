@@ -8,6 +8,7 @@
 let urlPrefix = "http://test.powerbank.zodme.com/api";
 const IOSOpenUrl = "ios://";
 const androidOpenUrl = "android://";
+const DEFAULT_PAGESIZE = 10;
 
 if(window.location.href.indexOf('qa') > -1 || window.location.href.indexOf('localhost') > -1) {
     urlPrefix = "http://test.powerbank.zodme.com/api";
@@ -15,5 +16,6 @@ if(window.location.href.indexOf('qa') > -1 || window.location.href.indexOf('loca
 export {
     urlPrefix,
     IOSOpenUrl,
-    androidOpenUrl
+    androidOpenUrl,
+    DEFAULT_PAGESIZE
 };
