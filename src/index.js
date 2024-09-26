@@ -11,8 +11,8 @@ import Routes from './routes/index.js';
 import "lib-flexible"
 
 import * as serviceWorker from './serviceWorker';
-import 'antd/dist/antd.css';
 import './styles/index.scss';
+import './utils/promise.js';
 
 ReactDOM.render(
     <Routes />, document.getElementById('root')
